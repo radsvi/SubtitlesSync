@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SubtitlesSync"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="900" MinHeight="200" MinWidth="450">
+        Title="MainWindow" Height="{Binding WindowHeight, Mode=TwoWay}" Width="{Binding WindowWidth, Mode=TwoWay}" MinHeight="200" MinWidth="450" d:Width="350" d:MinWidth="350">
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding EscKeyCommand}"/>
+    </Window.InputBindings>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="22"/>

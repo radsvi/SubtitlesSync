@@ -1,5 +1,6 @@
 ﻿using SubtitlesSync.ViewModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace SubtitlesSync
 {

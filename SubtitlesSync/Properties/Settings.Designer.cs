@@ -34,5 +34,29 @@ namespace SubtitlesSync.Properties {
                 this["folderPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int windowWidth {
+            get {
+                return ((int)(this["windowWidth"]));
+            }
+            set {
+                this["windowWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int windowHeight {
+            get {
+                return ((int)(this["windowHeight"]));
+            }
+            set {
+                this["windowHeight"] = value;
+            }
+        }
     }
 }

@@ -1,38 +1,52 @@
 ﻿using Microsoft.Win32;
-using SubtitlesSync.Lib;
 using SubtitlesSync.Model;
 using SubtitlesSync.MVVM;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Net.Http.Json;
 using System.Windows;
+using SubtitlesSync.Properties;
 
 namespace SubtitlesSync.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-        private string folderPath = "d:\\Torrent\\House MD Season 1, 2, 3, 4, 5, 6, 7 & 8 + Extras DVDRip TSV\\Season 6\\"; // ## odstranit default value, dat tam loadovani z json filu misto toho
+        private string folderPath = Settings.Default.folderPath;
 
         public string FolderPath
         {
             get { return folderPath; }
             set { 
                 folderPath = value;
+                Settings.Default.folderPath = value;
+                Settings.Default.Save();
                 OnPropertyChanged();
             }
         }
-        //private Settings persistentSettings = JSON.ImportFromFile();
-        ////private List<Settings> persistentSettings;
 
-        //public Settings PersistentSettings
-        //{
-        //    get { return persistentSettings; }
-        //    set { 
-        //        persistentSettings = value;
-        //        //JSON.ExportToFile(persistentSettings);
-        //        OnPropertyChanged();
-        //    }
-        //}
+        private int windowHeight = Settings.Default.windowHeight;
+
+        public int WindowHeight
+        {
+            get { return windowHeight; }
+            set { 
+                windowHeight = value;
+                Settings.Default.windowHeight = value;
+                Settings.Default.Save();
+                OnPropertyChanged();
+            }
+        }
+        private int windowWidth = Settings.Default.windowWidth;
+
+        public int WindowWidth
+        {
+            get { return windowWidth; }
+            set { 
+                windowWidth = value;
+                Settings.Default.windowWidth = value;
+                Settings.Default.Save();
+                OnPropertyChanged();
+            }
+        }
 
         public string[] SubtitleSuffixes { get; set; } = { "*.srt", "*.sub" };
 
@@ -43,10 +57,8 @@ namespace SubtitlesSync.ViewModel
         public RelayCommand BrowseCommand => new RelayCommand(execute => BrowseNLoadFolder());
         public RelayCommand ReloadFolder => new RelayCommand(execute => LoadFolder(), canExecute => { return Directory.Exists(FolderPath); });
         public RelayCommand RenameCommand => new RelayCommand(execute => RenameSubtitles(), canExecute => { return Items.Count > 0; });
-        
-        //public RelayCommand AddCommand => new RelayCommand(execute => AddItem());
-        //public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteItem(), canExecute => SelectedItem != null);
-        //public RelayCommand SaveCommand => new RelayCommand(execute => Save(), canExecute => CanSave());
+        public RelayCommand EscKeyCommand => new RelayCommand(execute => CloseApplication());
+
         public MainWindowViewModel()
         {
             Items = new ObservableCollection<Item>();
@@ -105,6 +117,11 @@ namespace SubtitlesSync.ViewModel
             //MessageBox.Show(message);
 
             //JSON.ExportToFile(PersistentSettings);
+            
+        }
+        private void CloseApplication()
+        {
+            Application.Current.Shutdown();
         }
     }
 }
