@@ -11,7 +11,7 @@ namespace SubtitlesSync.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-        private string folderPath = "d:\\Torrent\\House MD Season 1, 2, 3, 4, 5, 6, 7 & 8 + Extras DVDRip TSV\\Season 6\\"; // ## odstranit default value
+        private string folderPath = "d:\\Torrent\\House MD Season 1, 2, 3, 4, 5, 6, 7 & 8 + Extras DVDRip TSV\\Season 6\\"; // ## odstranit default value, dat tam loadovani z json filu misto toho
 
         public string FolderPath
         {
@@ -21,16 +21,18 @@ namespace SubtitlesSync.ViewModel
                 OnPropertyChanged();
             }
         }
-        private List myVar;
+        //private Settings persistentSettings = JSON.ImportFromFile();
+        ////private List<Settings> persistentSettings;
 
-        public List MyProperty
-        {
-            get { return myVar; }
-            set { myVar = value; }
-        }
-
-        List<Person> jsonContent = JSON.ImportFromFile();
-        string message = "Message: " + jsonContent[0].Lastname;
+        //public Settings PersistentSettings
+        //{
+        //    get { return persistentSettings; }
+        //    set { 
+        //        persistentSettings = value;
+        //        //JSON.ExportToFile(persistentSettings);
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         public string[] SubtitleSuffixes { get; set; } = { "*.srt", "*.sub" };
 
@@ -39,8 +41,8 @@ namespace SubtitlesSync.ViewModel
 
         //public RelayCommand AddCommand => new RelayCommand(execute => AddItem(), canExecute => { return true; });
         public RelayCommand BrowseCommand => new RelayCommand(execute => BrowseNLoadFolder());
-        public RelayCommand ReloadFolder => new RelayCommand(execute => LoadFolder());
-        public RelayCommand RenameCommand => new RelayCommand(execute => RenameSubtitles());
+        public RelayCommand ReloadFolder => new RelayCommand(execute => LoadFolder(), canExecute => { return Directory.Exists(FolderPath); });
+        public RelayCommand RenameCommand => new RelayCommand(execute => RenameSubtitles(), canExecute => { return Items.Count > 0; });
         
         //public RelayCommand AddCommand => new RelayCommand(execute => AddItem());
         //public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteItem(), canExecute => SelectedItem != null);
@@ -98,9 +100,11 @@ namespace SubtitlesSync.ViewModel
         {
             // ## testovaci!
 
-            List<Person> jsonContent = JSON.ImportFromFile();
-            string message = "Message: " + jsonContent[0].Lastname;
-            MessageBox.Show(message);
+            //List<Settings> jsonContent = JSON.ImportFromFile();
+            //string message = "Message: " + jsonContent[0].FolderPath;
+            //MessageBox.Show(message);
+
+            //JSON.ExportToFile(PersistentSettings);
         }
     }
 }

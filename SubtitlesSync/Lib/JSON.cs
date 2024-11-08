@@ -9,17 +9,17 @@ namespace SubtitlesSync.Lib
 {
     static class JSON
     {
-        public static List<Person> ImportFromFile(string fileName = "SubtitlesSync.json")
+        public static Settings ImportFromFile(string fileName = "SubtitlesSync.json")
         {
-            List<Person> source = new List<Person>();
+            Settings source = new Settings();
             using (StreamReader r = new StreamReader(fileName))
             {
                 string json = r.ReadToEnd();
-                source = JsonSerializer.Deserialize<List<Person>>(json);
+                source = JsonSerializer.Deserialize<Settings>(json);
             }
             return source;
         }
-        public static void ExportToFile(string exportItem, string fileName = "SubtitlesSync.json")
+        public static void ExportToFile(Settings exportItem, string fileName = "SubtitlesSync.json")
         {
             JsonSerializerOptions options = new() { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
             string jsonString = JsonSerializer.Serialize(exportItem, options);
