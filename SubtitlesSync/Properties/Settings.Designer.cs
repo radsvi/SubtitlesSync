@@ -37,7 +37,7 @@ namespace SubtitlesSync.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
         public int windowWidth {
             get {
                 return ((int)(this["windowWidth"]));
@@ -49,7 +49,7 @@ namespace SubtitlesSync.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("900")]
         public int windowHeight {
             get {
                 return ((int)(this["windowHeight"]));
