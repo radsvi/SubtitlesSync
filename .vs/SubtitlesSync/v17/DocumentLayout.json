@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AA1AF637-C39D-4C8D-A167-4085463F6DE0}|SubtitlesSync\\SubtitlesSync.csproj|c:\\users\\svihe\\dropbox\\coding\\c#\\subtitlessync\\subtitlessync\\viewmodel\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA1AF637-C39D-4C8D-A167-4085463F6DE0}|SubtitlesSync\\SubtitlesSync.csproj|solutionrelative:subtitlessync\\viewmodel\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AA1AF637-C39D-4C8D-A167-4085463F6DE0}|SubtitlesSync\\SubtitlesSync.csproj|c:\\users\\svihe\\dropbox\\coding\\c#\\subtitlessync\\subtitlessync\\viewmodel\\methods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AA1AF637-C39D-4C8D-A167-4085463F6DE0}|SubtitlesSync\\SubtitlesSync.csproj|solutionrelative:subtitlessync\\viewmodel\\methods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AA1AF637-C39D-4C8D-A167-4085463F6DE0}|SubtitlesSync\\SubtitlesSync.csproj|c:\\users\\svihe\\dropbox\\coding\\c#\\subtitlessync\\subtitlessync\\viewmodel\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AA1AF637-C39D-4C8D-A167-4085463F6DE0}|SubtitlesSync\\SubtitlesSync.csproj|solutionrelative:subtitlessync\\viewmodel\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AA1AF637-C39D-4C8D-A167-4085463F6DE0}|SubtitlesSync\\SubtitlesSync.csproj|c:\\users\\svihe\\dropbox\\coding\\c#\\subtitlessync\\subtitlessync\\model\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA1AF637-C39D-4C8D-A167-4085463F6DE0}|SubtitlesSync\\SubtitlesSync.csproj|solutionrelative:subtitlessync\\model\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA1AF637-C39D-4C8D-A167-4085463F6DE0}|SubtitlesSync\\SubtitlesSync.csproj|c:\\users\\svihe\\dropbox\\coding\\c#\\subtitlessync\\subtitlessync\\mvvm\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AA1AF637-C39D-4C8D-A167-4085463F6DE0}|SubtitlesSync\\SubtitlesSync.csproj|solutionrelative:subtitlessync\\mvvm\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AA1AF637-C39D-4C8D-A167-4085463F6DE0}|SubtitlesSync\\SubtitlesSync.csproj|c:\\users\\svihe\\dropbox\\coding\\c#\\subtitlessync\\subtitlessync\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -22,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 86,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,38 +42,64 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
+              "Title": "ViewModelBase.cs",
+              "DocumentMoniker": "C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\MVVM\\ViewModelBase.cs",
+              "RelativeDocumentMoniker": "SubtitlesSync\\MVVM\\ViewModelBase.cs",
+              "ToolTip": "C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\MVVM\\ViewModelBase.cs",
+              "RelativeToolTip": "SubtitlesSync\\MVVM\\ViewModelBase.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T22:23:41.98Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\MainWindow.xaml",
               "RelativeDocumentMoniker": "SubtitlesSync\\MainWindow.xaml",
               "ToolTip": "C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\MainWindow.xaml",
               "RelativeToolTip": "SubtitlesSync\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-11-10T20:16:09.919Z",
+              "WhenOpened": "2024-11-10T21:00:43.808Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "Item.cs",
+              "DocumentMoniker": "C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\Model\\Item.cs",
+              "RelativeDocumentMoniker": "SubtitlesSync\\Model\\Item.cs",
+              "ToolTip": "C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\Model\\Item.cs",
+              "RelativeToolTip": "SubtitlesSync\\Model\\Item.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAAABEAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T20:55:48.03Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "MainWindowViewModel.cs",
               "DocumentMoniker": "C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\ViewModel\\MainWindowViewModel.cs",
               "RelativeDocumentMoniker": "SubtitlesSync\\ViewModel\\MainWindowViewModel.cs",
               "ToolTip": "C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\ViewModel\\MainWindowViewModel.cs",
               "RelativeToolTip": "SubtitlesSync\\ViewModel\\MainWindowViewModel.cs",
-              "ViewState": "AQIAAFwAAAAAAAAAAAAzwF4AAAAAAAAA",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAxwBwAAABdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-10T18:45:57.572Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Methods.cs",
               "DocumentMoniker": "C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\ViewModel\\Methods.cs",
               "RelativeDocumentMoniker": "SubtitlesSync\\ViewModel\\Methods.cs",
               "ToolTip": "C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\ViewModel\\Methods.cs",
               "RelativeToolTip": "SubtitlesSync\\ViewModel\\Methods.cs",
-              "ViewState": "AQIAAHcAAAAAAAAAAAAowI0AAAATAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-10T18:34:35.103Z",
               "EditorCaption": ""

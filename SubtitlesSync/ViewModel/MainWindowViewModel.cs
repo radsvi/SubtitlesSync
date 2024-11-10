@@ -15,6 +15,17 @@ namespace SubtitlesSync.ViewModel
     internal partial class MainWindowViewModel : ViewModelBase
     {
         private string folderPath = Settings.Default.folderPath;
+        public string FolderPath
+        {
+            get { return folderPath; }
+            set
+            {
+                folderPath = value;
+                Settings.Default.folderPath = value;
+                Settings.Default.Save();
+                OnPropertyChanged();
+            }
+        }
         public string[] VideoSuffixes { get; set; } = { "*.avi", "*.mkv", "*.mp4", "*.mpg" };
         public string[] SubtitleSuffixes { get; set; } = { "*.srt", "*.sub" };
 
@@ -45,17 +56,6 @@ namespace SubtitlesSync.ViewModel
         }
 
         public ObservableCollection<Item> Items { get; set; }
-
-        public string FolderPath
-        {
-            get { return folderPath; }
-            set {
-                folderPath = value;
-                Settings.Default.folderPath = value;
-                Settings.Default.Save();
-                OnPropertyChanged();
-            }
-        }
 
         private int windowHeight = Settings.Default.windowHeight;
 
@@ -90,7 +90,7 @@ namespace SubtitlesSync.ViewModel
         public RelayCommand BrowseCommand => new RelayCommand(execute => BrowseNLoadFolder());
         //public RelayCommand ReloadFolder => new RelayCommand(execute => LoadFolderVideo(), canExecute => { return Directory.Exists(FolderPath); });
         public RelayCommand ReloadFolder => new RelayCommand(execute => PopulateDataGrid(), canExecute => { return Directory.Exists(FolderPath); });
-        public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return CheckWhetherFolderChanged(); });
+        public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return CheckWhetherFolderUnchanged(); });
         public RelayCommand EscKeyCommand => new RelayCommand(execute => CloseApplication());
 
         public MainWindowViewModel()
@@ -129,6 +129,7 @@ namespace SubtitlesSync.ViewModel
                 EpisodeLong = @"E\s?\d{1,2}",
                 EpisodeShort = @"E\s?"
             });
+
             PopulateDataGrid();
         }
         

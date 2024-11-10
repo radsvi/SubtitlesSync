@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Xml.Linq;
 
 namespace SubtitlesSync.ViewModel
 {
@@ -239,13 +240,20 @@ namespace SubtitlesSync.ViewModel
             foreach (var videoItem in videoFiles)
             {
                 //Item currentItem = new Item { VideoFileName = videoItem.ShortName };
-                Item currentItem = new Item { VideoFileName = $"{videoItem.ShortName} [S{videoItem.Season}E{videoItem.Episode}]" };
+                Item currentItem = new Item {
+                    VideoFullFileName = videoItem.FileName,
+                    VideoFileName = videoItem.ShortName,
+                    VideoDisplayName = $"{videoItem.ShortName} [S{videoItem.Season}E{videoItem.Episode}]",
+                    VideoSuffix = videoItem.Extension
+                };
                 foreach (var subItem in subtitleFiles)
                 {
                     if (videoItem.Season == subItem.Season && videoItem.Episode == subItem.Episode)
                     {
-                        //currentItem.SubtitlesFileName = subItem.ShortName;
-                        currentItem.SubtitlesFileName = $"{videoItem.ShortName} [S{videoItem.Season}E{videoItem.Episode}]";
+                        currentItem.SubtitlesFileName = subItem.ShortName;
+                        currentItem.SubtitlesFullFileName = subItem.FileName;
+                        currentItem.SubtitlesDisplayName = $"{subItem.ShortName} [S{subItem.Season}E{subItem.Episode}]";
+                        currentItem.SubtitlesSuffix = subItem.Extension;
                         currentItem.Status = "ready";
                     }
                 }
@@ -253,15 +261,8 @@ namespace SubtitlesSync.ViewModel
             }
         }
 
-        private void StartRenaming()
+        private bool CheckWhetherFolderUnchanged()
         {
-            //List<string> folderContentNew = new List<string>(Directory.GetFiles(FolderPath));
-            CheckWhetherFolderChanged();
-            MessageBox.Show("TEST");
-        }
-        private bool CheckWhetherFolderChanged()
-        {
-            // ## tohle jeste zkontrolovat, udelal jsem to trochu narychlo
             if (Items.Count > 0)
             {
                 if (folderBackupContent.SequenceEqual(Directory.GetFiles(FolderPath)))
@@ -278,24 +279,37 @@ namespace SubtitlesSync.ViewModel
                 return true;
             }
         }
-        //internal bool CompareLists(List<string> tempList)
-        //{
-        //    // ## dodelat
+        private void StartRenaming()
+        {
+            //List<string> folderContentNew = new List<string>(Directory.GetFiles(FolderPath));
+            if (CheckWhetherFolderUnchanged() == false)
+            {
+                MessageBox.Show("Content of the folder changed. Refresh the list before you continue!");
+            }
 
-        //    //foreach(Item item in Items)
-        //    //{
-        //    //    foreach (Item tempItem in tempList)
-        //    //    {
+            string backupFolder = "SubtitlesBackup";
+            if (Directory.Exists(FolderPath + "\\SubtitlesBackup") == false) { Directory.CreateDirectory(FolderPath + "\\SubtitlesBackup"); }
 
-        //    //    }
-        //    //}
+            foreach(var item in Items)
+            {
+                if (String.IsNullOrEmpty(item.SubtitlesFileName) == false && String.IsNullOrEmpty(item.SubtitlesSuffix) == false)
+                {
+                    //File.Copy(Path.Combine(FolderPath, item.SubtitlesFileName), Path.Combine(FolderPath, backupFolder, item.SubtitlesFileName), true);
+                    //MessageBox.Show(Path.Combine(FolderPath, backupFolder, item.SubtitlesFileName));
+                    File.Copy(item.SubtitlesFullFileName, Path.Combine(FolderPath, backupFolder, item.SubtitlesFileName), true);
 
-        //    // ## dodelat porovnavani Listu
+                    string newSubName = Regex.Replace(item.VideoFileName, item.VideoSuffix, "", RegexOptions.IgnoreCase);
+                    string newSuffix = item.SubtitlesSuffix;
+                    string newSubNamePlusPath = Path.Combine(FolderPath, newSubName + newSuffix);
+                    File.Move(item.SubtitlesFullFileName, newSubNamePlusPath);
+                    item.Status = "Backed-up & Renamed";
+                    //item.Status = newSubNamePlusPath;
+                    //MessageBox.Show(newSubNamePlusPath);
+                }
+            }
 
-            
-
-        //    return folderBackupContent.SequenceEqual(Directory.GetFiles(FolderPath));
-        //}
+            //MessageBox.Show("TEST");
+        }
         private void CloseApplication()
         {
             System.Windows.Application.Current.Shutdown();
