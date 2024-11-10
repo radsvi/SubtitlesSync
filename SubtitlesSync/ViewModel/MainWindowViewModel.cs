@@ -49,7 +49,7 @@ namespace SubtitlesSync.ViewModel
         public string FolderPath
         {
             get { return folderPath; }
-            set { 
+            set {
                 folderPath = value;
                 Settings.Default.folderPath = value;
                 Settings.Default.Save();
@@ -62,7 +62,7 @@ namespace SubtitlesSync.ViewModel
         public int WindowHeight
         {
             get { return windowHeight; }
-            set { 
+            set {
                 windowHeight = value;
                 Settings.Default.windowHeight = value;
                 Settings.Default.Save();
@@ -74,13 +74,17 @@ namespace SubtitlesSync.ViewModel
         public int WindowWidth
         {
             get { return windowWidth; }
-            set { 
+            set {
                 windowWidth = value;
                 Settings.Default.windowWidth = value;
                 Settings.Default.Save();
                 OnPropertyChanged();
             }
         }
+
+        public List<RGXPatterns> RegexPatterns { get; set; }
+
+
 
         //public RelayCommand AddCommand => new RelayCommand(execute => AddItem(), canExecute => { return true; });
         public RelayCommand BrowseCommand => new RelayCommand(execute => BrowseNLoadFolder());
@@ -92,6 +96,19 @@ namespace SubtitlesSync.ViewModel
         public MainWindowViewModel()
         {
             Items = new ObservableCollection<Item>();
+            RegexPatterns = new List<RGXPatterns>();
+            //RegexPatterns.Add(new RGXPatterns { WholeTitle = @"S\s?\d{1,2} E\s?\d{1,2}",
+            //    SeasonLong = @"S\s?\d{1,2}", SeasonShort = @"S\s?", EpisodeLong = @"E\s?\d{1,2}", EpisodeShort = @"E\s?"});
+            RegexPatterns.Add(new RGXPatterns { WholeTitle = @"Season\s?\d{1,2} Episode \d{1,2}",
+                SeasonLong = @"Season\s?\d{1,2}", SeasonShort = @"Season\s?", EpisodeLong = @"Episode\s?\d{1,2}", EpisodeShort = @"Episode\s?"});
+            //RegexPatterns.Add(new RGXPatterns
+            //{
+            //    WholeTitle = @"Season \d{1,2} Episode \d{1,2}",
+            //    SeasonLong = @"Season \d{1,2}",
+            //    SeasonShort = "Season ",
+            //    EpisodeLong = @"Episode \d{1,2}",
+            //    EpisodeShort = "Episode "
+            //});
             PopulateDataGrid();
         }
 

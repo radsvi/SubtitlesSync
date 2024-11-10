@@ -103,35 +103,46 @@ namespace SubtitlesSync.ViewModel
         {
             foreach (FilesExtended fileItem in FolderContent)
             {
-                // ($item.Name -match "Season \d{1,2} Episode \d{1,2}")
-                //var asdf = Regex.Replace();
-                Regex seasonAndEpisodeRegex = new Regex(@"Season \d{1,2} Episode \d{1,2}");
-                Match matchSeasonAndEpisode = seasonAndEpisodeRegex.Match(fileItem.ShortName);
-
-                Match matchSeason = (new Regex(@"Season \d{1,2}")).Match(matchSeasonAndEpisode.Value);
-                string tempSeasonNumber = Regex.Replace(matchSeason.Value, "Season ", "", RegexOptions.IgnoreCase);
-                int seasonNumberInt;
-                if (Int32.TryParse(tempSeasonNumber, out seasonNumberInt))
-                {
-                    fileItem.Season = seasonNumberInt;
-                }
-                else
-                {
-                    throw new Exception("spatnej regex match");
-                }
-
-                Match matchEpisode = (new Regex(@"Episode \d{1,2}")).Match(matchSeasonAndEpisode.Value);
-                string tempEpisodeNumber = Regex.Replace(matchEpisode.Value, "Episode ", "", RegexOptions.IgnoreCase);
-                int episodeNumberInt;
-                if (Int32.TryParse(tempEpisodeNumber, out episodeNumberInt))
-                {
-                    fileItem.Episode = episodeNumberInt;
-                }
-                else
-                {
-                    throw new Exception("spatnej regex match");
-                }
+                var currentFile = RegexMatch(fileItem);
             }
+        }
+        private FilesExtended RegexMatch(FilesExtended fileItem)
+        {
+            var currentPattern = RegexPatterns[0];
+
+            // ($item.Name -match "Season \d{1,2} Episode \d{1,2}")
+            //var asdf = Regex.Replace();
+            FilesExtended currentFile = new FilesExtended();
+
+            Regex seasonAndEpisodeRegex = new Regex(currentPattern.WholeTitle);
+            Match matchSeasonAndEpisode = seasonAndEpisodeRegex.Match(fileItem.ShortName);
+
+            Match matchSeason = (new Regex(currentPattern.SeasonLong)).Match(matchSeasonAndEpisode.Value);
+            string tempSeasonNumber = Regex.Replace(matchSeason.Value, currentPattern.SeasonShort, "", RegexOptions.IgnoreCase);
+            int seasonNumberInt;
+            if (Int32.TryParse(tempSeasonNumber, out seasonNumberInt))
+            {
+                currentFile.Season = seasonNumberInt;
+            }
+            else
+            {
+                throw new Exception("spatnej regex match");
+            }
+
+            Match matchEpisode = (new Regex(currentPattern.EpisodeLong)).Match(matchSeasonAndEpisode.Value);
+            string tempEpisodeNumber = Regex.Replace(matchEpisode.Value, currentPattern.EpisodeShort, "", RegexOptions.IgnoreCase);
+            int episodeNumberInt;
+            if (Int32.TryParse(tempEpisodeNumber, out episodeNumberInt))
+            {
+                currentFile.Episode = episodeNumberInt;
+            }
+            else
+            {
+                throw new Exception("spatnej regex match");
+            }
+
+
+            return currentFile;
         }
         private void MatchVideoAndSubtitles()
         {
@@ -153,7 +164,7 @@ namespace SubtitlesSync.ViewModel
                 {
                     if (videoItem.Season == subItem.Season && videoItem.Episode == subItem.Episode)
                     {
-                        currentItem.SubtitlesFileName = videoItem.ShortName;
+                        currentItem.SubtitlesFileName = subItem.ShortName;
                     }
                 }
                 Items.Add(currentItem);
