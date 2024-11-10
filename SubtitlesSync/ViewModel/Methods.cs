@@ -103,47 +103,141 @@ namespace SubtitlesSync.ViewModel
         {
             foreach (FilesExtended fileItem in FolderContent)
             {
-                var currentFile = RegexMatch(fileItem);
+                bool successSeason = false;
+                bool successEpisode = false;
+                foreach (RGXPatterns currentPattern in RegexPatterns)
+                {
+                    successSeason = false;
+                    successEpisode = false;
+                    // ($item.Name -match "Season \d{1,2} Episode \d{1,2}")
+                    //var asdf = Regex.Replace();
+                    //FilesExtended currentFile = new FilesExtended();
+
+                    Regex seasonAndEpisodeRegex = new Regex(currentPattern.WholeTitle);
+                    Match matchSeasonAndEpisode = seasonAndEpisodeRegex.Match(fileItem.ShortName);
+
+                    Match matchSeason = (new Regex(currentPattern.SeasonLong)).Match(matchSeasonAndEpisode.Value);
+                    string tempSeasonNumber = Regex.Replace(matchSeason.Value, currentPattern.SeasonShort, "", RegexOptions.IgnoreCase);
+                    int seasonNumberInt;
+                    if (Int32.TryParse(tempSeasonNumber, out seasonNumberInt))
+                    {
+                        fileItem.Season = seasonNumberInt;
+                        successSeason = true;
+                    }
+                    //else
+                    //{
+                    //    throw new Exception("spatnej regex match");
+
+                    //}
+
+                    Match matchEpisode = (new Regex(currentPattern.EpisodeLong)).Match(matchSeasonAndEpisode.Value);
+                    string tempEpisodeNumber = Regex.Replace(matchEpisode.Value, currentPattern.EpisodeShort, "", RegexOptions.IgnoreCase);
+                    int episodeNumberInt;
+                    if (Int32.TryParse(tempEpisodeNumber, out episodeNumberInt))
+                    {
+                        fileItem.Episode = episodeNumberInt;
+                        successEpisode = true;
+                    }
+                    //else
+                    //{
+                    //    throw new Exception("spatnej regex match");
+
+                    //}
+
+                    //var currentFile = RegexMatch(fileItem);
+                    //bool success = RegexMatch(fileItem);
+                    if (successSeason == true && successEpisode == true)
+                    {
+                        break;
+                    }
+                }
+                if (successSeason == false || successEpisode == false)
+                {
+                    throw new Exception("spatnej regex match");
+                } // tohle nemuzu takhle pouzit. nektery
+
             }
         }
-        private FilesExtended RegexMatch(FilesExtended fileItem)
+        private void RegexMatch()
         {
-            var currentPattern = RegexPatterns[0];
 
-            // ($item.Name -match "Season \d{1,2} Episode \d{1,2}")
-            //var asdf = Regex.Replace();
-            FilesExtended currentFile = new FilesExtended();
-
-            Regex seasonAndEpisodeRegex = new Regex(currentPattern.WholeTitle);
-            Match matchSeasonAndEpisode = seasonAndEpisodeRegex.Match(fileItem.ShortName);
-
-            Match matchSeason = (new Regex(currentPattern.SeasonLong)).Match(matchSeasonAndEpisode.Value);
-            string tempSeasonNumber = Regex.Replace(matchSeason.Value, currentPattern.SeasonShort, "", RegexOptions.IgnoreCase);
-            int seasonNumberInt;
-            if (Int32.TryParse(tempSeasonNumber, out seasonNumberInt))
-            {
-                currentFile.Season = seasonNumberInt;
-            }
-            else
-            {
-                throw new Exception("spatnej regex match");
-            }
-
-            Match matchEpisode = (new Regex(currentPattern.EpisodeLong)).Match(matchSeasonAndEpisode.Value);
-            string tempEpisodeNumber = Regex.Replace(matchEpisode.Value, currentPattern.EpisodeShort, "", RegexOptions.IgnoreCase);
-            int episodeNumberInt;
-            if (Int32.TryParse(tempEpisodeNumber, out episodeNumberInt))
-            {
-                currentFile.Episode = episodeNumberInt;
-            }
-            else
-            {
-                throw new Exception("spatnej regex match");
-            }
-
-
-            return currentFile;
         }
+        //private bool RegexMatch(FilesExtended fileItem)
+        //{
+        //    var currentPattern = RegexPatterns[0];
+        //    bool success = true;
+        //    // ($item.Name -match "Season \d{1,2} Episode \d{1,2}")
+        //    //var asdf = Regex.Replace();
+        //    //FilesExtended currentFile = new FilesExtended();
+
+        //    Regex seasonAndEpisodeRegex = new Regex(currentPattern.WholeTitle);
+        //    Match matchSeasonAndEpisode = seasonAndEpisodeRegex.Match(fileItem.ShortName);
+
+        //    Match matchSeason = (new Regex(currentPattern.SeasonLong)).Match(matchSeasonAndEpisode.Value);
+        //    string tempSeasonNumber = Regex.Replace(matchSeason.Value, currentPattern.SeasonShort, "", RegexOptions.IgnoreCase);
+        //    int seasonNumberInt;
+        //    if (Int32.TryParse(tempSeasonNumber, out seasonNumberInt))
+        //    {
+        //        fileItem.Season = seasonNumberInt;
+        //    }
+        //    else
+        //    {
+        //        //throw new Exception("spatnej regex match");
+        //        success = false;
+        //    }
+
+        //    Match matchEpisode = (new Regex(currentPattern.EpisodeLong)).Match(matchSeasonAndEpisode.Value);
+        //    string tempEpisodeNumber = Regex.Replace(matchEpisode.Value, currentPattern.EpisodeShort, "", RegexOptions.IgnoreCase);
+        //    int episodeNumberInt;
+        //    if (Int32.TryParse(tempEpisodeNumber, out episodeNumberInt))
+        //    {
+        //        fileItem.Episode = episodeNumberInt;
+        //    }
+        //    else
+        //    {
+        //        //throw new Exception("spatnej regex match");
+        //        success = false;
+        //    }
+        //    return success;
+        //}
+        //private FilesExtended RegexMatch(FilesExtended fileItem)
+        //{
+        //    var currentPattern = RegexPatterns[0];
+
+        //    // ($item.Name -match "Season \d{1,2} Episode \d{1,2}")
+        //    //var asdf = Regex.Replace();
+        //    FilesExtended currentFile = new FilesExtended();
+
+        //    Regex seasonAndEpisodeRegex = new Regex(currentPattern.WholeTitle);
+        //    Match matchSeasonAndEpisode = seasonAndEpisodeRegex.Match(fileItem.ShortName);
+
+        //    Match matchSeason = (new Regex(currentPattern.SeasonLong)).Match(matchSeasonAndEpisode.Value);
+        //    string tempSeasonNumber = Regex.Replace(matchSeason.Value, currentPattern.SeasonShort, "", RegexOptions.IgnoreCase);
+        //    int seasonNumberInt;
+        //    if (Int32.TryParse(tempSeasonNumber, out seasonNumberInt))
+        //    {
+        //        currentFile.Season = seasonNumberInt;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("spatnej regex match");
+        //    }
+
+        //    Match matchEpisode = (new Regex(currentPattern.EpisodeLong)).Match(matchSeasonAndEpisode.Value);
+        //    string tempEpisodeNumber = Regex.Replace(matchEpisode.Value, currentPattern.EpisodeShort, "", RegexOptions.IgnoreCase);
+        //    int episodeNumberInt;
+        //    if (Int32.TryParse(tempEpisodeNumber, out episodeNumberInt))
+        //    {
+        //        currentFile.Episode = episodeNumberInt;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("spatnej regex match");
+        //    }
+
+
+        //    return currentFile;
+        //}
         private void MatchVideoAndSubtitles()
         {
             //var videoFiles = Array.Exists(FolderContent, (FilesExtended item) => VideoSuffixes.Contains(item.Extension));
@@ -159,80 +253,82 @@ namespace SubtitlesSync.ViewModel
 
             foreach (var videoItem in videoFiles)
             {
-                Item currentItem = new Item { VideoFileName = videoItem.ShortName };
+                //Item currentItem = new Item { VideoFileName = videoItem.ShortName };
+                Item currentItem = new Item { VideoFileName = $"{videoItem.ShortName} [S{videoItem.Season}E{videoItem.Episode}]" };
                 foreach (var subItem in subtitleFiles)
                 {
                     if (videoItem.Season == subItem.Season && videoItem.Episode == subItem.Episode)
                     {
-                        currentItem.SubtitlesFileName = subItem.ShortName;
+                        //currentItem.SubtitlesFileName = subItem.ShortName;
+                        currentItem.SubtitlesFileName = $"{videoItem.ShortName} [S{videoItem.Season}E{videoItem.Episode}]";
                     }
                 }
                 Items.Add(currentItem);
             }
         }
-        private void LoadFolderVideo()
-        {
-            if (Directory.Exists(FolderPath))
-            {
-                List<string> fileEntries = new List<string>();
-                foreach (string suffix in VideoSuffixes)
-                {
-                    fileEntries.AddRange(Directory.GetFiles(FolderPath, suffix));
-                }
+        //private void LoadFolderVideo()
+        //{
+        //    if (Directory.Exists(FolderPath))
+        //    {
+        //        List<string> fileEntries = new List<string>();
+        //        foreach (string suffix in VideoSuffixes)
+        //        {
+        //            fileEntries.AddRange(Directory.GetFiles(FolderPath, suffix));
+        //        }
 
-                Items.Clear();
-                //ObservableCollection<Item> itemsTemp = new ObservableCollection<Item>();
-                foreach (string fileEntry in fileEntries)
-                {
-                    //itemsTemp.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-                    //Items.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-                    Items.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-                    //itemsTemp.Add(Path.GetFileName(fileEntry));
-                    //FolderContent.Add(Path.GetFileName(fileEntry));
-                }
+        //        Items.Clear();
+        //        //ObservableCollection<Item> itemsTemp = new ObservableCollection<Item>();
+        //        foreach (string fileEntry in fileEntries)
+        //        {
+        //            //itemsTemp.Add(new Item { FileName = Path.GetFileName(fileEntry) });
+        //            //Items.Add(new Item { FileName = Path.GetFileName(fileEntry) });
+        //            Items.Add(new Item { FileName = Path.GetFileName(fileEntry) });
+        //            //itemsTemp.Add(Path.GetFileName(fileEntry));
+        //            //FolderContent.Add(Path.GetFileName(fileEntry));
+        //        }
 
-                //if (CheckWhetherFolderChanged(itemsTemp))
-                //{ // folder changed
-                //    MessageBox.Show("Folder content changed. Refreshing...");
+        //        //if (CheckWhetherFolderChanged(itemsTemp))
+        //        //{ // folder changed
+        //        //    MessageBox.Show("Folder content changed. Refreshing...");
 
-                //}
-                //else
-                //{
+        //        //}
+        //        //else
+        //        //{
 
-                //}
-            }
-        }
-        private void LoadFolderSubs()
-        {
-            if (Directory.Exists(FolderPath))
-            {
-                List<string> fileEntries = new List<string>();
-                foreach (string suffix in SubtitleSuffixes)
-                {
-                    fileEntries.AddRange(Directory.GetFiles(FolderPath, suffix));
-                }
+        //        //}
+        //    }
+        //}
+        //private void LoadFolderSubs()
+        //{
+        //    if (Directory.Exists(FolderPath))
+        //    {
+        //        List<string> fileEntries = new List<string>();
+        //        foreach (string suffix in SubtitleSuffixes)
+        //        {
+        //            fileEntries.AddRange(Directory.GetFiles(FolderPath, suffix));
+        //        }
 
-                Items.Clear();
-                //ObservableCollection<Item> itemsTemp = new ObservableCollection<Item>();
-                foreach (string fileEntry in fileEntries)
-                {
-                    //itemsTemp.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-                    Items.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-                    //itemsTemp.Add(Path.GetFileName(fileEntry));
-                    //FolderContent.Add(Path.GetFileName(fileEntry));
-                }
+        //        Items.Clear();
+        //        //ObservableCollection<Item> itemsTemp = new ObservableCollection<Item>();
+        //        foreach (string fileEntry in fileEntries)
+        //        {
+        //            //itemsTemp.Add(new Item { FileName = Path.GetFileName(fileEntry) });
+        //            Items.Add(new Item { FileName = Path.GetFileName(fileEntry) });
+        //            //itemsTemp.Add(Path.GetFileName(fileEntry));
+        //            //FolderContent.Add(Path.GetFileName(fileEntry));
+        //        }
 
-                //if (CheckWhetherFolderChanged(itemsTemp))
-                //{ // folder changed
-                //    MessageBox.Show("Folder content changed. Refreshing...");
+        //        //if (CheckWhetherFolderChanged(itemsTemp))
+        //        //{ // folder changed
+        //        //    MessageBox.Show("Folder content changed. Refreshing...");
 
-                //}
-                //else
-                //{
+        //        //}
+        //        //else
+        //        //{
 
-                //}
-            }
-        }
+        //        //}
+        //    }
+        //}
         private void StartRenaming()
         {
             // ## pridat nejakou kontrolu jestli se nezmenil obsah slozky. Chci to delat pro pripad kdy... je to vlastne dulezity? kdyz to neudelam co se zmeni?
