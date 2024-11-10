@@ -43,8 +43,8 @@
           IsReadOnly="True"
           AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Original name" Binding="{Binding FileName}" Width="45*"/>
-                <DataGridTextColumn Header="Renamed to" Binding="{Binding NewFileName}" Width="45*"/>
+                <DataGridTextColumn Header="VideoFileName" Binding="{Binding VideoFileName}" Width="45*"/>
+                <DataGridTextColumn Header="SubtitlesFileName" Binding="{Binding SubtitlesFileName}" Width="45*"/>
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="10*"/>
             </DataGrid.Columns>
         </DataGrid>

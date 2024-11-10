@@ -2,8 +2,10 @@
 {
     internal class Item
     {
-        public string FileName { get; set; }
-        public string NewFileName { get; set; }
+        [ObsoleteAttribute]public string FileName { get; set; }
+        public string VideoFileName { get; set; }
+        public string SubtitlesFileName { get; set; }
+        [ObsoleteAttribute] public string NewFileName { get; set; }
         public string Status { get; set; }
     }
 }

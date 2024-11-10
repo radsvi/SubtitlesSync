@@ -5,33 +5,44 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using SubtitlesSync.Properties;
-using SubtitlesSync.Lib;
 using System.Linq;
+using System.Text.RegularExpressions;
+using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Controls;
 
 namespace SubtitlesSync.ViewModel
 {
-    internal class MainWindowViewModel : ViewModelBase
+    internal partial class MainWindowViewModel : ViewModelBase
     {
         private string folderPath = Settings.Default.folderPath;
-        public string[] SubtitleSuffixes { get; set; } = { "*.srt", "*.sub" };
         public string[] VideoSuffixes { get; set; } = { "*.avi", "*.mkv", "*.mp4", "*.mpg" };
-        private List<string> folderContent;
+        public string[] SubtitleSuffixes { get; set; } = { "*.srt", "*.sub" };
 
-        public List<string> FolderContent
+        //public List<FilesExtended> VideoFiles { get; set; }
+        //public List<FilesExtended> SubtitleFiles { get; set; }
+
+        private List<FilesExtended> folderContent = new List<FilesExtended>();
+        public List<FilesExtended> FolderContent
         {
-            get {
-                
-                
-                
-                return folderContent;
-            }
-            set {
-                folderContent = value;
-            }
+            get { return folderContent; }
+            set { folderContent = value; }
         }
 
+        private List<string> folderBackupContent = new List<string>();
+        public List<string> FolderBackupContent
+        {
+            get { return folderBackupContent; }
+            set
+            {
+                folderBackupContent = value;
 
-
+                if (FolderContent.Count() > 0) FolderContent.Clear();
+                foreach (string fileName in value)
+                {
+                    FolderContent.Add(new FilesExtended { FileName = fileName, ShortName = Path.GetFileName(fileName), Extension = Path.GetExtension(fileName) });
+                }
+            }
+        }
 
         public ObservableCollection<Item> Items { get; set; }
 
@@ -81,160 +92,9 @@ namespace SubtitlesSync.ViewModel
         public MainWindowViewModel()
         {
             Items = new ObservableCollection<Item>();
-            LoadFolderVideo();
+            PopulateDataGrid();
         }
 
-        //private Item selectedItem;
-        //public Item SelectedItem
-        //{
-        //    get { return selectedItem; }
-        //    set
-        //    {
-        //        selectedItem = value;
-        //        OnPropertyChanged(); // SelectedItem is automatically passed as parameter diky tomu [CallerMemberName]
-        //    }
-        //}
-
-        private void BrowseNLoadFolder()
-        {
-            OpenFolderDialog folderDialog = new OpenFolderDialog();
-            folderDialog.Title = "Select folder containing subtitles...";
-
-            bool? success = folderDialog.ShowDialog();
-            if (success == true)
-            {
-                string path = folderDialog.FolderName;
-                FolderPath = path;
-
-                PopulateDataGrid();
-            }
-        }
-        private void PopulateDataGrid()
-        {
-            
-            
-            
-            LoadFolderVideo();
-        }
-        private void LoadFolderVideo()
-        {
-            if (Directory.Exists(FolderPath))
-            {
-                List<string> fileEntries = new List<string>();
-                foreach (string suffix in VideoSuffixes)
-                {
-                    fileEntries.AddRange(Directory.GetFiles(FolderPath, suffix));
-                }
-
-                Items.Clear();
-                //ObservableCollection<Item> itemsTemp = new ObservableCollection<Item>();
-                foreach (string fileEntry in fileEntries)
-                {
-                    //itemsTemp.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-                    Items.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-                    //itemsTemp.Add(Path.GetFileName(fileEntry));
-                    //FolderContent.Add(Path.GetFileName(fileEntry));
-                }
-
-                //if (CheckWhetherFolderChanged(itemsTemp))
-                //{ // folder changed
-                //    MessageBox.Show("Folder content changed. Refreshing...");
-
-                //}
-                //else
-                //{
-
-                //}
-            }
-        }
-        private void LoadFolderSubs()
-        {
-            if (Directory.Exists(FolderPath))
-            {
-                List<string> fileEntries = new List<string>();
-                foreach (string suffix in SubtitleSuffixes)
-                {
-                    fileEntries.AddRange(Directory.GetFiles(FolderPath, suffix));
-                }
-
-                Items.Clear();
-                //ObservableCollection<Item> itemsTemp = new ObservableCollection<Item>();
-                foreach (string fileEntry in fileEntries)
-                {
-                    //itemsTemp.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-                    Items.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-                    //itemsTemp.Add(Path.GetFileName(fileEntry));
-                    //FolderContent.Add(Path.GetFileName(fileEntry));
-                }
-
-                //if (CheckWhetherFolderChanged(itemsTemp))
-                //{ // folder changed
-                //    MessageBox.Show("Folder content changed. Refreshing...");
-
-                //}
-                //else
-                //{
-
-                //}
-            }
-        }
-        private void StartRenaming()
-        {
-            // ## pridat nejakou kontrolu jestli se nezmenil obsah slozky. Chci to delat pro pripad kdy... je to vlastne dulezity? kdyz to neudelam co se zmeni?
-            // no muze to teoreticky znova stahovat titulky, ale to se zas tak moc nestane.
-            // nebo...?
-
-            //if (CheckWhetherFolderChanged(itemsTemp))
-            //{ // folder changed
-            //    MessageBox.Show("Folder content changed. Refreshing...");
-
-            //}
-            //else
-            //{
-
-            //}
-            MatchVideoAndSub.RenamingProcess();
-        }
-        private bool CheckWhetherFolderChanged(ObservableCollection<Item> itemsTemp)
-        {
-            // ## tohle jeste zkontrolovat, udelal jsem to trochu narychlo
-            if (Items.Count > 0)
-            {
-                if (CompareLists(itemsTemp))
-                {
-                    return true;
-                }
-                else
-                {
-                    
-                    return false;
-                }
-            }
-            else
-            {
-                return true;
-            }
-        }
-        internal bool CompareLists(ObservableCollection<Item> tempList)
-        {
-            // ## dodelat
-            
-            //foreach(Item item in Items)
-            //{
-            //    foreach (Item tempItem in tempList)
-            //    {
-
-            //    }
-            //}
-
-            // ## dodelat porovnavani Listu
-            
-            return true;
-        }
-        private void CloseApplication()
-        {
-            Application.Current.Shutdown();
-        }
 
     }
 }
