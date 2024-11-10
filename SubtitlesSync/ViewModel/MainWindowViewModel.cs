@@ -90,7 +90,7 @@ namespace SubtitlesSync.ViewModel
         public RelayCommand BrowseCommand => new RelayCommand(execute => BrowseNLoadFolder());
         //public RelayCommand ReloadFolder => new RelayCommand(execute => LoadFolderVideo(), canExecute => { return Directory.Exists(FolderPath); });
         public RelayCommand ReloadFolder => new RelayCommand(execute => PopulateDataGrid(), canExecute => { return Directory.Exists(FolderPath); });
-        public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return Items.Count > 0; });
+        public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return CheckWhetherFolderChanged(); });
         public RelayCommand EscKeyCommand => new RelayCommand(execute => CloseApplication());
 
         public MainWindowViewModel()
@@ -129,16 +129,6 @@ namespace SubtitlesSync.ViewModel
                 EpisodeLong = @"E\s?\d{1,2}",
                 EpisodeShort = @"E\s?"
             });
-            //RegexPatterns.Add(new RGXPatterns { WholeTitle = @"Season\s?\d{1,2} Episode \d{1,2}",
-            //    SeasonLong = @"Season \d{1,2}", SeasonShort = "Season ", EpisodeLong = @"Episode \d{1,2}", EpisodeShort = "Episode "});
-            //RegexPatterns.Add(new RGXPatterns
-            //{
-            //    WholeTitle = @"Season \d{1,2} Episode \d{1,2}",
-            //    SeasonLong = @"Season \d{1,2}",
-            //    SeasonShort = "Season ",
-            //    EpisodeLong = @"Episode \d{1,2}",
-            //    EpisodeShort = "Episode "
-            //});
             PopulateDataGrid();
         }
         

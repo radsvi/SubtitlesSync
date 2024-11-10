@@ -109,9 +109,6 @@ namespace SubtitlesSync.ViewModel
                 {
                     successSeason = false;
                     successEpisode = false;
-                    // ($item.Name -match "Season \d{1,2} Episode \d{1,2}")
-                    //var asdf = Regex.Replace();
-                    //FilesExtended currentFile = new FilesExtended();
 
                     Regex seasonAndEpisodeRegex = new Regex(currentPattern.WholeTitle);
                     Match matchSeasonAndEpisode = seasonAndEpisodeRegex.Match(fileItem.ShortName);
@@ -124,11 +121,6 @@ namespace SubtitlesSync.ViewModel
                         fileItem.Season = seasonNumberInt;
                         successSeason = true;
                     }
-                    //else
-                    //{
-                    //    throw new Exception("spatnej regex match");
-
-                    //}
 
                     Match matchEpisode = (new Regex(currentPattern.EpisodeLong)).Match(matchSeasonAndEpisode.Value);
                     string tempEpisodeNumber = Regex.Replace(matchEpisode.Value, currentPattern.EpisodeShort, "", RegexOptions.IgnoreCase);
@@ -138,14 +130,7 @@ namespace SubtitlesSync.ViewModel
                         fileItem.Episode = episodeNumberInt;
                         successEpisode = true;
                     }
-                    //else
-                    //{
-                    //    throw new Exception("spatnej regex match");
 
-                    //}
-
-                    //var currentFile = RegexMatch(fileItem);
-                    //bool success = RegexMatch(fileItem);
                     if (successSeason == true && successEpisode == true)
                     {
                         break;
@@ -154,7 +139,7 @@ namespace SubtitlesSync.ViewModel
                 if (successSeason == false || successEpisode == false)
                 {
                     throw new Exception("spatnej regex match");
-                } // tohle nemuzu takhle pouzit. nektery
+                }
 
             }
         }
@@ -261,104 +246,30 @@ namespace SubtitlesSync.ViewModel
                     {
                         //currentItem.SubtitlesFileName = subItem.ShortName;
                         currentItem.SubtitlesFileName = $"{videoItem.ShortName} [S{videoItem.Season}E{videoItem.Episode}]";
+                        currentItem.Status = "ready";
                     }
                 }
                 Items.Add(currentItem);
             }
         }
-        //private void LoadFolderVideo()
-        //{
-        //    if (Directory.Exists(FolderPath))
-        //    {
-        //        List<string> fileEntries = new List<string>();
-        //        foreach (string suffix in VideoSuffixes)
-        //        {
-        //            fileEntries.AddRange(Directory.GetFiles(FolderPath, suffix));
-        //        }
 
-        //        Items.Clear();
-        //        //ObservableCollection<Item> itemsTemp = new ObservableCollection<Item>();
-        //        foreach (string fileEntry in fileEntries)
-        //        {
-        //            //itemsTemp.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-        //            //Items.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-        //            Items.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-        //            //itemsTemp.Add(Path.GetFileName(fileEntry));
-        //            //FolderContent.Add(Path.GetFileName(fileEntry));
-        //        }
-
-        //        //if (CheckWhetherFolderChanged(itemsTemp))
-        //        //{ // folder changed
-        //        //    MessageBox.Show("Folder content changed. Refreshing...");
-
-        //        //}
-        //        //else
-        //        //{
-
-        //        //}
-        //    }
-        //}
-        //private void LoadFolderSubs()
-        //{
-        //    if (Directory.Exists(FolderPath))
-        //    {
-        //        List<string> fileEntries = new List<string>();
-        //        foreach (string suffix in SubtitleSuffixes)
-        //        {
-        //            fileEntries.AddRange(Directory.GetFiles(FolderPath, suffix));
-        //        }
-
-        //        Items.Clear();
-        //        //ObservableCollection<Item> itemsTemp = new ObservableCollection<Item>();
-        //        foreach (string fileEntry in fileEntries)
-        //        {
-        //            //itemsTemp.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-        //            Items.Add(new Item { FileName = Path.GetFileName(fileEntry) });
-        //            //itemsTemp.Add(Path.GetFileName(fileEntry));
-        //            //FolderContent.Add(Path.GetFileName(fileEntry));
-        //        }
-
-        //        //if (CheckWhetherFolderChanged(itemsTemp))
-        //        //{ // folder changed
-        //        //    MessageBox.Show("Folder content changed. Refreshing...");
-
-        //        //}
-        //        //else
-        //        //{
-
-        //        //}
-        //    }
-        //}
         private void StartRenaming()
         {
-            // ## pridat nejakou kontrolu jestli se nezmenil obsah slozky. Chci to delat pro pripad kdy... je to vlastne dulezity? kdyz to neudelam co se zmeni?
-            // no muze to teoreticky znova stahovat titulky, ale to se zas tak moc nestane.
-            // nebo...?
-
-            //if (CheckWhetherFolderChanged(itemsTemp))
-            //{ // folder changed
-            //    MessageBox.Show("Folder content changed. Refreshing...");
-
-            //}
-            //else
-            //{
-
-            //}
-            //MatchVideoAndSub.RenamingProcess();
+            //List<string> folderContentNew = new List<string>(Directory.GetFiles(FolderPath));
+            CheckWhetherFolderChanged();
             MessageBox.Show("TEST");
         }
-        private bool CheckWhetherFolderChanged(ObservableCollection<Item> itemsTemp)
+        private bool CheckWhetherFolderChanged()
         {
             // ## tohle jeste zkontrolovat, udelal jsem to trochu narychlo
             if (Items.Count > 0)
             {
-                if (CompareLists(itemsTemp))
+                if (folderBackupContent.SequenceEqual(Directory.GetFiles(FolderPath)))
                 {
                     return true;
                 }
                 else
                 {
-
                     return false;
                 }
             }
@@ -367,22 +278,24 @@ namespace SubtitlesSync.ViewModel
                 return true;
             }
         }
-        internal bool CompareLists(ObservableCollection<Item> tempList)
-        {
-            // ## dodelat
+        //internal bool CompareLists(List<string> tempList)
+        //{
+        //    // ## dodelat
 
-            //foreach(Item item in Items)
-            //{
-            //    foreach (Item tempItem in tempList)
-            //    {
+        //    //foreach(Item item in Items)
+        //    //{
+        //    //    foreach (Item tempItem in tempList)
+        //    //    {
 
-            //    }
-            //}
+        //    //    }
+        //    //}
 
-            // ## dodelat porovnavani Listu
+        //    // ## dodelat porovnavani Listu
 
-            return true;
-        }
+            
+
+        //    return folderBackupContent.SequenceEqual(Directory.GetFiles(FolderPath));
+        //}
         private void CloseApplication()
         {
             System.Windows.Application.Current.Shutdown();
