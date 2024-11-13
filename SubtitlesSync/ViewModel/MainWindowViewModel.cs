@@ -14,7 +14,8 @@ namespace SubtitlesSync.ViewModel
 {
     internal partial class MainWindowViewModel : ViewModelBase
     {
-        private string folderPath = Settings.Default.folderPath;
+        //private string folderPath = Settings.Default.folderPath;
+        private string folderPath;
         public string FolderPath
         {
             get { return folderPath; }
@@ -26,6 +27,14 @@ namespace SubtitlesSync.ViewModel
                 OnPropertyChanged();
             }
         }
+        private string subtitlesToSearchFor;
+
+        public string SubtitlesToSearchFor
+        {
+            get { return subtitlesToSearchFor; }
+            set { subtitlesToSearchFor = value; }
+        }
+
         public string[] VideoSuffixes { get; set; } = { "*.avi", "*.mkv", "*.mp4", "*.mpg" };
         public string[] SubtitleSuffixes { get; set; } = { "*.srt", "*.sub" };
 
@@ -36,14 +45,14 @@ namespace SubtitlesSync.ViewModel
         public List<FilesExtended> FolderContent
         {
             get { return folderContent; }
-            set { folderContent = value; }
+            private set { folderContent = value; }
         }
 
         private List<string> folderBackupContent = new List<string>();
         public List<string> FolderBackupContent
         {
             get { return folderBackupContent; }
-            set
+            private set
             {
                 folderBackupContent = value;
 
@@ -90,12 +99,17 @@ namespace SubtitlesSync.ViewModel
         public RelayCommand BrowseCommand => new RelayCommand(execute => BrowseNLoadFolder());
         //public RelayCommand ReloadFolder => new RelayCommand(execute => LoadFolderVideo(), canExecute => { return Directory.Exists(FolderPath); });
         public RelayCommand ReloadFolder => new RelayCommand(execute => PopulateDataGrid(), canExecute => { return Directory.Exists(FolderPath); });
-        public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return CheckWhetherFolderUnchanged(); });
+        public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return CheckWhetherFolderIsUnchanged(); });
         public RelayCommand EscKeyCommand => new RelayCommand(execute => CloseApplication());
 
         public MainWindowViewModel()
         {
+            // https://stackoverflow.com/questions/11769113/how-to-start-wpf-based-on-arguments
+            FolderPath = (Environment.GetCommandLineArgs().Length > 1) ? Environment.GetCommandLineArgs()[1] : Settings.Default.folderPath;
+            SubtitlesToSearchFor = (Environment.GetCommandLineArgs().Length > 2) ? Environment.GetCommandLineArgs()[2] : String.Empty;
+
             Items = new ObservableCollection<Item>();
+
             RegexPatterns = new List<RGXPatterns>();
             RegexPatterns.Add(new RGXPatterns
             { // example: S01E01

@@ -44,8 +44,8 @@
           AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Video FileName" Binding="{Binding VideoDisplayName}" Width="45*"/>
-                <DataGridTextColumn Header="Subtitles FileName" Binding="{Binding SubtitlesDisplayName}" Width="45*"/>
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="10*"/>
+                <DataGridTextColumn Header="Subtitles FileName" Binding="{Binding SubtitlesDisplayName}" Width="44*"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="11*"/>
             </DataGrid.Columns>
         </DataGrid>
         

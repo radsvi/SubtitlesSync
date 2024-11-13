@@ -40,31 +40,31 @@ namespace SubtitlesSync.ViewModel
                 FolderBackupContent = new List<string>(Directory.GetFiles(FolderPath));
             }
         }
-        private void CheckAndUpdateFolderContentVar() // mozna by to melo byt spis neco jako IfChangedThenStop
-        {
-            if (Directory.Exists(FolderPath))
-            {
-                List<string> folderContentNew = new List<string>(Directory.GetFiles(FolderPath));
-                if (FolderBackupContent.Count() > 0)
-                {
-                    if (folderContentNew.Count() > 0)
-                    {
-                        if (FolderBackupContent.SequenceEqual(folderContentNew) == false)
-                        {
-                            FolderBackupContent = folderContentNew;
-                        }
-                    }
-                }
-                else
-                {
-                    FolderBackupContent = folderContentNew;
-                }
-            }
-            else
-            {
-                FolderBackupContent.Clear();
-            }
-        }
+        //private void CheckAndUpdateFolderContentVar() // mozna by to melo byt spis neco jako IfChangedThenStop
+        //{
+        //    if (Directory.Exists(FolderPath))
+        //    {
+        //        List<string> folderContentNew = new List<string>(Directory.GetFiles(FolderPath));
+        //        if (FolderBackupContent.Count() > 0)
+        //        {
+        //            if (folderContentNew.Count() > 0)
+        //            {
+        //                if (FolderBackupContent.SequenceEqual(folderContentNew) == false)
+        //                {
+        //                    FolderBackupContent = folderContentNew;
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            FolderBackupContent = folderContentNew;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        FolderBackupContent.Clear();
+        //    }
+        //}
 
         private void BrowseNLoadFolder()
         {
@@ -134,95 +134,21 @@ namespace SubtitlesSync.ViewModel
 
                     if (successSeason == true && successEpisode == true)
                     {
+                        fileItem.SuccessfullyFoundSeasonAndEpisode = true;
                         break;
                     }
                 }
                 if (successSeason == false || successEpisode == false)
                 {
-                    throw new Exception("spatnej regex match");
+                    fileItem.SuccessfullyFoundSeasonAndEpisode = false;
+                    //throw new Exception("spatnej regex match");
                 }
 
             }
         }
-        private void RegexMatch()
-        {
-
-        }
-        //private bool RegexMatch(FilesExtended fileItem)
+        //private void RegexMatch()
         //{
-        //    var currentPattern = RegexPatterns[0];
-        //    bool success = true;
-        //    // ($item.Name -match "Season \d{1,2} Episode \d{1,2}")
-        //    //var asdf = Regex.Replace();
-        //    //FilesExtended currentFile = new FilesExtended();
 
-        //    Regex seasonAndEpisodeRegex = new Regex(currentPattern.WholeTitle);
-        //    Match matchSeasonAndEpisode = seasonAndEpisodeRegex.Match(fileItem.ShortName);
-
-        //    Match matchSeason = (new Regex(currentPattern.SeasonLong)).Match(matchSeasonAndEpisode.Value);
-        //    string tempSeasonNumber = Regex.Replace(matchSeason.Value, currentPattern.SeasonShort, "", RegexOptions.IgnoreCase);
-        //    int seasonNumberInt;
-        //    if (Int32.TryParse(tempSeasonNumber, out seasonNumberInt))
-        //    {
-        //        fileItem.Season = seasonNumberInt;
-        //    }
-        //    else
-        //    {
-        //        //throw new Exception("spatnej regex match");
-        //        success = false;
-        //    }
-
-        //    Match matchEpisode = (new Regex(currentPattern.EpisodeLong)).Match(matchSeasonAndEpisode.Value);
-        //    string tempEpisodeNumber = Regex.Replace(matchEpisode.Value, currentPattern.EpisodeShort, "", RegexOptions.IgnoreCase);
-        //    int episodeNumberInt;
-        //    if (Int32.TryParse(tempEpisodeNumber, out episodeNumberInt))
-        //    {
-        //        fileItem.Episode = episodeNumberInt;
-        //    }
-        //    else
-        //    {
-        //        //throw new Exception("spatnej regex match");
-        //        success = false;
-        //    }
-        //    return success;
-        //}
-        //private FilesExtended RegexMatch(FilesExtended fileItem)
-        //{
-        //    var currentPattern = RegexPatterns[0];
-
-        //    // ($item.Name -match "Season \d{1,2} Episode \d{1,2}")
-        //    //var asdf = Regex.Replace();
-        //    FilesExtended currentFile = new FilesExtended();
-
-        //    Regex seasonAndEpisodeRegex = new Regex(currentPattern.WholeTitle);
-        //    Match matchSeasonAndEpisode = seasonAndEpisodeRegex.Match(fileItem.ShortName);
-
-        //    Match matchSeason = (new Regex(currentPattern.SeasonLong)).Match(matchSeasonAndEpisode.Value);
-        //    string tempSeasonNumber = Regex.Replace(matchSeason.Value, currentPattern.SeasonShort, "", RegexOptions.IgnoreCase);
-        //    int seasonNumberInt;
-        //    if (Int32.TryParse(tempSeasonNumber, out seasonNumberInt))
-        //    {
-        //        currentFile.Season = seasonNumberInt;
-        //    }
-        //    else
-        //    {
-        //        throw new Exception("spatnej regex match");
-        //    }
-
-        //    Match matchEpisode = (new Regex(currentPattern.EpisodeLong)).Match(matchSeasonAndEpisode.Value);
-        //    string tempEpisodeNumber = Regex.Replace(matchEpisode.Value, currentPattern.EpisodeShort, "", RegexOptions.IgnoreCase);
-        //    int episodeNumberInt;
-        //    if (Int32.TryParse(tempEpisodeNumber, out episodeNumberInt))
-        //    {
-        //        currentFile.Episode = episodeNumberInt;
-        //    }
-        //    else
-        //    {
-        //        throw new Exception("spatnej regex match");
-        //    }
-
-
-        //    return currentFile;
         //}
         private void MatchVideoAndSubtitles()
         {
@@ -231,41 +157,54 @@ namespace SubtitlesSync.ViewModel
             List<FilesExtended> subtitleFiles = new List<FilesExtended>();
             foreach (FilesExtended fileItem in FolderContent)
             {
-                if (VideoSuffixes.Contains("*" + fileItem.Extension)) videoFiles.Add(fileItem);
-                if (SubtitleSuffixes.Contains("*" + fileItem.Extension)) subtitleFiles.Add(fileItem);
+                if (fileItem.SuccessfullyFoundSeasonAndEpisode == true && VideoSuffixes.Contains("*" + fileItem.Extension)) videoFiles.Add(fileItem);
+                if (fileItem.SuccessfullyFoundSeasonAndEpisode == true && SubtitleSuffixes.Contains("*" + fileItem.Extension)) subtitleFiles.Add(fileItem);
             }
 
             if (Items.Count > 0) Items.Clear();
 
+            //foreach( var item in Environment.GetCommandLineArgs())
+            //{
+            //    Items.Add(new Item { VideoDisplayName = item });
+            //}
+
             foreach (var videoItem in videoFiles)
             {
                 //Item currentItem = new Item { VideoFileName = videoItem.ShortName };
-                Item currentItem = new Item {
-                    VideoFullFileName = videoItem.FileName,
-                    VideoFileName = videoItem.ShortName,
-                    VideoDisplayName = $"{videoItem.ShortName} [S{videoItem.Season}E{videoItem.Episode}]",
-                    VideoSuffix = videoItem.Extension
-                };
+                //Item currentItem = new Item {
+                //    VideoFullFileName = videoItem.FileName,
+                //    VideoFileName = videoItem.ShortName,
+                //    VideoDisplayName = $"[S{videoItem.Season}E{videoItem.Episode}] {videoItem.ShortName}",
+                //    VideoSuffix = videoItem.Extension
+                //};
+                Item currentItem = new Item { };
+                currentItem.VideoFullFileName = videoItem.FileName;
+                currentItem.VideoFileName = videoItem.ShortName;
+                currentItem.VideoDisplayName = $"[S{videoItem.Season}E{videoItem.Episode}] {videoItem.ShortName}";
+                currentItem.VideoSuffix = videoItem.Extension;
+                
                 foreach (var subItem in subtitleFiles)
                 {
                     if (videoItem.Season == subItem.Season && videoItem.Episode == subItem.Episode)
                     {
                         currentItem.SubtitlesFileName = subItem.ShortName;
                         currentItem.SubtitlesFullFileName = subItem.FileName;
-                        currentItem.SubtitlesDisplayName = $"{subItem.ShortName} [S{subItem.Season}E{subItem.Episode}]";
+                        currentItem.SubtitlesDisplayName = $"[S{subItem.Season}E{subItem.Episode}] {subItem.ShortName}";
                         currentItem.SubtitlesSuffix = subItem.Extension;
-                        currentItem.Status = "ready";
+                        currentItem.Status = "<ready>";
                     }
                 }
                 Items.Add(currentItem);
             }
         }
 
-        private bool CheckWhetherFolderUnchanged()
+        private bool CheckWhetherFolderIsUnchanged()
         {
+            if (Directory.Exists(FolderPath) == false) { return false; }
+
             if (Items.Count > 0)
             {
-                if (folderBackupContent.SequenceEqual(Directory.GetFiles(FolderPath)))
+                if (FolderBackupContent.SequenceEqual(Directory.GetFiles(FolderPath)))
                 {
                     return true;
                 }
@@ -282,7 +221,7 @@ namespace SubtitlesSync.ViewModel
         private void StartRenaming()
         {
             //List<string> folderContentNew = new List<string>(Directory.GetFiles(FolderPath));
-            if (CheckWhetherFolderUnchanged() == false)
+            if (CheckWhetherFolderIsUnchanged() == false)
             {
                 MessageBox.Show("Content of the folder changed. Refresh the list before you continue!");
             }
@@ -292,7 +231,7 @@ namespace SubtitlesSync.ViewModel
 
             foreach(var item in Items)
             {
-                if (String.IsNullOrEmpty(item.SubtitlesFileName) == false && String.IsNullOrEmpty(item.SubtitlesSuffix) == false)
+                if (String.IsNullOrEmpty(item.SubtitlesFileName) == false || String.IsNullOrEmpty(item.SubtitlesSuffix) == false)
                 {
                     //File.Copy(Path.Combine(FolderPath, item.SubtitlesFileName), Path.Combine(FolderPath, backupFolder, item.SubtitlesFileName), true);
                     //MessageBox.Show(Path.Combine(FolderPath, backupFolder, item.SubtitlesFileName));
@@ -313,6 +252,21 @@ namespace SubtitlesSync.ViewModel
         private void CloseApplication()
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void WriteRegistryEntry()
+        {
+            RegistryKey key = Registry.LocalMachine.OpenSubKey("Software", true);
+            //RegistryKey key = Registry.ClassesRoot
+
+            key.CreateSubKey("AppName");
+            key = key.OpenSubKey("AppName", true);
+
+
+            key.CreateSubKey("AppVersion");
+            key = key.OpenSubKey("AppVersion", true);
+
+            key.SetValue("yourkey", "yourvalue");
         }
     }
 }
