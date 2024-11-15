@@ -157,8 +157,8 @@ namespace SubtitlesSync.ViewModel
             List<FilesExtended> subtitleFiles = new List<FilesExtended>();
             foreach (FilesExtended fileItem in FolderContent)
             {
-                if (fileItem.SuccessfullyFoundSeasonAndEpisode == true && VideoSuffixes.Contains("*" + fileItem.Extension)) videoFiles.Add(fileItem);
-                if (fileItem.SuccessfullyFoundSeasonAndEpisode == true && SubtitleSuffixes.Contains("*" + fileItem.Extension)) subtitleFiles.Add(fileItem);
+                if (fileItem.SuccessfullyFoundSeasonAndEpisode == true && VideoSuffixes.Contains(fileItem.Extension)) videoFiles.Add(fileItem);
+                if (fileItem.SuccessfullyFoundSeasonAndEpisode == true && SubtitleSuffixes.Contains(fileItem.Extension)) subtitleFiles.Add(fileItem);
             }
 
             if (Items.Count > 0) Items.Clear();
@@ -249,8 +249,10 @@ namespace SubtitlesSync.ViewModel
 
             //MessageBox.Show("TEST");
         }
+        
         private void CloseApplication()
         {
+            // ## predelat na MVVM model: https://www.youtube.com/watch?v=U7Qclpe2joo
             System.Windows.Application.Current.Shutdown();
         }
 
@@ -267,6 +269,54 @@ namespace SubtitlesSync.ViewModel
             key = key.OpenSubKey("AppVersion", true);
 
             key.SetValue("yourkey", "yourvalue");
+        }
+
+        private void AssociateWithVideoFilesRegistry()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to create context menu for video files to allow quick search for subtitles?", "Context menu association", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.No) return;
+
+            string registryFolderPath = "SOFTWARE\\Classes";
+
+            foreach (string suffix in VideoSuffixes)
+            {
+                string suffixKey = Registry.CurrentUser.OpenSubKey(Path.Combine(registryFolderPath, suffix)).GetValue(String.Empty).ToString();
+
+                if (suffixKey == null) { break; }
+
+                RegistryKey regClassesSubKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Classes", true);
+                RegistryKey regFileSuffixSubKey = regClassesSubKey.CreateSubKey(suffixKey);
+
+                string command = "\"C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\bin\\Debug\\net8.0-windows\\SubtitlesSync.exe\" \"null\" \"%1\"";
+                CreateSubtitlesSyncRegistry(regFileSuffixSubKey, "Search for subtitles", command, "%SystemRoot%\\System32\\shell32.dll,315");
+            }
+        }
+        private void AssociateWithFolderRegistry()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to create context menu for folder to allow quick start of SubtitlesSync app?", "Context menu association", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.No) return;
+
+            RegistryKey regDirectorySubKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Classes\\Directory", true);
+
+            string command = "\"C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\bin\\Debug\\net8.0-windows\\SubtitlesSync.exe\" \"%L\"";
+            CreateSubtitlesSyncRegistry(regDirectorySubKey, "SubtitlesSync...", command, "%SystemRoot%\\System32\\shell32.dll,115");
+        }
+        private void CreateSubtitlesSyncRegistry(RegistryKey directory, string displayName, string command, string icon)
+        {
+            RegistryKey regShellSubKey = directory.CreateSubKey("shell");
+            RegistryKey regSubtitlesSyncSubKey = regShellSubKey.CreateSubKey("SubtitlesSync");
+            regSubtitlesSyncSubKey.SetValue(String.Empty, displayName);
+            regSubtitlesSyncSubKey.SetValue("icon", icon);
+
+            RegistryKey regCommandSubKey = regSubtitlesSyncSubKey.CreateSubKey("Command");
+            regCommandSubKey.SetValue(String.Empty, command);
+        }
+        private void RemoveContextMenus()
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to remove all context menues associated with this app?", "Context menu deassociation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.No) return;
+
+            // ## dodelat!
         }
     }
 }
