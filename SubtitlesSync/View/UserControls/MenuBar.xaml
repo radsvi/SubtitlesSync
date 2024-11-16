@@ -12,8 +12,8 @@
         </Grid.RowDefinitions>
         <Menu Padding="10,0" Background="White">
             <MenuItem Header="File" FontSize="16">
-                <MenuItem Header="Create search context menu" Command="{Binding SearchContextMenuCommand}"/>
-                <MenuItem Header="Create subtitles sync context menu" Command="{Binding SubtitlesSyncContextMenuCommand}"/>
+                <MenuItem Header="Create &quot;Search for subtitles&quot; context menu" Command="{Binding SearchContextMenuCommand}"/>
+                <MenuItem Header="Create &quot;Sync subtitles with video&quot; context menu" Command="{Binding SubtitlesSyncContextMenuCommand}"/>
                 <MenuItem Header="Remove context menus" Command="{Binding RemoveContextMenuCommand}"/>
             </MenuItem>
         </Menu>

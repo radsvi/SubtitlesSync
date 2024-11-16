@@ -256,20 +256,20 @@ namespace SubtitlesSync.ViewModel
             System.Windows.Application.Current.Shutdown();
         }
 
-        private void WriteRegistryEntry()
-        {
-            RegistryKey key = Registry.LocalMachine.OpenSubKey("Software", true);
-            //RegistryKey key = Registry.ClassesRoot
+        //private void WriteRegistryEntry()
+        //{
+        //    RegistryKey key = Registry.LocalMachine.OpenSubKey("Software", true);
+        //    //RegistryKey key = Registry.ClassesRoot
 
-            key.CreateSubKey("AppName");
-            key = key.OpenSubKey("AppName", true);
+        //    key.CreateSubKey("AppName");
+        //    key = key.OpenSubKey("AppName", true);
 
 
-            key.CreateSubKey("AppVersion");
-            key = key.OpenSubKey("AppVersion", true);
+        //    key.CreateSubKey("AppVersion");
+        //    key = key.OpenSubKey("AppVersion", true);
 
-            key.SetValue("yourkey", "yourvalue");
-        }
+        //    key.SetValue("yourkey", "yourvalue");
+        //}
 
         private void AssociateWithVideoFilesRegistry()
         {
@@ -299,7 +299,7 @@ namespace SubtitlesSync.ViewModel
             RegistryKey regDirectorySubKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Classes\\Directory", true);
 
             string command = "\"C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\bin\\Debug\\net8.0-windows\\SubtitlesSync.exe\" \"%L\"";
-            CreateSubtitlesSyncRegistry(regDirectorySubKey, "SubtitlesSync...", command, "%SystemRoot%\\System32\\shell32.dll,115");
+            CreateSubtitlesSyncRegistry(regDirectorySubKey, "Sync subtitles with video...", command, "%SystemRoot%\\System32\\shell32.dll,115");
         }
         private void CreateSubtitlesSyncRegistry(RegistryKey directory, string displayName, string command, string icon)
         {
@@ -317,6 +317,51 @@ namespace SubtitlesSync.ViewModel
             if (result == MessageBoxResult.No) return;
 
             // ## dodelat!
+        }
+        private void ParseFileNameAndFolder(string subtitlesString, out string folderPath, out string searchPattern)
+        {
+            string[] folderPathSplit = subtitlesString.Split("\\");
+            folderPath = String.Empty;
+            string fileNameWithSuffix = String.Empty;
+            for (int i = 0; i < folderPathSplit.Length; i++)
+            //foreach (string item in subtitlesString.Split("\\"))
+            {
+                if (i < folderPathSplit.Length - 1)
+                {
+                    folderPath = Path.Combine(folderPath, folderPathSplit[i]);
+                }
+                else
+                {
+                    fileNameWithSuffix = folderPathSplit[i];
+                }
+            }
+
+            string fileNameWithoutSuffix = String.Empty;
+            string[] fileNameSplit = fileNameWithSuffix.Split(".");
+            for (int i = 0; i < fileNameSplit.Length - 1; i++)
+            {
+                fileNameWithoutSuffix += fileNameSplit[i];
+            }
+            searchPattern = fileNameWithoutSuffix.Replace(" ", "+");
+        }
+        private void OpenWebSearchForSubtitles(string subtitlesString)
+        {
+            string fileNameWithSuffix = string.Empty;
+            foreach (string item in subtitlesString.Split("\\"))
+            {
+                fileNameWithSuffix = item;
+            }
+
+            string fileNameWithoutSuffix = string.Empty;
+            string[] fileNameSplit = fileNameWithSuffix.Split(".");
+            for (int i = 0; i < fileNameSplit.Length - 1; i++)
+            {
+                fileNameWithoutSuffix += fileNameSplit[i];
+            }
+            string searchPattern = fileNameWithoutSuffix.Replace(" ", "+");
+            //MessageBox.Show(searchPattern);
+            // ## predelat na defaultni browser - pouzit "Navigating event" https://stackoverflow.com/questions/4580263/how-to-open-in-default-browser-in-c-sharp
+            System.Diagnostics.Process.Start("C:\\Program Files\\Mozilla Firefox\\firefox.exe", $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-{searchPattern}");
         }
     }
 }

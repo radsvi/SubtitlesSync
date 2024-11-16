@@ -25,6 +25,26 @@ namespace SubtitlesSync.ViewModel
                 Settings.Default.folderPath = value;
                 Settings.Default.Save();
                 OnPropertyChanged();
+
+                //if (string.IsNullOrEmpty(value))
+                //{
+                //    MessageBox.Show("prazdny! null");
+                //    folderPath = Settings.Default.folderPath;
+                //    return;
+                //}
+                //else if (value == "null")
+                //{
+                //    MessageBox.Show("prazdny!");
+                //    folderPath = Settings.Default.folderPath;
+                //    return;
+                //}
+                //else
+                //{
+                //    folderPath = value;
+                //    Settings.Default.folderPath = value;
+                //    Settings.Default.Save();
+                //    OnPropertyChanged();
+                //}
             }
         }
         private string subtitlesToSearchFor;
@@ -64,7 +84,7 @@ namespace SubtitlesSync.ViewModel
             }
         }
 
-        public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
 
         private int windowHeight = Settings.Default.windowHeight;
 
@@ -111,55 +131,54 @@ namespace SubtitlesSync.ViewModel
             // https://stackoverflow.com/questions/11769113/how-to-start-wpf-based-on-arguments
             FolderPath = (Environment.GetCommandLineArgs().Length > 1) ? Environment.GetCommandLineArgs()[1] : Settings.Default.folderPath;
             SubtitlesToSearchFor = (Environment.GetCommandLineArgs().Length > 2) ? Environment.GetCommandLineArgs()[2] : String.Empty;
-            if (SubtitlesToSearchFor == String.Empty)
-            {
-                Items = new ObservableCollection<Item>();
-
-                RegexPatterns = new List<RGXPatterns>();
-                RegexPatterns.Add(new RGXPatterns
-                { // example: S01E01
-                    WholeTitle = @"S\s?\d{1,2}\s?E\s?\d{1,2}",
-                    SeasonLong = @"S\s?\d{1,2}",
-                    SeasonShort = @"S\s?",
-                    EpisodeLong = @"E\s?\d{1,2}",
-                    EpisodeShort = @"E\s?"
-                });
-                RegexPatterns.Add(new RGXPatterns
-                { // example: Season 6 Episode 01
-                    WholeTitle = @"Season\s?\d{1,2} Episode \d{1,2}",
-                    SeasonLong = @"Season\s?\d{1,2}",
-                    SeasonShort = @"Season\s?",
-                    EpisodeLong = @"Episode\s?\d{1,2}",
-                    EpisodeShort = @"Episode\s?"
-                });
-                RegexPatterns.Add(new RGXPatterns
-                { // example: 01x01
-                    WholeTitle = @"\d{1,2}\s?x\s?\d{1,2}",
-                    SeasonLong = @"\d{1,2}",
-                    SeasonShort = @"",
-                    EpisodeLong = @"x\d{1,2}",
-                    EpisodeShort = @"x"
-                });
-                RegexPatterns.Add(new RGXPatterns
-                { // example: .0101., or .101.
-                    WholeTitle = @"\.\d{3,4}\.",
-                    SeasonLong = @"S\s?\d{1,2}",
-                    SeasonShort = @"S\s?",
-                    EpisodeLong = @"E\s?\d{1,2}",
-                    EpisodeShort = @"E\s?"
-                });
-
-                PopulateDataGrid();
-            }
-            else
-            {
-                // ## predelat na defaultni browser - pouzit "Navigating event" https://stackoverflow.com/questions/4580263/how-to-open-in-default-browser-in-c-sharp
-                System.Diagnostics.Process.Start("C:\\Program Files\\Mozilla Firefox\\firefox.exe", "https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-HouseMD");
-            }
-
+            //string SubtitlesToSearchFor = "D:\\Torrent\\House MD Season 1, 2, 3, 4, 5, 6, 7 & 8 + Extras DVDRip TSV\\Season 7\\House MD Season 7 Episode 20 - Changes.avi";
             
-        }
-        
+            Items = new ObservableCollection<Item>();
+            RegexPatterns = new List<RGXPatterns>();
+            RegexPatterns.Add(new RGXPatterns
+            { // example: S01E01
+                WholeTitle = @"S\s?\d{1,2}\s?E\s?\d{1,2}",
+                SeasonLong = @"S\s?\d{1,2}",
+                SeasonShort = @"S\s?",
+                EpisodeLong = @"E\s?\d{1,2}",
+                EpisodeShort = @"E\s?"
+            });
+            RegexPatterns.Add(new RGXPatterns
+            { // example: Season 6 Episode 01
+                WholeTitle = @"Season\s?\d{1,2} Episode \d{1,2}",
+                SeasonLong = @"Season\s?\d{1,2}",
+                SeasonShort = @"Season\s?",
+                EpisodeLong = @"Episode\s?\d{1,2}",
+                EpisodeShort = @"Episode\s?"
+            });
+            RegexPatterns.Add(new RGXPatterns
+            { // example: 01x01
+                WholeTitle = @"\d{1,2}\s?x\s?\d{1,2}",
+                SeasonLong = @"\d{1,2}",
+                SeasonShort = @"",
+                EpisodeLong = @"x\d{1,2}",
+                EpisodeShort = @"x"
+            });
+            RegexPatterns.Add(new RGXPatterns
+            { // example: .0101., or .101.
+                WholeTitle = @"\.\d{3,4}\.",
+                SeasonLong = @"S\s?\d{1,2}",
+                SeasonShort = @"S\s?",
+                EpisodeLong = @"E\s?\d{1,2}",
+                EpisodeShort = @"E\s?"
+            });
+            PopulateDataGrid();
 
+            if (SubtitlesToSearchFor != String.Empty)
+            {
+                string folderOut;
+                string fileOut;
+                ParseFileNameAndFolder(SubtitlesToSearchFor, out folderOut, out fileOut);
+                //MessageBox.Show($"Folder: #{folderOut}#\n\nFile: {fileOut}" );
+
+                FolderPath = folderOut;
+                OpenWebSearchForSubtitles(SubtitlesToSearchFor);
+            }
+        }
     }
 }
