@@ -39,8 +39,6 @@
                 <!--https://web.archive.org/web/20070721020023/http://www1.tip.nl/%7Et876506/UnicodeDisplay.html-->
                 <Button Grid.Column="2" Content="Q" Name="btnReloadFolder" FontFamily="Wingdings 3" Margin="0,0,10,0"
                 Command="{Binding ReloadFolder}"/>
-                <!--<Button Grid.Column="2" Content="∝" Name="btnReloadFolder"
-            Command="{Binding ReloadFolder}"/>-->
                 <Button Grid.Column="3" Content="Rename!" Name="btnRename"
                 Command="{Binding RenameCommand}"/>
             </Grid>
@@ -57,9 +55,6 @@
                     <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="11*"/>
                 </DataGrid.Columns>
             </DataGrid>
-
-
         </Grid>
     </Grid>
-    
 </Window>

@@ -344,24 +344,29 @@ namespace SubtitlesSync.ViewModel
             }
             searchPattern = fileNameWithoutSuffix.Replace(" ", "+");
         }
-        private void OpenWebSearchForSubtitles(string subtitlesString)
-        {
-            string fileNameWithSuffix = string.Empty;
-            foreach (string item in subtitlesString.Split("\\"))
-            {
-                fileNameWithSuffix = item;
-            }
+        //private void OpenWebSearchForSubtitles(string subtitlesString)
+        //{
+        //    string fileNameWithSuffix = string.Empty;
+        //    foreach (string item in subtitlesString.Split("\\"))
+        //    {
+        //        fileNameWithSuffix = item;
+        //    }
 
-            string fileNameWithoutSuffix = string.Empty;
-            string[] fileNameSplit = fileNameWithSuffix.Split(".");
-            for (int i = 0; i < fileNameSplit.Length - 1; i++)
-            {
-                fileNameWithoutSuffix += fileNameSplit[i];
-            }
-            string searchPattern = fileNameWithoutSuffix.Replace(" ", "+");
+        //    string fileNameWithoutSuffix = string.Empty;
+        //    string[] fileNameSplit = fileNameWithSuffix.Split(".");
+        //    for (int i = 0; i < fileNameSplit.Length - 1; i++)
+        //    {
+        //        fileNameWithoutSuffix += fileNameSplit[i];
+        //    }
+        //    string searchPattern = fileNameWithoutSuffix.Replace(" ", "+");
+        //    //MessageBox.Show(searchPattern);
+        //    System.Diagnostics.Process.Start("C:\\Program Files\\Mozilla Firefox\\firefox.exe", $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-{searchPattern}");
+        //}
+        private void OpenWebSearchForSubtitles(string fileName)
+        {
             //MessageBox.Show(searchPattern);
             // ## predelat na defaultni browser - pouzit "Navigating event" https://stackoverflow.com/questions/4580263/how-to-open-in-default-browser-in-c-sharp
-            System.Diagnostics.Process.Start("C:\\Program Files\\Mozilla Firefox\\firefox.exe", $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-{searchPattern}");
+            System.Diagnostics.Process.Start("C:\\Program Files\\Mozilla Firefox\\firefox.exe", $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-{fileName}");
         }
     }
 }

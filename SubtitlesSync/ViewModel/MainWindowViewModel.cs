@@ -144,7 +144,7 @@ namespace SubtitlesSync.ViewModel
                 //MessageBox.Show($"Folder: #{folderOut}#\n\nFile: {fileOut}" );
 
                 FolderPath = folderOut;
-                OpenWebSearchForSubtitles(SubtitlesToSearchFor);
+                OpenWebSearchForSubtitles(fileOut);
             }
         }
     }
