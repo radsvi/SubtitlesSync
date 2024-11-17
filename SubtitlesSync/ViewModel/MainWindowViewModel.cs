@@ -148,7 +148,9 @@ namespace SubtitlesSync.ViewModel
         public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => AssociateWithVideoFilesRegistry());
         public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => AssociateWithFolderRegistry());
         public RelayCommand RemoveContextMenuCommand => new RelayCommand(execute => RemoveContextMenus());
+        public RelayCommand DownloadSelectedCommand => new RelayCommand(execute => DownloadSelected());
         
+
 
         public MainWindowViewModel()
         {

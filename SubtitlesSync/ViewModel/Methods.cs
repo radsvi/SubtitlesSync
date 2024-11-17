@@ -191,6 +191,7 @@ namespace SubtitlesSync.ViewModel
                         currentItem.SubtitlesFullFileName = subItem.FileName;
                         currentItem.SubtitlesDisplayName = $"[S{subItem.Season}E{subItem.Episode}] {subItem.ShortName}";
                         currentItem.SubtitlesSuffix = subItem.Extension;
+                        currentItem.Checked = false;
                         currentItem.Status = "<ready>";
                     }
                 }
@@ -344,29 +345,30 @@ namespace SubtitlesSync.ViewModel
             }
             searchPattern = fileNameWithoutSuffix.Replace(" ", "+");
         }
-        //private void OpenWebSearchForSubtitles(string subtitlesString)
-        //{
-        //    string fileNameWithSuffix = string.Empty;
-        //    foreach (string item in subtitlesString.Split("\\"))
-        //    {
-        //        fileNameWithSuffix = item;
-        //    }
+        private string ParseFileNameAndFolder(string subtitlesString)
+        {
+            string fileNameWithoutSuffix;
+            ParseFileNameAndFolder(subtitlesString, out _, out fileNameWithoutSuffix);
 
-        //    string fileNameWithoutSuffix = string.Empty;
-        //    string[] fileNameSplit = fileNameWithSuffix.Split(".");
-        //    for (int i = 0; i < fileNameSplit.Length - 1; i++)
-        //    {
-        //        fileNameWithoutSuffix += fileNameSplit[i];
-        //    }
-        //    string searchPattern = fileNameWithoutSuffix.Replace(" ", "+");
-        //    //MessageBox.Show(searchPattern);
-        //    System.Diagnostics.Process.Start("C:\\Program Files\\Mozilla Firefox\\firefox.exe", $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-{searchPattern}");
-        //}
+            return fileNameWithoutSuffix;
+        }
         private void OpenWebSearchForSubtitles(string fileName)
         {
             //MessageBox.Show(searchPattern);
             // ## predelat na defaultni browser - pouzit "Navigating event" https://stackoverflow.com/questions/4580263/how-to-open-in-default-browser-in-c-sharp
-            System.Diagnostics.Process.Start("C:\\Program Files\\Mozilla Firefox\\firefox.exe", $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-{fileName}");
+            string searchPattern = fileName.Replace(" ", "+");
+            System.Diagnostics.Process.Start("C:\\Program Files\\Mozilla Firefox\\firefox.exe", $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-{searchPattern}");
+        }
+        private void DownloadSelected()
+        {
+            foreach(var item in Items)
+            {
+                if (item.Checked)
+                {
+                    string searchPattern = ParseFileNameAndFolder(item.VideoFileName);
+                    OpenWebSearchForSubtitles(searchPattern);
+                }
+            }
         }
     }
 }

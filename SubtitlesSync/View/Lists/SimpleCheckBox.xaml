@@ -5,18 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SubtitlesSync.View.Lists"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
+             d:DesignHeight="250" d:DesignWidth="400"
+             d:Background="White"
+             >
         <ItemsControl ItemsSource="{Binding Items}" d:ItemsSource="{d:SampleData}" >
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <CheckBox Padding="0,2" VerticalContentAlignment="Center">
-                        <TextBlock Text="{Binding Path=VideoDisplayName}" Margin="5,0,0,0"/>
+                    <CheckBox Padding="0,2" VerticalContentAlignment="Center"
+                              IsChecked="{Binding Path=Checked}">
+                        <Grid Grid.IsSharedSizeScope="True" ShowGridLines="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="45*"/>
+                                <ColumnDefinition Width="44*"/>
+                                <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="5*"/>
+                        </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Width="450" Text="{Binding Path=VideoDisplayName}" Margin="5,0,0,0"/>
+                            <TextBlock Grid.Column="1" Width="450" Text="{Binding Path=SubtitlesDisplayName}" Margin="5,0,0,0"/>
+                            <TextBlock Grid.Column="2" Width="50" Text="{Binding Path=Status}" Margin="5,0,0,0"/>
+                    </Grid>
                     </CheckBox>
-                </DataTemplate>
+            </DataTemplate>
             </ItemsControl.ItemTemplate>
 
         </ItemsControl>
-    </StackPanel>
+   
 </UserControl>

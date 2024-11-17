@@ -10,7 +10,9 @@
         xmlns:ViewModel="clr-namespace:SubtitlesSync.ViewModel" x:Class="SubtitlesSync.MainWindow"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type={x:Type local:MainWindow}}"
-        Title="MainWindow" Height="{Binding WindowHeight, Mode=TwoWay}" d:Height="220" Width="{Binding WindowWidth, Mode=TwoWay}" MinHeight="200" MinWidth="450" d:Width="350" d:MinWidth="350">
+        Title="MainWindow"
+        MinHeight="200" Height="{Binding WindowHeight, Mode=TwoWay}" d:Height="220"
+        MinWidth="450" Width="{Binding WindowWidth, Mode=TwoWay}" d:Width="350" d:MinWidth="350">
     <!--<Window.Resources>
         <local:App x:Key="MyItems"/>
         <DataTemplate x:Key="MainItemList" DataType="{x:Type model:Item}">
@@ -41,30 +43,36 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
+            <DockPanel Grid.Row="0" HorizontalAlignment="Stretch">
+                <!--<Grid.ColumnDefinitions>
                     <ColumnDefinition Width="86"/>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="33"/>
                     <ColumnDefinition Width="86"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Browse..." x:Name="btnBrowse"
+                </Grid.ColumnDefinitions>-->
+                <Button Content="Browse..." x:Name="btnBrowse" Width="76" DockPanel.Dock="Left"
                 Command="{Binding BrowseCommand}"/>
-                <TextBox Grid.Column="1" x:Name="tbAddress" Text="{Binding FolderPath}" Margin="10,0" VerticalContentAlignment="Center" IsEnabled="False" />
+                
                 <!--https://stackoverflow.com/questions/6771769/refresh-icon-for-button-->
                 <!--https://stackoverflow.com/questions/253431/is-it-appropriate-to-use-wingdings-fonts-in-a-windows-forms-or-wpf-app-->
                 <!--https://web.archive.org/web/20070721020023/http://www1.tip.nl/%7Et876506/UnicodeDisplay.html-->
-                <Button Grid.Column="2" Content="Q" x:Name="btnReloadFolder" FontFamily="Wingdings 3" Margin="0,0,10,0"
-                Command="{Binding ReloadFolder}"/>
-                <Button Grid.Column="3" Content="Rename!" x:Name="btnRename"
-                Command="{Binding RenameCommand}"/>
-            </Grid>
+                <Button Width="76" DockPanel.Dock="Right" Margin="10,0,0,0" FontSize="7"
+                        Command="{Binding DownloadSelectedCommand}">
+                    <TextBlock>Download<LineBreak/>Selected</TextBlock>
+                </Button>
+                <Button Content="Rename!" x:Name="btnRename" Width="76" DockPanel.Dock="Right" Margin="10,0,0,0"
+                        Command="{Binding RenameCommand}"/>
+                <Button Content="Q" x:Name="btnReloadFolder" FontFamily="Wingdings 3" Width="23" DockPanel.Dock="Right"
+                        Command="{Binding ReloadFolder}"/>
+                <TextBox x:Name="tbAddress" Text="{Binding FolderPath}" Margin="10,0" HorizontalAlignment="Stretch" DockPanel.Dock="Top"
+                         VerticalContentAlignment="Center" IsEnabled="False" />
+            </DockPanel>
             <!--#endregion-->
-            <!--<lists:DataGridOne Grid.Row="1"/>-->
             <!--<lists:DataTemplateOne Grid.Row="1"/>-->
+            <!--<lists:DataGridOne Grid.Row="1"/>-->
             <!--<lists:SimpleListBox Grid.Row="1"/>-->
             <!--<lists:ListBoxWithCheckbox Grid.Row="1"/>-->
-            <!--<lists:SimpleCheckBox Grid.Row="1"/>-->
+            <lists:SimpleCheckBox Grid.Row="1"/>
 
 
             <!--#region StackPanel with ItemTemplate -->
