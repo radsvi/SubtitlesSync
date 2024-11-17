@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="SubtitlesSync.View.Lists.DataTemplateOne"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SubtitlesSync.View.Lists"
+             xmlns:mainWindow="clr-namespace:SubtitlesSync"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="400">
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
+    <!--<DataGrid Margin="0,10,0,0"
+       ItemsSource="{Binding Items}"
+       SelectedItem="{Binding SelectedItem}"
+       CanUserAddRows="False" CanUserDeleteRows="False"
+       IsReadOnly="True"
+       AutoGenerateColumns="False">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Video FileName" Binding="{Binding VideoDisplayName}" Width="45*"/>
+            <DataGridTextColumn Header="Subtitles FileName" Binding="{Binding SubtitlesDisplayName}" Width="44*"/>
+            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="11*"/>
+        </DataGrid.Columns>
+    </DataGrid>-->
+
+    <Grid>
+        <StackPanel>
+            <!--<StackPanel.Resources>
+                <mainWindow:Items/>
+            </StackPanel.Resources>-->
+            
+        </StackPanel>
+    </Grid>
+</UserControl>

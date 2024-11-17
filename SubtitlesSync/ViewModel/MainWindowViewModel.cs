@@ -84,7 +84,15 @@ namespace SubtitlesSync.ViewModel
             }
         }
 
-        public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>();
+        public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>(){};
+        //public ObservableCollection<Item> Items { get; set; }
+
+        //public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>(){ // tohle je jen pro design. bude prepsany jakmile pustim appku // ## smazat? Nejak to stejne nefunguje
+        //    new Item { VideoDisplayName = "qwer" },
+        //    new Item { VideoDisplayName = "asdf" },
+        //    new Item { VideoDisplayName = "zxcv" },
+        //    new Item { VideoDisplayName = "tyui" }
+        //};
 
         private int windowHeight = Settings.Default.windowHeight;
 
@@ -113,6 +121,22 @@ namespace SubtitlesSync.ViewModel
 
         public List<RGXPatterns> RegexPatterns { get; set; } = RegexPatternsClass.GetValues();
 
+        
+        ObservableCollection<Item> customSampleData = new ObservableCollection<Item>() // ## smazat?
+        {
+            new Item { VideoDisplayName = "qwer" },
+            new Item { VideoDisplayName = "asdf" },
+            new Item { VideoDisplayName = "zxcv" },
+            new Item { VideoDisplayName = "tyui" }
+        };
+
+        public ObservableCollection<Item> CustomSampleData
+        {
+            get { return customSampleData; }
+            set { customSampleData = value; }
+        }
+
+
 
 
         //public RelayCommand AddCommand => new RelayCommand(execute => AddItem(), canExecute => { return true; });
@@ -132,8 +156,8 @@ namespace SubtitlesSync.ViewModel
             FolderPath = (Environment.GetCommandLineArgs().Length > 1) ? Environment.GetCommandLineArgs()[1] : Settings.Default.folderPath;
             SubtitlesToSearchFor = (Environment.GetCommandLineArgs().Length > 2) ? Environment.GetCommandLineArgs()[2] : String.Empty;
             //string SubtitlesToSearchFor = "D:\\Torrent\\House MD Season 1, 2, 3, 4, 5, 6, 7 & 8 + Extras DVDRip TSV\\Season 7\\House MD Season 7 Episode 20 - Changes.avi";
-            
-            Items = new ObservableCollection<Item>();
+
+            //Items = new ObservableCollection<Item>();
             PopulateDataGrid();
 
             if (SubtitlesToSearchFor != String.Empty)

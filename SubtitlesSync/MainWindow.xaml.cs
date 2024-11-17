@@ -12,8 +12,8 @@ namespace SubtitlesSync
         public MainWindow()
         {
             InitializeComponent();
-            MainWindowViewModel vm = new MainWindowViewModel();
-            DataContext = vm;
+            //MainWindowViewModel vm = new MainWindowViewModel(); // binding pres XAML
+            //DataContext = vm;
         }
     }
 }
