@@ -11,23 +11,15 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type={x:Type local:MainWindow}}"
         Title="MainWindow" Height="{Binding WindowHeight, Mode=TwoWay}" d:Height="220" Width="{Binding WindowWidth, Mode=TwoWay}" MinHeight="200" MinWidth="450" d:Width="350" d:MinWidth="350">
-    <Window.Resources>
-        <!--<local:App x:Key="MyItems"/>
+    <!--<Window.Resources>
+        <local:App x:Key="MyItems"/>
         <DataTemplate x:Key="MainItemList" DataType="{x:Type model:Item}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding VideoDisplayName}"/>
             </StackPanel>
-        </DataTemplate>-->
-        <ItemsControl x:Key="MainItemList">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Label Content="{Binding Path=VideoDisplayName}"/>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </Window.Resources>
+        </DataTemplate>
+    
+    </Window.Resources>-->
     <Window.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding EscKeyCommand}"/>
     </Window.InputBindings>
@@ -70,54 +62,16 @@
             <!--#endregion-->
             <!--<lists:DataGridOne Grid.Row="1"/>-->
             <!--<lists:DataTemplateOne Grid.Row="1"/>-->
-            <!--#region ListBox test -->
-            <!--<StackPanel Grid.Row="1">
-                
-            <StackPanel.DataContext>
-                    <local:MainWindow/>
-                </StackPanel.DataContext>
-            
-                <ListBox ItemTemplate="{Binding Source={StaticResource MainItemList}}" Margin="0,10,0,0"
-                         ItemsSource="{Binding Items}" d:ItemsSource="{d:SampleData}"
-                         HorizontalContentAlignment="Stretch"/>
-            </StackPanel>-->
-            <!--#endregion-->
-            <!--#region ListBox of Checkboxes -->
-            <!--<StackPanel Grid.Row="1">
-                <ListBox Margin="0,10,0,0"
-                         ItemsSource="{Binding Items}" d:ItemsSource="{d:SampleData}"
-                         HorizontalContentAlignment="Stretch">
-                    <ListBox.ItemTemplate>
-                        <HierarchicalDataTemplate>
-                            <CheckBox Content="{Binding VideoDisplayName}"/>
-                        </HierarchicalDataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>-->
-            <!--#endregion-->
-           
+            <!--<lists:SimpleListBox Grid.Row="1"/>-->
+            <!--<lists:ListBoxWithCheckbox Grid.Row="1"/>-->
+            <!--<lists:SimpleCheckBox Grid.Row="1"/>-->
 
-            
 
-            <!--#region ItemsControl without ItemTemplate linking -->
-            <!--<StackPanel Grid.Row="1">
-                <ItemsControl ItemsSource="{Binding Items}" d:ItemsSource="{d:SampleData}" >
-
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Padding="0,2" VerticalContentAlignment="Center">
-                                <TextBlock Text="{Binding Path=VideoDisplayName}" Margin="5,0,0,0"/>
-                            </CheckBox>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-
-                </ItemsControl>
-            </StackPanel>-->
-            <!--#endregion-->
-
+            <!--#region StackPanel with ItemTemplate -->
             <!--<StackPanel Grid.Row="1">
                 <ItemsControl ItemsSource="{Binding Items}" d:ItemsSource="{d:SampleData}" ItemTemplate="{Binding Source={StaticResource MainItemList}}"/>
             </StackPanel>-->
+            <!--#endregion-->
         </Grid>
     </Grid>
 </Window>
