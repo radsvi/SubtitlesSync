@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="SubtitlesSync.View.Lists.DataGridListBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SubtitlesSync.View.Lists"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="400">
+    <!--<DataGrid Margin="0,10,0,0"
+       ItemsSource="{Binding Items}" d:ItemsSource="{d:SampleData}"
+       SelectedItem="{Binding SelectedItem}"
+       CanUserAddRows="False" CanUserDeleteRows="False"
+       IsReadOnly="True"
+       AutoGenerateColumns="False">
+
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Video FileName" Binding="{Binding VideoDisplayName}" Width="45*"/>
+            <DataGridTextColumn Header="Subtitles FileName" Binding="{Binding SubtitlesDisplayName}" Width="44*"/>
+            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="11*"/>
+            <DataGridTextColumn Header="DL2" Binding="{Binding Path=Checked}" Width="11*"/>
+            --><!--<DataGridCheckBoxColumn Header="DL" Binding="{Binding Path=Checked}" Width="11*"/>-->
+            <!--<DataGridTemplateColumn Header="DL1" Width="25">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center"
+                                  IsChecked="{Binding Checked}"/>
+                        --><!-- IsChecked musim dodelat. muzu pouzit tu convert funkci --><!--
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>--><!--
+        </DataGrid.Columns>
+    </DataGrid>-->
+
+    <DataGrid Margin="0,10,0,0"
+   ItemsSource="{Binding Items}" d:ItemsSource="{d:SampleData}"
+   SelectedItem="{Binding SelectedItem}"
+   CanUserAddRows="False" CanUserDeleteRows="False"
+   IsReadOnly="True"
+   AutoGenerateColumns="False">
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Name" Binding="{Binding VideoDisplayName}" />
+            <DataGridTemplateColumn Header="Item Collection">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <ListBox ItemsSource="{Binding SubtitlesDisplayName}" />
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

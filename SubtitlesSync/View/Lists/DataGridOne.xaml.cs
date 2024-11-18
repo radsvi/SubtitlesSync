@@ -24,5 +24,15 @@ namespace SubtitlesSync.View.Lists
         {
             InitializeComponent();
         }
+        //private void OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (!(e.Source is CheckBox))
+        //    {
+        //        DataGridRow row = sender as DataGridRow;
+        //        YourDataClass dataObject = row.DataContext as YourDataClass;
+        //        if (dataObject != null)
+        //            dataObject.IsChecked = true;
+        //    }
+        //}
     }
 }

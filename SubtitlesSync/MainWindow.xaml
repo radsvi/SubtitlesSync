@@ -69,11 +69,13 @@
             </DockPanel>
             <!--#endregion-->
             <!--<lists:DataTemplateOne Grid.Row="1"/>-->
-            <!--<lists:DataGridOne Grid.Row="1"/>-->
             <!--<lists:SimpleListBox Grid.Row="1"/>-->
             <!--<lists:ListBoxWithCheckbox Grid.Row="1"/>-->
-            <lists:SimpleCheckBox Grid.Row="1"/>
-
+            <!--<lists:SimpleCheckBox Grid.Row="1"/>-->
+            <!--<lists:DataGridListBox Grid.Row="1"/>-->
+            <lists:DataGridOne Grid.Row="1"/>
+            
+            <!--<lists:ListBoxCheckboxGrid Grid.Row="1"/>-->
 
             <!--#region StackPanel with ItemTemplate -->
             <!--<StackPanel Grid.Row="1">

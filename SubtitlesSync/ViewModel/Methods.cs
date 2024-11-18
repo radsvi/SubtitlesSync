@@ -191,12 +191,24 @@ namespace SubtitlesSync.ViewModel
                         currentItem.SubtitlesFullFileName = subItem.FileName;
                         currentItem.SubtitlesDisplayName = $"[S{subItem.Season}E{subItem.Episode}] {subItem.ShortName}";
                         currentItem.SubtitlesSuffix = subItem.Extension;
-                        currentItem.Checked = false;
+                        currentItem.IsChecked = false;
+                        currentItem.ReadyToRename = true;
                         currentItem.Status = "<ready>";
                     }
                 }
                 Items.Add(currentItem);
             }
+        }
+        private bool CheckRenamePrepared()
+        {
+            if (CheckWhetherFolderIsUnchanged() == false) return false;
+
+            foreach(var item in Items)
+            {
+                if (item.ReadyToRename == true) return true;
+            }
+
+            return false;
         }
 
         private bool CheckWhetherFolderIsUnchanged()
@@ -363,7 +375,7 @@ namespace SubtitlesSync.ViewModel
         {
             foreach(var item in Items)
             {
-                if (item.Checked)
+                if (item.IsChecked)
                 {
                     string searchPattern = ParseFileNameAndFolder(item.VideoFileName);
                     OpenWebSearchForSubtitles(searchPattern);

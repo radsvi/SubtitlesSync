@@ -5,24 +5,45 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SubtitlesSync.View.Lists"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="400">
+    <!--https://stackoverflow.com/questions/43050291/wpf-ticking-checkbox-when-clicking-anywhere-on-a-datagrid-row-->
+    <!--<UserControl.Resources>
+        <Style TargetType="DataGridRow">
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="OnPreviewMouseLeftButtonDown" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Type}" Value="TTC">
+                    <Setter Property="Template" Value="{StaticResource ResourceKey=TTC}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>-->
     <DataGrid Margin="0,10,0,0"
            ItemsSource="{Binding Items}" d:ItemsSource="{d:SampleData}"
            SelectedItem="{Binding SelectedItem}"
            CanUserAddRows="False" CanUserDeleteRows="False"
-           IsReadOnly="True"
+           IsReadOnly="False"
            AutoGenerateColumns="False">
+        <!--<DataGrid.ColumnHeaderStyle>
+            <Style TargetType="{x:Type DataGridColumnHeader}">
+                <Setter Property="FontFamily" Value="Wingdings 3"/>
+            </Style>
+        </DataGrid.ColumnHeaderStyle>-->
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Video FileName" Binding="{Binding VideoDisplayName}" Width="45*"/>
-            <DataGridTextColumn Header="Subtitles FileName" Binding="{Binding SubtitlesDisplayName}" Width="44*"/>
-            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="11*"/>
-            <DataGridTemplateColumn Header="DL" Width="25">
+            <DataGridTextColumn Header="Video FileName" Binding="{Binding VideoDisplayName}" Width="45*" IsReadOnly="True"/>
+            <DataGridTextColumn Header="Subtitles FileName" Binding="{Binding SubtitlesDisplayName}" Width="44*" IsReadOnly="True"/>
+            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="11*" IsReadOnly="True"/>
+            <!--<DataGridTemplateColumn Header="DL" Width="25">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=MyViewModelProperty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" /><!-- IsChecked musim dodelat. pouzit tu convert funkci -->
+                        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Checked}" />--><!-- IsChecked musim dodelat. pouzit tu convert funkci --><!--
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+            </DataGridTemplateColumn>-->
+            <DataGridCheckBoxColumn Header="DL" Binding="{Binding Path=IsChecked}" Width="25"/>
         </DataGrid.Columns>
     </DataGrid>
+    
+    
+    
+    
 </UserControl>

@@ -13,7 +13,15 @@ namespace SubtitlesSync.Model
         public string SubtitlesFileName { get; set; }
         public string SubtitlesDisplayName { get; set; }
         public string SubtitlesSuffix { get; set; }
-        public bool Checked { get; set; } = true;
+        //public bool Checked { get; set; } = true;
+        private bool isChecked = true;
+        public bool IsChecked
+        {
+            get { return isChecked; }
+            set { isChecked = value; }
+        }
+        public bool ReadyToRename { get; set; } = false;
+
         [ObsoleteAttribute] public string NewFileName { get; set; }
         //public string Status { get; set; }
         private string status;

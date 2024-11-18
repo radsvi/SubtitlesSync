@@ -94,6 +94,17 @@ namespace SubtitlesSync.ViewModel
         //    new Item { VideoDisplayName = "tyui" }
         //};
 
+        private Item selectedItem;
+        public Item SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                selectedItem = value;
+                OnPropertyChanged();
+            }
+        }
+
         private int windowHeight = Settings.Default.windowHeight;
 
         public int WindowHeight
@@ -143,7 +154,7 @@ namespace SubtitlesSync.ViewModel
         public RelayCommand BrowseCommand => new RelayCommand(execute => BrowseNLoadFolder());
         //public RelayCommand ReloadFolder => new RelayCommand(execute => LoadFolderVideo(), canExecute => { return Directory.Exists(FolderPath); });
         public RelayCommand ReloadFolder => new RelayCommand(execute => PopulateDataGrid(), canExecute => { return Directory.Exists(FolderPath); });
-        public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return CheckWhetherFolderIsUnchanged(); });
+        public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return CheckRenamePrepared(); });
         public RelayCommand EscKeyCommand => new RelayCommand(execute => CloseApplication());
         public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => AssociateWithVideoFilesRegistry());
         public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => AssociateWithFolderRegistry());
