@@ -60,7 +60,7 @@
                         Command="{Binding DownloadSelectedCommand}">
                     <TextBlock>Download<LineBreak/>Selected</TextBlock>
                 </Button>
-                <Button Content="Rename!" x:Name="btnRename" Width="76" DockPanel.Dock="Right" Margin="10,0,0,0"
+                <Button Content="Rename all" x:Name="btnRename" Width="76" DockPanel.Dock="Right" Margin="10,0,0,0"
                         Command="{Binding RenameCommand}"/>
                 <Button Content="Q" x:Name="btnReloadFolder" FontFamily="Wingdings 3" Width="23" DockPanel.Dock="Right"
                         Command="{Binding ReloadFolder}"/>

@@ -253,8 +253,16 @@ namespace SubtitlesSync.ViewModel
                     string newSubName = Regex.Replace(item.VideoFileName, item.VideoSuffix, "", RegexOptions.IgnoreCase);
                     string newSuffix = item.SubtitlesSuffix;
                     string newSubNamePlusPath = Path.Combine(FolderPath, newSubName + newSuffix);
-                    File.Move(item.SubtitlesFullFileName, newSubNamePlusPath);
-                    item.Status = "Backed-up & Renamed";
+                    try
+                    {
+                        File.Move(item.SubtitlesFullFileName, newSubNamePlusPath);
+                        item.Status = "Backed-up & Renamed";
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Error, file not renamed!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error );
+                        item.Status = "Error";
+                    }
                     //item.Status = newSubNamePlusPath;
                     //MessageBox.Show(newSubNamePlusPath);
                 }
