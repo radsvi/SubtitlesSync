@@ -6,12 +6,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
+using static SubtitlesSync.Model.Item;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SubtitlesSync.ViewModel
 {
@@ -38,38 +41,24 @@ namespace SubtitlesSync.ViewModel
             if (Directory.Exists(FolderPath))
             {
                 FolderBackupContent = new List<string>(Directory.GetFiles(FolderPath));
+                if (FolderContent.Count() > 0) FolderContent.Clear();
+                foreach (string fileName in FolderBackupContent)
+                {
+                    FolderContent.Add(new FilesExtended {
+                        FileName = fileName,
+                        BaseName = Path.GetFileNameWithoutExtension(fileName),
+                        ShortName = Path.GetFileName(fileName),
+                        Extension = Path.GetExtension(fileName)
+                    });
+                }
             }
         }
-        //private void CheckAndUpdateFolderContentVar() // mozna by to melo byt spis neco jako IfChangedThenStop
-        //{
-        //    if (Directory.Exists(FolderPath))
-        //    {
-        //        List<string> folderContentNew = new List<string>(Directory.GetFiles(FolderPath));
-        //        if (FolderBackupContent.Count() > 0)
-        //        {
-        //            if (folderContentNew.Count() > 0)
-        //            {
-        //                if (FolderBackupContent.SequenceEqual(folderContentNew) == false)
-        //                {
-        //                    FolderBackupContent = folderContentNew;
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            FolderBackupContent = folderContentNew;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        FolderBackupContent.Clear();
-        //    }
-        //}
 
         private void BrowseNLoadFolder()
         {
             OpenFolderDialog folderDialog = new OpenFolderDialog();
             folderDialog.Title = "Select folder containing subtitles...";
+            folderDialog.InitialDirectory = FolderPath;
 
             bool? success = folderDialog.ShowDialog();
             if (success == true)
@@ -185,15 +174,27 @@ namespace SubtitlesSync.ViewModel
                 
                 foreach (var subItem in subtitleFiles)
                 {
-                    if (videoItem.Season == subItem.Season && videoItem.Episode == subItem.Episode)
+                    //pokud se menujou stejne, nebo pokud je to prazdny
+                    if (videoItem.BaseName == subItem.BaseName || currentItem.InternalStatus == _InternalStatus.empty)
                     {
-                        currentItem.SubtitlesFileName = subItem.ShortName;
-                        currentItem.SubtitlesFullFileName = subItem.FileName;
-                        currentItem.SubtitlesDisplayName = $"[S{subItem.Season}E{subItem.Episode}] {subItem.ShortName}";
-                        currentItem.SubtitlesSuffix = subItem.Extension;
-                        currentItem.IsChecked = false;
-                        currentItem.ReadyToRename = true;
-                        currentItem.Status = "<ready>";
+                        if (videoItem.Season == subItem.Season && videoItem.Episode == subItem.Episode)
+                        {
+                            currentItem.SubtitlesFileName = subItem.ShortName;
+                            currentItem.SubtitlesFullFileName = subItem.FileName;
+                            currentItem.SubtitlesDisplayName = $"[S{subItem.Season}E{subItem.Episode}] {subItem.ShortName}";
+                            currentItem.SubtitlesSuffix = subItem.Extension;
+                            currentItem.IsChecked = false;
+                            
+                            if (videoItem.BaseName == subItem.BaseName)
+                            {
+                                currentItem.InternalStatus = _InternalStatus.matches;
+                            }
+                            else
+                            {
+                                currentItem.InternalStatus = _InternalStatus.ready;
+                                currentItem.ReadyToRename = true;
+                            }
+                        }
                     }
                 }
                 Items.Add(currentItem);
@@ -256,12 +257,12 @@ namespace SubtitlesSync.ViewModel
                     try
                     {
                         File.Move(item.SubtitlesFullFileName, newSubNamePlusPath);
-                        item.Status = "Backed-up & Renamed";
+                        item.InternalStatus = _InternalStatus.renamed;
                     }
                     catch
                     {
-                        MessageBox.Show("Error, file not renamed!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error );
-                        item.Status = "Error";
+                        MessageBox.Show($"Error, file [{item.SubtitlesFileName}] not renamed!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        item.InternalStatus = _InternalStatus.error;
                     }
                     //item.Status = newSubNamePlusPath;
                     //MessageBox.Show(newSubNamePlusPath);
@@ -308,7 +309,8 @@ namespace SubtitlesSync.ViewModel
                 RegistryKey regClassesSubKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Classes", true);
                 RegistryKey regFileSuffixSubKey = regClassesSubKey.CreateSubKey(suffixKey);
 
-                string command = "\"C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\bin\\Debug\\net8.0-windows\\SubtitlesSync.exe\" \"null\" \"%1\"";
+                string appPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SubtitlesSync.exe");
+                string command = $"\"{appPath}\" \"null\" \"%1\"";
                 CreateSubtitlesSyncRegistry(regFileSuffixSubKey, "Search for subtitles", command, "%SystemRoot%\\System32\\shell32.dll,315");
             }
         }
@@ -318,8 +320,8 @@ namespace SubtitlesSync.ViewModel
             if (result == MessageBoxResult.No) return;
 
             RegistryKey regDirectorySubKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Classes\\Directory", true);
-
-            string command = "\"C:\\Users\\svihe\\Dropbox\\Coding\\C#\\SubtitlesSync\\SubtitlesSync\\bin\\Debug\\net8.0-windows\\SubtitlesSync.exe\" \"%L\"";
+            string appPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SubtitlesSync.exe");
+            string command = $"\"{appPath}\" \"%L\"";
             CreateSubtitlesSyncRegistry(regDirectorySubKey, "Sync subtitles with video...", command, "%SystemRoot%\\System32\\shell32.dll,115");
         }
         private void CreateSubtitlesSyncRegistry(RegistryKey directory, string displayName, string command, string icon)
@@ -334,10 +336,11 @@ namespace SubtitlesSync.ViewModel
         }
         private void RemoveContextMenus()
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to remove all context menues associated with this app?", "Context menu deassociation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.No) return;
+            //MessageBoxResult result = MessageBox.Show("Do you want to remove all context menues associated with this app?", "Context menu deassociation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            //if (result == MessageBoxResult.No) return;
 
             // ## dodelat!
+            MessageBox.Show("Error, function not implemented yet", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         private void ParseFileNameAndFolder(string subtitlesString, out string folderPath, out string searchPattern)
         {
@@ -377,7 +380,8 @@ namespace SubtitlesSync.ViewModel
             //MessageBox.Show(searchPattern);
             // ## predelat na defaultni browser - pouzit "Navigating event" https://stackoverflow.com/questions/4580263/how-to-open-in-default-browser-in-c-sharp
             string searchPattern = fileName.Replace(" ", "+");
-            System.Diagnostics.Process.Start("C:\\Program Files\\Mozilla Firefox\\firefox.exe", $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-{searchPattern}");
+            string url = SubtitlesDownloadSource.Replace("%s", searchPattern);
+            System.Diagnostics.Process.Start("C:\\Program Files\\Mozilla Firefox\\firefox.exe", url);
         }
         private void DownloadSelected()
         {

@@ -58,6 +58,21 @@ namespace SubtitlesSync.ViewModel
         public string[] VideoSuffixes { get; set; } = { ".avi", ".mkv", ".mp4", ".mpg" };
         public string[] SubtitleSuffixes { get; set; } = { ".srt", ".sub" };
 
+        //public string SubtitlesDownloadSource { get; set; } = $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s";
+        private string subtitlesDownloadSource = $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s";
+        public string SubtitlesDownloadSource
+        {
+            get { return subtitlesDownloadSource; }
+            set
+            {
+                if (value.IndexOf("%s") != -1)
+                {
+                    subtitlesDownloadSource = value;
+                }
+            }
+        }
+
+
         //public List<FilesExtended> VideoFiles { get; set; }
         //public List<FilesExtended> SubtitleFiles { get; set; }
 
@@ -72,16 +87,7 @@ namespace SubtitlesSync.ViewModel
         public List<string> FolderBackupContent
         {
             get { return folderBackupContent; }
-            private set
-            {
-                folderBackupContent = value;
-
-                if (FolderContent.Count() > 0) FolderContent.Clear();
-                foreach (string fileName in value)
-                {
-                    FolderContent.Add(new FilesExtended { FileName = fileName, ShortName = Path.GetFileName(fileName), Extension = Path.GetExtension(fileName) });
-                }
-            }
+            private set { folderBackupContent = value; }
         }
 
         public ObservableCollection<Item> Items { get; set; } = new ObservableCollection<Item>(){};
@@ -133,19 +139,19 @@ namespace SubtitlesSync.ViewModel
         public List<RGXPatterns> RegexPatterns { get; set; } = RegexPatternsClass.GetValues();
 
         
-        ObservableCollection<Item> customSampleData = new ObservableCollection<Item>() // ## smazat?
-        {
-            new Item { VideoDisplayName = "qwer" },
-            new Item { VideoDisplayName = "asdf" },
-            new Item { VideoDisplayName = "zxcv" },
-            new Item { VideoDisplayName = "tyui" }
-        };
+        //ObservableCollection<Item> customSampleData = new ObservableCollection<Item>() // ## smazat?
+        //{
+        //    new Item { VideoDisplayName = "qwer" },
+        //    new Item { VideoDisplayName = "asdf" },
+        //    new Item { VideoDisplayName = "zxcv" },
+        //    new Item { VideoDisplayName = "tyui" }
+        //};
 
-        public ObservableCollection<Item> CustomSampleData
-        {
-            get { return customSampleData; }
-            set { customSampleData = value; }
-        }
+        //public ObservableCollection<Item> CustomSampleData
+        //{
+        //    get { return customSampleData; }
+        //    set { customSampleData = value; }
+        //}
 
 
 

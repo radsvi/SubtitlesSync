@@ -31,7 +31,7 @@
         <DataGrid.Columns>
             <DataGridTextColumn Header="Video FileName" Binding="{Binding VideoDisplayName}" Width="45*" IsReadOnly="True"/>
             <DataGridTextColumn Header="Subtitles FileName" Binding="{Binding SubtitlesDisplayName}" Width="44*" IsReadOnly="True"/>
-            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="11*" IsReadOnly="True"/>
+            <DataGridTextColumn Header="Status" Binding="{Binding DisplayStatus}" Width="11*" IsReadOnly="True"/>
             <!--<DataGridTemplateColumn Header="DL" Width="25">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>

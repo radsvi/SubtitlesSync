@@ -14,6 +14,8 @@ namespace SubtitlesSync
             InitializeComponent();
             //MainWindowViewModel vm = new MainWindowViewModel(); // binding pres XAML
             //DataContext = vm;
+            
+            //MessageBox.Show(AppDomain.CurrentDomain.BaseDirectory);
         }
     }
 }
