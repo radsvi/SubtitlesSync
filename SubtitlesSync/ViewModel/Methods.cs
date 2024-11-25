@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using SubtitlesSync.Model;
 using SubtitlesSync.MVVM;
+using SubtitlesSync.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -383,6 +384,14 @@ namespace SubtitlesSync.ViewModel
             string url = SubtitlesDownloadSource.Replace("%s", searchPattern);
             System.Diagnostics.Process.Start("C:\\Program Files\\Mozilla Firefox\\firefox.exe", url);
         }
+        private bool DownloadCheckIfAvailable()
+        {
+            foreach (Item item in Items)
+            {
+                if (item.IsChecked == true) return true;
+            }
+            return false;
+        }
         private void DownloadSelected()
         {
             foreach(var item in Items)
@@ -393,6 +402,17 @@ namespace SubtitlesSync.ViewModel
                     OpenWebSearchForSubtitles(searchPattern);
                 }
             }
+        }
+        private void OpenOptionsWindow()
+        {
+            //OptionsWindow modalWindow = new OptionsWindow();
+            ////Opacity = 0.4;
+            //OptionsWindow.ShowDialog(); // main window zustane zamrzli v pozadi
+            ////Opacity = 1;
+            //if (OptionsWindow.Success)
+            //{
+            //    txtInput.Text = OptionsWindow.Input;
+            //}
         }
     }
 }

@@ -11,5 +11,8 @@
     <Setting Name="windowHeight" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">900</Value>
     </Setting>
+    <Setting Name="subtitlesDownloadSource" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

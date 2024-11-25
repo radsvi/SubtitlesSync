@@ -58,8 +58,7 @@ namespace SubtitlesSync.ViewModel
         public string[] VideoSuffixes { get; set; } = { ".avi", ".mkv", ".mp4", ".mpg" };
         public string[] SubtitleSuffixes { get; set; } = { ".srt", ".sub" };
 
-        //public string SubtitlesDownloadSource { get; set; } = $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s";
-        private string subtitlesDownloadSource = $"https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s";
+        private string subtitlesDownloadSource = Settings.Default.subtitlesDownloadSource;
         public string SubtitlesDownloadSource
         {
             get { return subtitlesDownloadSource; }
@@ -165,8 +164,10 @@ namespace SubtitlesSync.ViewModel
         public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => AssociateWithVideoFilesRegistry());
         public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => AssociateWithFolderRegistry());
         public RelayCommand RemoveContextMenuCommand => new RelayCommand(execute => RemoveContextMenus());
-        public RelayCommand DownloadSelectedCommand => new RelayCommand(execute => DownloadSelected());
+        public RelayCommand DownloadSelectedCommand => new RelayCommand(execute => DownloadSelected(), canExecute => { return DownloadCheckIfAvailable(); });
+        public RelayCommand OpenOptionsCommand => new RelayCommand(execute => OpenOptionsWindow());
         
+
 
 
         public MainWindowViewModel()
