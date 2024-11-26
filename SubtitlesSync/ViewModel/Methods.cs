@@ -413,6 +413,7 @@ namespace SubtitlesSync.ViewModel
             //{
             //    txtInput.Text = OptionsWindow.Input;
             //}
+
         }
     }
 }
