@@ -170,6 +170,7 @@ namespace SubtitlesSync.ViewModel
                 Item currentItem = new Item { };
                 currentItem.VideoFullFileName = videoItem.FileName;
                 currentItem.VideoFileName = videoItem.ShortName;
+                currentItem.VideoBaseName = videoItem.BaseName;
                 currentItem.VideoDisplayName = $"[S{videoItem.Season}E{videoItem.Episode}] {videoItem.ShortName}";
                 currentItem.VideoSuffix = videoItem.Extension;
                 
@@ -181,6 +182,7 @@ namespace SubtitlesSync.ViewModel
                         if (videoItem.Season == subItem.Season && videoItem.Episode == subItem.Episode)
                         {
                             currentItem.SubtitlesFileName = subItem.ShortName;
+                            currentItem.SubtitlesBaseName = subItem.BaseName;
                             currentItem.SubtitlesFullFileName = subItem.FileName;
                             currentItem.SubtitlesDisplayName = $"[S{subItem.Season}E{subItem.Episode}] {subItem.ShortName}";
                             currentItem.SubtitlesSuffix = subItem.Extension;
@@ -246,6 +248,8 @@ namespace SubtitlesSync.ViewModel
 
             foreach(var item in Items)
             {
+                if (item.VideoBaseName == item.SubtitlesBaseName) continue;
+                
                 if (String.IsNullOrEmpty(item.SubtitlesFileName) == false || String.IsNullOrEmpty(item.SubtitlesSuffix) == false)
                 {
                     //File.Copy(Path.Combine(FolderPath, item.SubtitlesFileName), Path.Combine(FolderPath, backupFolder, item.SubtitlesFileName), true);
