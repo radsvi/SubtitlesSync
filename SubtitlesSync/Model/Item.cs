@@ -7,10 +7,12 @@ namespace SubtitlesSync.Model
         [ObsoleteAttribute]public string FileName { get; set; }
         public string VideoFullFileName { get; set; }
         public string VideoFileName { get; set; }
+        public string VideoBaseName { get; set; }
         public string VideoDisplayName { get; set; }
         public string VideoSuffix { get; set; }
         public string SubtitlesFullFileName { get; set; }
         public string SubtitlesFileName { get; set; }
+        public string SubtitlesBaseName { get; set; }
         public string SubtitlesDisplayName { get; set; }
         public string SubtitlesSuffix { get; set; }
         //public bool Checked { get; set; } = true;
@@ -69,7 +71,10 @@ namespace SubtitlesSync.Model
         public string DisplayStatus
         {
             get { return displayStatus; }
-            private set { displayStatus = value; }
+            private set {
+                displayStatus = value;
+                OnPropertyChanged();
+            }
         }
 
     }

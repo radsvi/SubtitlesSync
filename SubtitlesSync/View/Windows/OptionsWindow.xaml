@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="OptionsWindow" Height="180" Width="300">
     <Grid>
-        <StackPanel VerticalAlignment="Center">
+        <!--<StackPanel VerticalAlignment="Center">
             <TextBox x:Name="txtInput" Width="200" Height="40" Margin="5"
                      TextChanged="txtInput_TextChanged"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -16,6 +16,6 @@
                 <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="40"
                         Click="btnCancel_Click"/>
             </StackPanel>
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Window>
