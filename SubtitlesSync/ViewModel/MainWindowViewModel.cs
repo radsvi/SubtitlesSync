@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls;
+using SubtitlesSync.Services;
+using System.Windows.Input;
 
 namespace SubtitlesSync.ViewModel
 {
@@ -153,6 +155,20 @@ namespace SubtitlesSync.ViewModel
         //}
 
 
+        private IWindowService _windowService;
+        public ICommand OpenWindowCommand { get; set; }
+        public ICommand CloseWindowCommand { get; set; }
+
+        private void OnOpenWindow()
+        {
+            _windowService.OpenWindow();
+        }
+        private void OnCloseWindow()
+        {
+            _windowService?.CloseWindow();
+        }
+
+
 
 
         //public RelayCommand AddCommand => new RelayCommand(execute => AddItem(), canExecute => { return true; });
@@ -170,8 +186,12 @@ namespace SubtitlesSync.ViewModel
 
 
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IWindowService windowService)
         {
+            _windowService = windowService;
+            OpenWindowCommand = new RelayCommand(param => OnOpenWindow());
+            CloseWindowCommand = new RelayCommand(param => OnCloseWindow());
+
             // https://stackoverflow.com/questions/11769113/how-to-start-wpf-based-on-arguments
             FolderPath = (Environment.GetCommandLineArgs().Length > 1) ? Environment.GetCommandLineArgs()[1] : Settings.Default.folderPath;
             SubtitlesToSearchFor = (Environment.GetCommandLineArgs().Length > 2) ? Environment.GetCommandLineArgs()[2] : String.Empty;

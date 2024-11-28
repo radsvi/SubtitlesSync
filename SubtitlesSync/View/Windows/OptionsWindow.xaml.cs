@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SubtitlesSync.Services;
+using SubtitlesSync.ViewModel;
 
 namespace SubtitlesSync.View.Windows
 {
@@ -19,10 +21,17 @@ namespace SubtitlesSync.View.Windows
     /// </summary>
     public partial class OptionsWindow : Window
     {
-        public OptionsWindow(Window parentWindow)
+        public OptionsWindow()
         {
-            Owner = parentWindow;
+            //Owner = parentWindow;
             InitializeComponent();
+
+            var windowService = new WindowService();
+            DataContext = new MainWindowViewModel(windowService);
+
+            // Position the new window
+            Top = (SystemParameters.WorkArea.Height - Height) / 2 + 50;
+            Left = (SystemParameters.WorkArea.Width - Width) / 2 + 120;
         }
     }
 }
