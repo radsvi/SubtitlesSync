@@ -155,21 +155,6 @@ namespace SubtitlesSync.ViewModel
         //}
 
 
-        private IWindowService _windowService;
-        public ICommand OpenWindowCommand { get; set; }
-        public ICommand CloseWindowCommand { get; set; }
-
-        private void OnOpenWindow()
-        {
-            _windowService.OpenWindow();
-        }
-        private void OnCloseWindow()
-        {
-            _windowService?.CloseWindow();
-        }
-
-
-
 
         //public RelayCommand AddCommand => new RelayCommand(execute => AddItem(), canExecute => { return true; });
         public RelayCommand BrowseCommand => new RelayCommand(execute => BrowseNLoadFolder());
@@ -181,16 +166,29 @@ namespace SubtitlesSync.ViewModel
         public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => AssociateWithFolderRegistry());
         public RelayCommand RemoveContextMenuCommand => new RelayCommand(execute => RemoveContextMenus());
         public RelayCommand DownloadSelectedCommand => new RelayCommand(execute => DownloadSelected(), canExecute => { return DownloadCheckIfAvailable(); });
-        public RelayCommand OpenOptionsCommand => new RelayCommand(execute => OpenOptionsWindow());
-        
+        //public RelayCommand OpenOptionsCommand => new RelayCommand(execute => OpenOptionsWindow());
 
+        private IWindowService _windowService;
+        //public ICommand OpenWindowCommand { get; set; }
+        //public ICommand CloseWindowCommand { get; set; }
+        public RelayCommand OpenOptionsWindowCommand => new RelayCommand(execute => OnOpenWindow());
+        public RelayCommand CloseOptionsWindowCommand => new RelayCommand(execute => OnCloseWindow());
+
+        private void OnOpenWindow()
+        {
+            _windowService.OpenWindow();
+        }
+        private void OnCloseWindow()
+        {
+            _windowService?.CloseWindow();
+        }
 
 
         public MainWindowViewModel(IWindowService windowService)
         {
             _windowService = windowService;
-            OpenWindowCommand = new RelayCommand(param => OnOpenWindow());
-            CloseWindowCommand = new RelayCommand(param => OnCloseWindow());
+            //OpenWindowCommand = new RelayCommand(param => OnOpenWindow());
+            //CloseWindowCommand = new RelayCommand(param => OnCloseWindow());
 
             // https://stackoverflow.com/questions/11769113/how-to-start-wpf-based-on-arguments
             FolderPath = (Environment.GetCommandLineArgs().Length > 1) ? Environment.GetCommandLineArgs()[1] : Settings.Default.folderPath;

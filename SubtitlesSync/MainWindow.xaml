@@ -58,7 +58,7 @@
                 <!--https://stackoverflow.com/questions/253431/is-it-appropriate-to-use-wingdings-fonts-in-a-windows-forms-or-wpf-app-->
                 <!--https://web.archive.org/web/20070721020023/http://www1.tip.nl/%7Et876506/UnicodeDisplay.html-->
                 <Button Content="Options" Margin="10,0,0,0" DockPanel.Dock="Right"
-                        Command="{Binding OpenWindowCommand}"/>
+                        Command="{Binding OpenOptionsWindowCommand}"/>
                 <Button Width="76" DockPanel.Dock="Right" Margin="10,0,0,0" FontSize="7"
                         Command="{Binding DownloadSelectedCommand}">
                     <TextBlock>Download<LineBreak/>Selected</TextBlock>
