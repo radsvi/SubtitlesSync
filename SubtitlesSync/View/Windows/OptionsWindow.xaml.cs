@@ -27,9 +27,9 @@ namespace SubtitlesSync.View.Windows
             InitializeComponent();
 
             var windowService = new WindowService();
-            DataContext = new MainWindowViewModel(windowService);
+            var dc = new MainWindowViewModel(windowService);
+            DataContext = dc;
 
-            // Position the new window
             Top = (SystemParameters.WorkArea.Height - Height) / 2 + 50;
             Left = (SystemParameters.WorkArea.Width - Width) / 2;
         }
