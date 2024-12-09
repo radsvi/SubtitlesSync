@@ -14,5 +14,11 @@
     <Setting Name="subtitlesDownloadSource" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s</Value>
     </Setting>
+    <Setting Name="searchContextMenuChecked" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="syncContextMenuChecked" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

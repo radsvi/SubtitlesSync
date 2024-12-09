@@ -70,6 +70,7 @@ namespace SubtitlesSync.ViewModel
                 {
                     subtitlesDownloadSource = value;
                     OnPropertyChanged();
+                    ToggleVideoFilesRegistry();
                     Settings.Default.subtitlesDownloadSource = value;
                     Settings.Default.Save();
                 }
@@ -128,7 +129,6 @@ namespace SubtitlesSync.ViewModel
             }
         }
         private int windowWidth = Settings.Default.windowWidth;
-
         public int WindowWidth
         {
             get { return windowWidth; }
@@ -142,8 +142,30 @@ namespace SubtitlesSync.ViewModel
 
         public List<RGXPatterns> RegexPatterns { get; set; } = RegexPatternsClass.GetValues();
 
-        public bool SearchContextMenuChecked { get; set; } = Convert.ToBoolean(Registry.CurrentUser.OpenSubKey(Path.Combine("SOFTWARE\\Classes", VideoSuffixes[0])));
-        public bool SyncContextMenuChecked { get; set; }
+        private bool searchContextMenuChecked = Settings.Default.searchContextMenuChecked;
+        public bool SearchContextMenuChecked
+        {
+            get { return searchContextMenuChecked; }
+            set {
+                searchContextMenuChecked = value;
+                Settings.Default.searchContextMenuChecked = value;
+                Settings.Default.Save();
+            }
+        }
+
+        private bool syncContextMenuChecked = Settings.Default.syncContextMenuChecked;
+        public bool SyncContextMenuChecked
+        {
+            get { return syncContextMenuChecked; }
+            set {
+                syncContextMenuChecked = value;
+                Settings.Default.syncContextMenuChecked = value;
+                Settings.Default.Save();
+            }
+        }
+
+
+
 
         //ObservableCollection<Item> customSampleData = new ObservableCollection<Item>() // ## smazat?
         //{
@@ -170,8 +192,9 @@ namespace SubtitlesSync.ViewModel
         //public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => AssociateWithVideoFilesRegistry());
         //public RelayCommand RemoveSearchContextMenuCommand => new RelayCommand(execute => DisassociateVideoFilesRegistry());
         public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => ToggleVideoFilesRegistry());
-        public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => AssociateWithFolderRegistry());
-        public RelayCommand RemoveSyncContextMenuCommand => new RelayCommand(execute => DisassociateFolderRegistry());
+        //public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => AssociateWithFolderRegistry());
+        //public RelayCommand RemoveSyncContextMenuCommand => new RelayCommand(execute => DisassociateFolderRegistry());
+        public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => ToggleFolderRegistry());
         public RelayCommand DownloadSelectedCommand => new RelayCommand(execute => DownloadSelected(), canExecute => { return DownloadCheckIfAvailable(); });
         //public RelayCommand OpenOptionsCommand => new RelayCommand(execute => OpenOptionsWindow());
 

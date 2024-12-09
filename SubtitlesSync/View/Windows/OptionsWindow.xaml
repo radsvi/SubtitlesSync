@@ -18,6 +18,7 @@
         </Style>
         <Style TargetType="CheckBox">
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
     <Grid Margin="10">
@@ -31,28 +32,23 @@
                 </DockPanel>
             </GroupBox>
             
-            <GroupBox Header="Registry">
+            <GroupBox Header="Context menu for associated files">
                 <StackPanel>
                     <DockPanel>
                         <CheckBox x:Name="cbSearchContextMenu"
-                                  Command="{Binding SearchContextMenuCommand}"
-                                  IsChecked="{Binding SearchContextMenuChecked}"/>
-                        <Label Content="Create &quot;Search for subtitles&quot; context menu"/>
+                            Command="{Binding SearchContextMenuCommand}"
+                            IsChecked="{Binding SearchContextMenuChecked}">
+                            <Label Content="Create &quot;Search for subtitles&quot; context menu"/>
+                        </CheckBox>
                     </DockPanel>
                     <DockPanel>
-                        <CheckBox IsChecked="True"/>
-                        <Label Content="Create &quot;Sync subtitles with video&quot; context menu"/>
+                        <CheckBox
+                            Command="{Binding SubtitlesSyncContextMenuCommand}"
+                            IsChecked="{Binding SyncContextMenuChecked}">
+                            <Label Content="Create &quot;Sync subtitles with video&quot; context menu"/>
+                        </CheckBox>
                     </DockPanel>
 
-                    <!--<Button Content="Create &quot;Search for subtitles&quot; context menu"
-                            Command="{Binding SearchContextMenuCommand}"/>
-                    <Button Content="Remove search context menus"
-                            Command="{Binding RemoveSearchContextMenuCommand}"/>
-                    <Button Content="Create &quot;Sync subtitles with video&quot; context menu"
-                            Command="{Binding SubtitlesSyncContextMenuCommand}"/>
-                    <Button Content="Remove sync context menus"
-                            Command="{Binding RemoveSyncContextMenuCommand}"/>-->
-                    
                 </StackPanel>
             </GroupBox>
         </StackPanel>

@@ -343,6 +343,17 @@ namespace SubtitlesSync.ViewModel
                 RemoveRegistrySubkey(Path.Combine(registryFolderPath, suffixKey, "shell"));
             }
         }
+        private void ToggleFolderRegistry()
+        {
+            if (SyncContextMenuChecked == true)
+            {
+                AssociateWithFolderRegistry();
+            }
+            else
+            {
+                DisassociateFolderRegistry();
+            }
+        }
         private void AssociateWithFolderRegistry()
         {
             //MessageBoxResult result = MessageBox.Show("Do you want to create context menu for folder to allow quick start of SubtitlesSync app?", "Context menu association", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -353,6 +364,10 @@ namespace SubtitlesSync.ViewModel
             string command = $"\"{appPath}\" \"%L\"";
             CreateSubtitlesSyncRegistry(regDirectorySubKey, "Sync subtitles with video...", command, "%SystemRoot%\\System32\\shell32.dll,115");
         }
+        private void DisassociateFolderRegistry()
+        {
+            RemoveRegistrySubkey("SOFTWARE\\Classes\\Directory\\shell");
+        }
         private void CreateSubtitlesSyncRegistry(RegistryKey directory, string displayName, string command, string icon)
         {
             RegistryKey regShellSubKey = directory.CreateSubKey("shell");
@@ -362,10 +377,6 @@ namespace SubtitlesSync.ViewModel
 
             RegistryKey regCommandSubKey = regSubtitlesSyncSubKey.CreateSubKey("Command");
             regCommandSubKey.SetValue(String.Empty, command);
-        }
-        private void DisassociateFolderRegistry()
-        {
-            RemoveRegistrySubkey("SOFTWARE\\Classes\\Directory\\shell");
         }
         private void RemoveRegistrySubkey(string path)
         {
@@ -382,16 +393,6 @@ namespace SubtitlesSync.ViewModel
                     MessageBox.Show($"Error, context menu doesn't exist!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-        }
-        private void RemoveContextMenus()
-        {
-            //MessageBoxResult result = MessageBox.Show("Do you want to remove all context menues associated with this app?", "Context menu deassociation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            //if (result == MessageBoxResult.No) return;
-
-            // ## dodelat!
-            //MessageBox.Show("Error, function not implemented yet", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
-
-            DisassociateVideoFilesRegistry();
         }
         private void ParseFileNameAndFolder(string subtitlesString, out string folderPath, out string searchPattern)
         {
