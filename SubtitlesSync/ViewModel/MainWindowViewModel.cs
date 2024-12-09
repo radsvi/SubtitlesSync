@@ -69,6 +69,9 @@ namespace SubtitlesSync.ViewModel
                 if (value.IndexOf("%s") != -1)
                 {
                     subtitlesDownloadSource = value;
+                    OnPropertyChanged();
+                    Settings.Default.subtitlesDownloadSource = value;
+                    Settings.Default.Save();
                 }
             }
         }
@@ -139,7 +142,7 @@ namespace SubtitlesSync.ViewModel
 
         public List<RGXPatterns> RegexPatterns { get; set; } = RegexPatternsClass.GetValues();
 
-        
+
         //ObservableCollection<Item> customSampleData = new ObservableCollection<Item>() // ## smazat?
         //{
         //    new Item { VideoDisplayName = "qwer" },
@@ -163,8 +166,9 @@ namespace SubtitlesSync.ViewModel
         public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return CheckRenamePrepared(); });
         public RelayCommand EscKeyCommand => new RelayCommand(execute => CloseApplication());
         public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => AssociateWithVideoFilesRegistry());
+        public RelayCommand RemoveSearchContextMenuCommand => new RelayCommand(execute => DisassociateVideoFilesRegistry());
         public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => AssociateWithFolderRegistry());
-        public RelayCommand RemoveContextMenuCommand => new RelayCommand(execute => RemoveContextMenus());
+        public RelayCommand RemoveSyncContextMenuCommand => new RelayCommand(execute => DisassociateFolderRegistry());
         public RelayCommand DownloadSelectedCommand => new RelayCommand(execute => DownloadSelected(), canExecute => { return DownloadCheckIfAvailable(); });
         //public RelayCommand OpenOptionsCommand => new RelayCommand(execute => OpenOptionsWindow());
 

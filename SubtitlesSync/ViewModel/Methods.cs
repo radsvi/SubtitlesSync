@@ -298,10 +298,14 @@ namespace SubtitlesSync.ViewModel
         //    key.SetValue("yourkey", "yourvalue");
         //}
 
+        //private void ToggleVideoFilesRegistry(bool IsChecked)
+        //{
+
+        //}
         private void AssociateWithVideoFilesRegistry()
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to create context menu for video files to allow quick search for subtitles?", "Context menu association", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.No) return;
+            //MessageBoxResult result = MessageBox.Show("Do you want to create context menu for video files to allow quick search for subtitles?", "Context menu association", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            //if (result == MessageBoxResult.No) return;
 
             string registryFolderPath = "SOFTWARE\\Classes";
 
@@ -319,10 +323,23 @@ namespace SubtitlesSync.ViewModel
                 CreateSubtitlesSyncRegistry(regFileSuffixSubKey, "Search for subtitles", command, "%SystemRoot%\\System32\\shell32.dll,315");
             }
         }
+        private void DisassociateVideoFilesRegistry()
+        {
+            string registryFolderPath = "SOFTWARE\\Classes";
+
+            foreach (string suffix in VideoSuffixes)
+            {
+                string suffixKey = Registry.CurrentUser.OpenSubKey(Path.Combine(registryFolderPath, suffix)).GetValue(String.Empty).ToString();
+
+                if (suffixKey == null) { break; }
+
+                RemoveRegistrySubkey(Path.Combine(registryFolderPath, suffixKey, "shell"));
+            }
+        }
         private void AssociateWithFolderRegistry()
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to create context menu for folder to allow quick start of SubtitlesSync app?", "Context menu association", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.No) return;
+            //MessageBoxResult result = MessageBox.Show("Do you want to create context menu for folder to allow quick start of SubtitlesSync app?", "Context menu association", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            //if (result == MessageBoxResult.No) return;
 
             RegistryKey regDirectorySubKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Classes\\Directory", true);
             string appPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SubtitlesSync.exe");
@@ -339,13 +356,35 @@ namespace SubtitlesSync.ViewModel
             RegistryKey regCommandSubKey = regSubtitlesSyncSubKey.CreateSubKey("Command");
             regCommandSubKey.SetValue(String.Empty, command);
         }
+        private void DisassociateFolderRegistry()
+        {
+            RemoveRegistrySubkey("SOFTWARE\\Classes\\Directory\\shell");
+        }
+        private void RemoveRegistrySubkey(string path)
+        {
+            using (RegistryKey regDirectorySubKey = Registry.CurrentUser.OpenSubKey(path, true))
+            {
+                try
+                {
+                    regDirectorySubKey.DeleteSubKeyTree("SubtitlesSync");
+                }
+                catch
+                {
+                    // Tohle by se nemelo nikdy zobrazit
+                    // ## nesmazat celej catch?
+                    MessageBox.Show($"Error, context menu doesn't exist!", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
         private void RemoveContextMenus()
         {
             //MessageBoxResult result = MessageBox.Show("Do you want to remove all context menues associated with this app?", "Context menu deassociation", MessageBoxButton.YesNo, MessageBoxImage.Question);
             //if (result == MessageBoxResult.No) return;
 
             // ## dodelat!
-            MessageBox.Show("Error, function not implemented yet", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            //MessageBox.Show("Error, function not implemented yet", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            DisassociateVideoFilesRegistry();
         }
         private void ParseFileNameAndFolder(string subtitlesString, out string folderPath, out string searchPattern)
         {
@@ -407,17 +446,17 @@ namespace SubtitlesSync.ViewModel
                 }
             }
         }
-        private void OpenOptionsWindow()
-        {
-            //OptionsWindow modalWindow = new OptionsWindow();
-            ////Opacity = 0.4;
-            //OptionsWindow.ShowDialog(); // main window zustane zamrzli v pozadi
-            ////Opacity = 1;
-            //if (OptionsWindow.Success)
-            //{
-            //    txtInput.Text = OptionsWindow.Input;
-            //}
+        //private void OpenOptionsWindow()
+        //{
+        //    //OptionsWindow modalWindow = new OptionsWindow();
+        //    ////Opacity = 0.4;
+        //    //OptionsWindow.ShowDialog(); // main window zustane zamrzli v pozadi
+        //    ////Opacity = 1;
+        //    //if (OptionsWindow.Success)
+        //    //{
+        //    //    txtInput.Text = OptionsWindow.Input;
+        //    //}
 
-        }
+        //}
     }
 }

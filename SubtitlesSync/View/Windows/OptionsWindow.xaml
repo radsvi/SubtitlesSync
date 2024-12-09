@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
         Background="#F0F0F0"
-        Title="OptionsWindow" Height="400" Width="800">
+        Title="OptionsWindow" Height="400" Width="800"
+        d:Height="200" d:Width="300">
     <Window.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding CloseOptionsWindowCommand}"/>
     </Window.InputBindings>
@@ -15,25 +16,43 @@
         <Style TargetType="Button">
             <Setter Property="Margin" Value="0,5,0,5"/>
         </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </Window.Resources>
     <Grid Margin="10">
         <StackPanel>
             <GroupBox Header="Other">
                 <DockPanel>
                     <Label Content="Subtitles source"/>
-                    <TextBox x:Name="tbSubtitlesSource" d:Text="https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s" Text="{Binding SubtitlesDownloadSource}"
+                    <TextBox x:Name="tbSubtitlesSource" d:Text="https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s"
+                             Text="{Binding SubtitlesDownloadSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                              VerticalAlignment="Center" Height="24" VerticalContentAlignment="Center" />
                 </DockPanel>
             </GroupBox>
             
             <GroupBox Header="Registry">
                 <StackPanel>
+                    <!--<DockPanel>
+                        <CheckBox IsChecked="True" x:Name="cbSearchContextMenu"
+                                  Command="{Binding SearchContextMenuCommand}"
+                                  CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"/>
+                        <Label Content="Create &quot;Search for subtitles&quot; context menu"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <CheckBox IsChecked="True"/>
+                        <Label Content="Create &quot;Sync subtitles with video&quot; context menu"/>
+                    </DockPanel>-->
+
                     <Button Content="Create &quot;Search for subtitles&quot; context menu"
                             Command="{Binding SearchContextMenuCommand}"/>
+                    <Button Content="Remove search context menus"
+                            Command="{Binding RemoveSearchContextMenuCommand}"/>
                     <Button Content="Create &quot;Sync subtitles with video&quot; context menu"
                             Command="{Binding SubtitlesSyncContextMenuCommand}"/>
-                    <Button Content="Remove context menus"
-                            Command="{Binding RemoveContextMenuCommand}"/>
+                    <Button Content="Remove sync context menus"
+                            Command="{Binding RemoveSyncContextMenuCommand}"/>
+                    
                 </StackPanel>
             </GroupBox>
         </StackPanel>
