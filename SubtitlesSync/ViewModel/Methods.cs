@@ -298,10 +298,17 @@ namespace SubtitlesSync.ViewModel
         //    key.SetValue("yourkey", "yourvalue");
         //}
 
-        //private void ToggleVideoFilesRegistry(bool IsChecked)
-        //{
-
-        //}
+        private void ToggleVideoFilesRegistry()
+        {
+            if (SearchContextMenuChecked == true)
+            {
+                AssociateWithVideoFilesRegistry();
+            }
+            else
+            {
+                DisassociateVideoFilesRegistry();
+            }
+        }
         private void AssociateWithVideoFilesRegistry()
         {
             //MessageBoxResult result = MessageBox.Show("Do you want to create context menu for video files to allow quick search for subtitles?", "Context menu association", MessageBoxButton.YesNo, MessageBoxImage.Question);

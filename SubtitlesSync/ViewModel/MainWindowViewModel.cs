@@ -142,6 +142,8 @@ namespace SubtitlesSync.ViewModel
 
         public List<RGXPatterns> RegexPatterns { get; set; } = RegexPatternsClass.GetValues();
 
+        public bool SearchContextMenuChecked { get; set; } = Convert.ToBoolean(Registry.CurrentUser.OpenSubKey(Path.Combine("SOFTWARE\\Classes", VideoSuffixes[0])));
+        public bool SyncContextMenuChecked { get; set; }
 
         //ObservableCollection<Item> customSampleData = new ObservableCollection<Item>() // ## smazat?
         //{
@@ -165,8 +167,9 @@ namespace SubtitlesSync.ViewModel
         public RelayCommand ReloadFolder => new RelayCommand(execute => PopulateDataGrid(), canExecute => { return Directory.Exists(FolderPath); });
         public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return CheckRenamePrepared(); });
         public RelayCommand EscKeyCommand => new RelayCommand(execute => CloseApplication());
-        public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => AssociateWithVideoFilesRegistry());
-        public RelayCommand RemoveSearchContextMenuCommand => new RelayCommand(execute => DisassociateVideoFilesRegistry());
+        //public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => AssociateWithVideoFilesRegistry());
+        //public RelayCommand RemoveSearchContextMenuCommand => new RelayCommand(execute => DisassociateVideoFilesRegistry());
+        public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => ToggleVideoFilesRegistry());
         public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => AssociateWithFolderRegistry());
         public RelayCommand RemoveSyncContextMenuCommand => new RelayCommand(execute => DisassociateFolderRegistry());
         public RelayCommand DownloadSelectedCommand => new RelayCommand(execute => DownloadSelected(), canExecute => { return DownloadCheckIfAvailable(); });

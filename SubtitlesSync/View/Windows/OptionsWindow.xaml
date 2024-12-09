@@ -33,25 +33,25 @@
             
             <GroupBox Header="Registry">
                 <StackPanel>
-                    <!--<DockPanel>
-                        <CheckBox IsChecked="True" x:Name="cbSearchContextMenu"
+                    <DockPanel>
+                        <CheckBox x:Name="cbSearchContextMenu"
                                   Command="{Binding SearchContextMenuCommand}"
-                                  CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"/>
+                                  IsChecked="{Binding SearchContextMenuChecked}"/>
                         <Label Content="Create &quot;Search for subtitles&quot; context menu"/>
                     </DockPanel>
                     <DockPanel>
                         <CheckBox IsChecked="True"/>
                         <Label Content="Create &quot;Sync subtitles with video&quot; context menu"/>
-                    </DockPanel>-->
+                    </DockPanel>
 
-                    <Button Content="Create &quot;Search for subtitles&quot; context menu"
+                    <!--<Button Content="Create &quot;Search for subtitles&quot; context menu"
                             Command="{Binding SearchContextMenuCommand}"/>
                     <Button Content="Remove search context menus"
                             Command="{Binding RemoveSearchContextMenuCommand}"/>
                     <Button Content="Create &quot;Sync subtitles with video&quot; context menu"
                             Command="{Binding SubtitlesSyncContextMenuCommand}"/>
                     <Button Content="Remove sync context menus"
-                            Command="{Binding RemoveSyncContextMenuCommand}"/>
+                            Command="{Binding RemoveSyncContextMenuCommand}"/>-->
                     
                 </StackPanel>
             </GroupBox>
