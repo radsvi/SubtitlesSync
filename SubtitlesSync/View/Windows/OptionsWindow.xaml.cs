@@ -31,7 +31,7 @@ namespace SubtitlesSync.View.Windows
 
             // Position the new window
             Top = (SystemParameters.WorkArea.Height - Height) / 2 + 50;
-            Left = (SystemParameters.WorkArea.Width - Width) / 2 + 120;
+            Left = (SystemParameters.WorkArea.Width - Width) / 2;
         }
     }
 }

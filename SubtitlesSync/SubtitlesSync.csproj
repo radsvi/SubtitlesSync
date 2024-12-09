@@ -10,7 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Lib\" />
+    <Compile Remove="Lib\**" />
+    <EmbeddedResource Remove="Lib\**" />
+    <None Remove="Lib\**" />
+    <Page Remove="Lib\**" />
   </ItemGroup>
 
   <ItemGroup>

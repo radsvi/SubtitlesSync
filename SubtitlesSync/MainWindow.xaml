@@ -35,9 +35,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
   
-        <userControls:MenuBar/>
+        <!--<userControls:MenuBar/>-->
 
-        <Grid Margin="10,0,10,10" Grid.Row="1">
+        <Grid Margin="10,10,10,10" Grid.Row="1">
             <!--#region First Row -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="22"/>
@@ -57,7 +57,8 @@
                 <!--https://stackoverflow.com/questions/6771769/refresh-icon-for-button-->
                 <!--https://stackoverflow.com/questions/253431/is-it-appropriate-to-use-wingdings-fonts-in-a-windows-forms-or-wpf-app-->
                 <!--https://web.archive.org/web/20070721020023/http://www1.tip.nl/%7Et876506/UnicodeDisplay.html-->
-                <Button Content="Options" Margin="10,0,0,0" DockPanel.Dock="Right"
+                <!--// ⛓️⚙️🔆🛠️🔄↻ //-->
+                <Button Content="⚙️" Margin="10,0,0,0" DockPanel.Dock="Right"
                         Command="{Binding OpenOptionsWindowCommand}"/>
                 <Button Width="76" DockPanel.Dock="Right" Margin="10,0,0,0" FontSize="7"
                         Command="{Binding DownloadSelectedCommand}">
