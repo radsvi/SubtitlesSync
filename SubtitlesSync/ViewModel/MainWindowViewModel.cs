@@ -237,6 +237,8 @@ namespace SubtitlesSync.ViewModel
 
                 FolderPath = folderOut;
                 OpenWebSearchForSubtitles(fileOut);
+
+                CloseApplication();
             }
         }
     }
