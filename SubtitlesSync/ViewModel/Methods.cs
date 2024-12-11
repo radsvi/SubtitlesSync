@@ -466,5 +466,19 @@ namespace SubtitlesSync.ViewModel
         //    //}
 
         //}
+
+
+        private DownloadFolderFiles downloadedFiles;
+        public DownloadFolderFiles DownloadedFiles
+        {
+            get { return downloadedFiles; }
+            set { downloadedFiles = value; }
+        }
+
+        public void CheckDownloadFolder()
+        {
+
+        }
+
     }
 }

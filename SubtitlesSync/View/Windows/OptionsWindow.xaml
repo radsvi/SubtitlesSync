@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SubtitlesSync.View.Windows"
+        xmlns:lists="clr-namespace:SubtitlesSync.View.Lists"
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
         Background="#F0F0F0"
-        Title="OptionsWindow" Height="400" Width="800"
-        d:Height="150" d:Width="600">
+        Title="OptionsWindow" Height="450" Width="640"
+        d:Width="640"
+        MinWidth="640">
     <Window.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding CloseOptionsWindowCommand}"/>
     </Window.InputBindings>
@@ -49,6 +51,33 @@
                         </CheckBox>
                     </DockPanel>
 
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Downloads">
+                <StackPanel>
+                    <DockPanel>
+                        <Label Content="Checking this download folder"/>
+                        <TextBox Text="{Binding SubtitlesDownloadSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Button Content="Browse..." x:Name="btnBrowse" Width="76"
+                                Command="{Binding BrowseCommand}"/>
+
+                    </DockPanel>
+                    <DockPanel>
+                        <Button Content="Check files downloaded x hours"/>
+                        <Label Content="in last"/>
+                        <TextBox Text="{Binding SubtitlesDownloadSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Label Content="hours"/>
+                    </DockPanel>
+                    <Button Content="Check download folder and unpack the subtitles to target directory"/>
+                    <TextBox x:Name="tbAddress" Text="{Binding FolderPath}" HorizontalAlignment="Stretch"
+                             VerticalContentAlignment="Center" IsEnabled="False" />
+                    <Expander Header="Downloaded files" IsExpanded="True">
+                        <StackPanel Background="White">
+                            <TextBlock>qwer</TextBlock>
+                            <lists:DownloadFolderListBox/>
+                        </StackPanel>
+                    </Expander>
                 </StackPanel>
             </GroupBox>
         </StackPanel>

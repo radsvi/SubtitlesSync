@@ -51,8 +51,8 @@
                     <ColumnDefinition Width="86"/>
                 </Grid.ColumnDefinitions>-->
                 <Button Content="Browse..." x:Name="btnBrowse" Width="76" DockPanel.Dock="Left"
-                    Command="{Binding BrowseCommand}"/>
-                
+                        Command="{Binding BrowseCommand}"/>
+
                 <!--https://stackoverflow.com/questions/6771769/refresh-icon-for-button-->
                 <!--https://stackoverflow.com/questions/253431/is-it-appropriate-to-use-wingdings-fonts-in-a-windows-forms-or-wpf-app-->
                 <!--https://web.archive.org/web/20070721020023/http://www1.tip.nl/%7Et876506/UnicodeDisplay.html-->
@@ -66,7 +66,8 @@
                 </Button>
                 <Button Content="Rename all" x:Name="btnRename" Width="76" DockPanel.Dock="Right" Margin="10,0,0,0"
                         Command="{Binding RenameCommand}"/>
-                <Border DockPanel.Dock="Top" Margin="10,0,0,0" BorderThickness="1" BorderBrush="LightGray">
+                <Border DockPanel.Dock="Top" Margin="10,0,0,0"
+                        BorderThickness="1" BorderBrush="LightGray">
                     <DockPanel>
                         <Button Command="{Binding ReloadFolder}"
                                 Style="{StaticResource ReloadButton}" DockPanel.Dock="Right"/>
