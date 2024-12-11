@@ -223,7 +223,6 @@ namespace SubtitlesSync.ViewModel
             // https://stackoverflow.com/questions/11769113/how-to-start-wpf-based-on-arguments
             FolderPath = (Environment.GetCommandLineArgs().Length > 1) ? Environment.GetCommandLineArgs()[1] : Settings.Default.folderPath;
             SubtitlesToSearchFor = (Environment.GetCommandLineArgs().Length > 2) ? Environment.GetCommandLineArgs()[2] : String.Empty;
-            //string SubtitlesToSearchFor = "D:\\Torrent\\House MD Season 1, 2, 3, 4, 5, 6, 7 & 8 + Extras DVDRip TSV\\Season 7\\House MD Season 7 Episode 20 - Changes.avi";
 
             //Items = new ObservableCollection<Item>();
             PopulateDataGrid();

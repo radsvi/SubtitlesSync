@@ -57,7 +57,7 @@
                 <!--https://stackoverflow.com/questions/253431/is-it-appropriate-to-use-wingdings-fonts-in-a-windows-forms-or-wpf-app-->
                 <!--https://web.archive.org/web/20070721020023/http://www1.tip.nl/%7Et876506/UnicodeDisplay.html-->
                 <!--// ⛓️⚙️🔆🛠️🔄↻ //-->
-                <Button DockPanel.Dock="Right"
+                <Button DockPanel.Dock="Right" Content="⚙️"
                         Style="{StaticResource OptionsButton}"
                         Command="{Binding OpenOptionsWindowCommand}"/>
                 <Button Width="76" DockPanel.Dock="Right" Margin="10,0,0,0" FontSize="7"
@@ -66,14 +66,15 @@
                 </Button>
                 <Button Content="Rename all" x:Name="btnRename" Width="76" DockPanel.Dock="Right" Margin="10,0,0,0"
                         Command="{Binding RenameCommand}"/>
+                <Border DockPanel.Dock="Top" Margin="10,0,0,0" BorderThickness="1" BorderBrush="LightGray">
+                    <DockPanel>
+                        <Button Command="{Binding ReloadFolder}"
+                                Style="{StaticResource ReloadButton}" DockPanel.Dock="Right"/>
+                        <TextBox x:Name="tbAddress" Text="{Binding FolderPath}" HorizontalAlignment="Stretch" BorderThickness="0"
+                                    VerticalContentAlignment="Center" IsEnabled="False" />
+                    </DockPanel>
+                </Border>
 
-                <Grid DockPanel.Dock="Top" Margin="10,0,0,0">
-                    <TextBox x:Name="tbAddress" Text="{Binding FolderPath}" HorizontalAlignment="Stretch"
-                             VerticalContentAlignment="Center" IsEnabled="False" />
-                    <Button Command="{Binding ReloadFolder}"
-                            Style="{StaticResource ReloadButton}"/>
-                </Grid>
-                
             </DockPanel>
             <!--#endregion-->
             <!--<lists:DataTemplateOne Grid.Row="1"/>-->
