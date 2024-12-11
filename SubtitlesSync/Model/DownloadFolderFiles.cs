@@ -9,8 +9,20 @@ namespace SubtitlesSync.Model
 {
     internal class DownloadFolderFiles : ViewModelBase
     {
-        public string FileName { get; set; } // full name with path and suffix
+        private string fileName; // full name with path and suffix
+
+        public string FileName
+        {
+            get { return fileName; }
+            set {
+                fileName = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string BaseName { get; set; } // name without suffix and without path
-        bool EnabledToTransfer { get; set; }
+        public string ShortName { get; set; } // name with suffix, but without path
+        public string Suffix { get; set; } // suffix in format ".srt"
+        public bool ToTransfer { get; set; }
     }
 }

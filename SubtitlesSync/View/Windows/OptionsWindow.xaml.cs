@@ -32,6 +32,8 @@ namespace SubtitlesSync.View.Windows
 
             Top = (SystemParameters.WorkArea.Height - Height) / 2 + 50;
             Left = (SystemParameters.WorkArea.Width - Width) / 2;
+
+            //CheckDownloadFolder();
         }
     }
 }

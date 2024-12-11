@@ -58,23 +58,23 @@
                 <StackPanel>
                     <DockPanel>
                         <Label Content="Checking this download folder"/>
-                        <TextBox Text="{Binding SubtitlesDownloadSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <TextBox Text="{Binding DownloadPath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                         <Button Content="Browse..." x:Name="btnBrowse" Width="76"
-                                Command="{Binding BrowseCommand}"/>
+                                Command="{Binding BrowseDownloadFolderCommand}"/>
 
                     </DockPanel>
                     <DockPanel>
-                        <Button Content="Check files downloaded x hours"/>
+                        <Button Content="Check files downloaded" Command="{Binding CheckDownloadFolderCommand}"/>
                         <Label Content="in last"/>
-                        <TextBox Text="{Binding SubtitlesDownloadSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <TextBox Text="{Binding FileNewerThanHours, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="20" HorizontalContentAlignment="Right"/>
                         <Label Content="hours"/>
                     </DockPanel>
-                    <Button Content="Check download folder and unpack the subtitles to target directory"/>
+                    <Button Content="Check download folder and unpack the subtitles to target directory"
+                            Command="{Binding TransferSubtitlesCommand}"/>
                     <TextBox x:Name="tbAddress" Text="{Binding FolderPath}" HorizontalAlignment="Stretch"
-                             VerticalContentAlignment="Center" IsEnabled="False" />
+                             VerticalContentAlignment="Center" IsEnabled="False" Width="Auto" />
                     <Expander Header="Downloaded files" IsExpanded="True">
                         <StackPanel Background="White">
-                            <TextBlock>qwer</TextBlock>
                             <lists:DownloadFolderListBox/>
                         </StackPanel>
                     </Expander>

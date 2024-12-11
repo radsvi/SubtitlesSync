@@ -1,11 +1,13 @@
 ﻿using Microsoft.Win32;
 using SubtitlesSync.Model;
 using SubtitlesSync.MVVM;
+using SubtitlesSync.Properties;
 using SubtitlesSync.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -59,7 +61,25 @@ namespace SubtitlesSync.ViewModel
         {
             OpenFolderDialog folderDialog = new OpenFolderDialog();
             folderDialog.Title = "Select folder containing subtitles...";
-            folderDialog.InitialDirectory = FolderPath;
+            if (Directory.Exists(FolderPath))
+            {
+                folderDialog.InitialDirectory = FolderPath;
+            }
+            else
+            {
+                var splitPath = FolderPath.Split("\\");
+
+                for (int i = 1; i < splitPath.Length; i++)
+                {
+                    var parentSplitPath = splitPath.Take(splitPath.Count() - i).ToArray();
+                    var parentPath = Path.Combine(parentSplitPath);
+                    if (Directory.Exists(parentPath))
+                    {
+                        folderDialog.InitialDirectory = parentPath;
+                        break;
+                    }
+                }
+            }
 
             bool? success = folderDialog.ShowDialog();
             if (success == true)
@@ -468,17 +488,144 @@ namespace SubtitlesSync.ViewModel
         //}
 
 
-        private DownloadFolderFiles downloadedFiles;
-        public DownloadFolderFiles DownloadedFiles
+
+        // ===================================
+        // ===================================
+        // ===================================
+        private string downloadPath = Settings.Default.downloadPath;
+        public string DownloadPath
         {
-            get { return downloadedFiles; }
-            set { downloadedFiles = value; }
+            get { return downloadPath; }
+            set {
+                downloadPath = value;
+                OnPropertyChanged();
+                Settings.Default.downloadPath = value;
+                Settings.Default.Save();
+            }
         }
+
+        private int fileNewerThanHours = Settings.Default.fileNewerThanHours;
+        public int FileNewerThanHours
+        {
+            get { return fileNewerThanHours; }
+            set {
+                fileNewerThanHours = value;
+                OnPropertyChanged();
+                Settings.Default.fileNewerThanHours = value;
+                Settings.Default.Save();
+            }
+        }
+
+
+        private List<DownloadFolderFiles> downloadedFiles = new List<DownloadFolderFiles>();
+        public List<DownloadFolderFiles> DownloadedFiles
+        {
+            get {
+                return downloadedFiles;
+            }
+            set {
+                downloadedFiles = value;
+                OnPropertyChanged();
+            }
+        }
+        //public string[] packageTypes { get; set; } = { ".zip", ".rar", ".7z" }; // ## otestovat ostatni pripony
+        public string[] packageTypes { get; set; } = { ".zip" };
 
         public void CheckDownloadFolder()
         {
+            if (Directory.Exists(DownloadPath))
+            {
+                var folderContent = new List<string>(Directory.GetFiles(DownloadPath));
+                if (DownloadedFiles.Count() > 0) DownloadedFiles.Clear();
+                foreach (string fileName in folderContent)
+                {
+                    var suffix = Path.GetExtension(fileName);
+                    DateTime date = File.GetCreationTime(fileName);
 
+                    if (Array.IndexOf(packageTypes, suffix) != -1 && DateTime.Now.Subtract(date).TotalHours < FileNewerThanHours) {
+                        //var qwer = "";
+                        DownloadedFiles.Add(new DownloadFolderFiles
+                        {
+                            FileName = fileName,
+                            BaseName = Path.GetFileNameWithoutExtension(fileName),
+                            ShortName = Path.GetFileName(fileName),
+                            Suffix = suffix,
+                            ToTransfer = true,
+                        });
+                    }
+                }
+            }
         }
 
+        public RelayCommand BrowseDownloadFolderCommand => new RelayCommand(execute => BrowseDownloadFolder());
+        public RelayCommand CheckDownloadFolderCommand => new RelayCommand(execute => CheckDownloadFolder());
+        public RelayCommand TransferSubtitlesCommand => new RelayCommand(execute => TransferSubtitles());
+
+        private void BrowseDownloadFolder()
+        {
+            OpenFolderDialog folderDialog = new OpenFolderDialog();
+            folderDialog.Title = "Select Download folder...";
+            if (Directory.Exists(DownloadPath))
+            {
+                folderDialog.InitialDirectory = DownloadPath;
+            }
+            else
+            {
+                var splitPath = DownloadPath.Split("\\");
+
+                for (int i = 1; i < splitPath.Length; i++)
+                {
+                    var parentSplitPath = splitPath.Take(splitPath.Count() - i).ToArray();
+                    var parentPath = Path.Combine(parentSplitPath);
+                    if (Directory.Exists(parentPath))
+                    {
+                        folderDialog.InitialDirectory = parentPath;
+                        break;
+                    }
+                }
+            }
+
+            bool? success = folderDialog.ShowDialog();
+            if (success == true)
+            {
+                string path = folderDialog.FolderName;
+                DownloadPath = path;
+            }
+        }
+        private void TransferSubtitles()
+        {
+            int extractedFiles = 0;
+            foreach (var archiveFile in DownloadedFiles)
+            {
+                if (archiveFile.ToTransfer == true && Path.Exists(archiveFile.FileName))
+                {
+                    //System.IO.Compression.ZipFile.ExtractToDirectory(file.FileName, FolderPath);
+                    using (ZipArchive archive = ZipFile.OpenRead(archiveFile.FileName))
+                    {
+                        foreach (ZipArchiveEntry entry in archive.Entries)
+                        {
+                            if (entry.FullName.EndsWith(".srt", StringComparison.OrdinalIgnoreCase)) // ## dodelat aby to podporovalo vsechny pripony
+                            {
+                                Console.WriteLine(entry.FullName);
+                                entry.ExtractToFile(Path.Combine(FolderPath, entry.FullName));
+                                extractedFiles++;
+                            }
+
+
+                        }
+                    }
+                }
+            }
+            if (extractedFiles > 0)
+            {
+                MessageBox.Show($"Extracted {extractedFiles} file(s).");
+                OnCloseWindow();
+            }
+            else
+            {
+                MessageBox.Show($"No files extracted.");
+            }
+            
+        }
     }
 }

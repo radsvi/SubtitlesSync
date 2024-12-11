@@ -94,5 +94,29 @@ namespace SubtitlesSync.Properties {
                 this["syncContextMenuChecked"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\users\\%username%\\Downloads")]
+        public string downloadPath {
+            get {
+                return ((string)(this["downloadPath"]));
+            }
+            set {
+                this["downloadPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int fileNewerThanHours {
+            get {
+                return ((int)(this["fileNewerThanHours"]));
+            }
+            set {
+                this["fileNewerThanHours"] = value;
+            }
+        }
     }
 }

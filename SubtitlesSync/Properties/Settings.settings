@@ -20,5 +20,11 @@
     <Setting Name="syncContextMenuChecked" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="downloadPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\users\%username%\Downloads</Value>
+    </Setting>
+    <Setting Name="fileNewerThanHours" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

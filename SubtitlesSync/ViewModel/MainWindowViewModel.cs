@@ -239,6 +239,7 @@ namespace SubtitlesSync.ViewModel
 
                 CloseApplication();
             }
+            CheckDownloadFolder(); // ## tohle musim zmenit. Dat to aby se to triggernulo az pri pusteni OptionsWindow
         }
     }
 }
