@@ -19,13 +19,13 @@
                                 <ColumnDefinition Width="45*"/>
                                 <ColumnDefinition Width="44*"/>
                                 <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition Width="5*"/>
-                        </Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*"/>
+                            </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0" Width="450" Text="{Binding Path=VideoDisplayName}" Margin="5,0,0,0"/>
                             <TextBlock Grid.Column="1" Width="450" Text="{Binding Path=SubtitlesDisplayName}" Margin="5,0,0,0"/>
                             <TextBlock Grid.Column="2" Width="50" Text="{Binding Path=Status}" Margin="5,0,0,0"/>
-                    </Grid>
+                        </Grid>
                     </CheckBox>
             </DataTemplate>
             </ItemsControl.ItemTemplate>
