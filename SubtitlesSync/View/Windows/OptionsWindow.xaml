@@ -47,81 +47,81 @@
         </Style>
     </Window.Resources>
     <Grid Margin="10">
-        <StackPanel>
-            <GroupBox Header="Other">
-                <DockPanel>
-                    <Label Content="Subtitles source"/>
-                    <TextBox x:Name="tbSubtitlesSource" d:Text="https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s"
-                             Text="{Binding SubtitlesDownloadSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                             VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="Auto" Height="24" VerticalContentAlignment="Center" />
-                </DockPanel>
-            </GroupBox>
-            
-            <GroupBox Header="Context menu for associated files">
-                <StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <GroupBox Header="Other">
                     <DockPanel>
-                        <CheckBox x:Name="cbSearchContextMenu"
-                            Command="{Binding SearchContextMenuCommand}"
-                            IsChecked="{Binding SearchContextMenuChecked}">
-                            <Label Content="Create &quot;Search for subtitles&quot; context menu for video files"/>
-                        </CheckBox>
+                        <Label Content="Subtitles source"/>
+                        <TextBox x:Name="tbSubtitlesSource" d:Text="https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s"
+                     Text="{Binding SubtitlesDownloadSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                     VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="Auto" Height="24" VerticalContentAlignment="Center" />
                     </DockPanel>
-                    <DockPanel>
-                        <CheckBox
-                            Command="{Binding SubtitlesSyncContextMenuCommand}"
-                            IsChecked="{Binding SyncContextMenuChecked}">
-                            <Label Content="Create &quot;Sync subtitles with video&quot; context menu"/>
-                        </CheckBox>
-                    </DockPanel>
+                </GroupBox>
 
-                </StackPanel>
-            </GroupBox>
+                <GroupBox Header="Context menu for associated files">
+                    <StackPanel>
+                        <DockPanel>
+                            <CheckBox x:Name="cbSearchContextMenu"
+                    Command="{Binding SearchContextMenuCommand}"
+                    IsChecked="{Binding SearchContextMenuChecked}">
+                                <Label Content="Create &quot;Search for subtitles&quot; context menu for video files"/>
+                            </CheckBox>
+                        </DockPanel>
+                        <DockPanel>
+                            <CheckBox
+                    Command="{Binding SubtitlesSyncContextMenuCommand}"
+                    IsChecked="{Binding SyncContextMenuChecked}">
+                                <Label Content="Create &quot;Sync subtitles with video&quot; context menu"/>
+                            </CheckBox>
+                        </DockPanel>
 
-            <GroupBox Header="Downloads">
-                <StackPanel>
-                    <AccessText TextWrapping="WrapWithOverflow" Margin="5"
-                                Text="Download itself has to be handled manually through browser. After choosing and downloading the files, the app will detect them, unpack, and move to designated folder. All that has to be set is the folder those files were downloaded."/>
-                    <DockPanel Height="30">
-                        <Label Content="Download folder" VerticalContentAlignment="Center"/>
-                        <Grid Style="{StaticResource BrowseBox}">
-                            <TextBox Text="{Binding DownloadPath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                     d:Text="C:\users\%username%\Downloads" IsEnabled="False"/>
-                            <Button Content="Browse..." Width="76"
-                                    Command="{Binding BrowseDownloadFolderCommand}"/>
-                        </Grid>
-                    </DockPanel>
-                    <DockPanel>
-                        <Button Content="Check new files" Command="{Binding CheckDownloadFolderCommand}" Padding="15,0"/>
-                        <Label Content="(Downloaded in last"/>
-                        <TextBox Text="{Binding FileNewerThanHours, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" d:Text="4" Width="20" HorizontalContentAlignment="Right"/>
-                        <Label Content="hours)"/>
-                    </DockPanel>
-                    <DockPanel>
-                        <userControls:NumericTextBox Width="40" NumTextBoxText="4" />
-                    </DockPanel>
-                    <DockPanel>
-                        <Label Content="Target folder"/>
-                        <TextBox x:Name="tbAddress" Text="{Binding FolderPath}" HorizontalAlignment="Stretch"
-                                 VerticalContentAlignment="Center" IsEnabled="False" Width="Auto" />
-                    </DockPanel>
+                    </StackPanel>
+                </GroupBox>
 
-                    <DockPanel Height="Auto">
-                        <Expander Header="Downloaded files" IsExpanded="True">
-                            <StackPanel Background="White">
-                                <DockPanel>
-                                    <Button Content="Unpack the subtitles into target directory"
-                                            Width="300"
-                                            Command="{Binding TransferSubtitlesCommand}"/>
-                                </DockPanel>
-                                <lists:DownloadFolderListBox/>
-                            </StackPanel>
-                        </Expander>
-                    </DockPanel>
-                    
-                </StackPanel>
-            </GroupBox>
-        </StackPanel>
+                <GroupBox Header="Downloads">
+                    <StackPanel>
+                        <AccessText TextWrapping="WrapWithOverflow" Margin="5"
+                        Text="Download itself has to be handled manually through browser. After choosing and downloading the files, the app will detect them, unpack, and move to designated folder. All that has to be set is the folder those files were downloaded."/>
+                        <DockPanel Height="30">
+                            <Label Content="Download folder" VerticalContentAlignment="Center"/>
+                            <Grid Style="{StaticResource BrowseBox}">
+                                <TextBox Text="{Binding DownloadPath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                             d:Text="C:\users\%username%\Downloads" IsEnabled="False"/>
+                                <Button Content="Browse..." Width="76"
+                            Command="{Binding BrowseDownloadFolderCommand}"/>
+                            </Grid>
+                        </DockPanel>
+                        <DockPanel>
+                            <Button Content="Check new files" Command="{Binding CheckDownloadFolderCommand}" Padding="15,0"/>
+                            <Label Content="(Downloaded in last"/>
+                            <TextBox Text="{Binding FileNewerThanHours, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" d:Text="4" Width="20" HorizontalContentAlignment="Right"/>
+                            <Label Content="hours)"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <!--<userControls:NumericTextBox Width="40" NumTextBoxText="4" />-->
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Target folder"/>
+                            <TextBox x:Name="tbAddress" Text="{Binding FolderPath}" HorizontalAlignment="Stretch"
+                         VerticalContentAlignment="Center" IsEnabled="False" Width="Auto" />
+                        </DockPanel>
 
+                        <DockPanel Height="Auto">
+                            <Expander Header="Downloaded files" IsExpanded="True">
+                                <StackPanel Background="White">
+                                    <DockPanel>
+                                        <Button Content="Unpack the subtitles into target directory"
+                                    Width="300"
+                                    Command="{Binding TransferSubtitlesCommand}"/>
+                                    </DockPanel>
+                                    <lists:DownloadFolderListBox/>
+                                </StackPanel>
+                            </Expander>
+                        </DockPanel>
 
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

@@ -33,7 +33,15 @@ namespace SubtitlesSync.View.UserControls
 
         public int NumTextBoxText { get; set; }
 
-        
+        //internal RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
+
+        //private void NumericTextBoxIncrease()
+        //{
+        //    //var NumTextBoxText = new NumericTextBox();
+        //    //NumTextBoxText.NumTextBoxText++;
+
+        //    NumTextBoxText++;
+        //}
 
 
     }
