@@ -118,5 +118,29 @@ namespace SubtitlesSync.Properties {
                 this["fileNewerThanHours"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("450")]
+        public int optionsWindowHeight {
+            get {
+                return ((int)(this["optionsWindowHeight"]));
+            }
+            set {
+                this["optionsWindowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("640")]
+        public int optionsWindowWidth {
+            get {
+                return ((int)(this["optionsWindowWidth"]));
+            }
+            set {
+                this["optionsWindowWidth"] = value;
+            }
+        }
     }
 }

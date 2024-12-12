@@ -10,7 +10,7 @@
         xmlns:ViewModel="clr-namespace:SubtitlesSync.ViewModel" x:Class="SubtitlesSync.MainWindow"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type={x:Type local:MainWindow}}"
-        Title="MainWindow"
+        Title="Subtitles Synchronization app"
         WindowStartupLocation="CenterScreen"
         MinHeight="200" Height="{Binding WindowHeight, Mode=TwoWay}" d:Height="150" d:MinHeight="120"
         MinWidth="450" Width="{Binding WindowWidth, Mode=TwoWay}" d:Width="650" d:MinWidth="350">

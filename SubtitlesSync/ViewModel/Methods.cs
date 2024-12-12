@@ -516,6 +516,31 @@ namespace SubtitlesSync.ViewModel
             }
         }
 
+        private int optionsWindowHeight = Settings.Default.optionsWindowHeight;
+        public int OptionsWindowHeight
+        {
+            get { return optionsWindowHeight; }
+            set
+            {
+                optionsWindowHeight = value;
+                Settings.Default.optionsWindowHeight = value;
+                Settings.Default.Save();
+                OnPropertyChanged();
+            }
+        }
+        private int optionsWindowWidth = Settings.Default.optionsWindowWidth;
+        public int OptionsWindowWidth
+        {
+            get { return optionsWindowWidth; }
+            set
+            {
+                optionsWindowWidth = value;
+                Settings.Default.optionsWindowWidth = value;
+                Settings.Default.Save();
+                OnPropertyChanged();
+            }
+        }
+
 
         private List<DownloadFolderFiles> downloadedFiles = new List<DownloadFolderFiles>();
         public List<DownloadFolderFiles> DownloadedFiles
@@ -531,6 +556,10 @@ namespace SubtitlesSync.ViewModel
         //public string[] packageTypes { get; set; } = { ".zip", ".rar", ".7z" }; // ## otestovat ostatni pripony
         public string[] packageTypes { get; set; } = { ".zip" };
 
+        public RelayCommand BrowseDownloadFolderCommand => new RelayCommand(execute => BrowseDownloadFolder());
+        public RelayCommand CheckDownloadFolderCommand => new RelayCommand(execute => CheckDownloadFolder());
+        public RelayCommand TransferSubtitlesCommand => new RelayCommand(execute => TransferSubtitles(), canExecute => { if (DownloadedFiles.Count > 0) { return true; } else { return false; } });
+
         public void CheckDownloadFolder()
         {
             if (Directory.Exists(DownloadPath))
@@ -542,8 +571,8 @@ namespace SubtitlesSync.ViewModel
                     var suffix = Path.GetExtension(fileName);
                     DateTime date = File.GetCreationTime(fileName);
 
-                    if (Array.IndexOf(packageTypes, suffix) != -1 && DateTime.Now.Subtract(date).TotalHours < FileNewerThanHours) {
-                        //var qwer = "";
+                    if (Array.IndexOf(packageTypes, suffix) != -1 && DateTime.Now.Subtract(date).TotalHours < FileNewerThanHours)
+                    {
                         DownloadedFiles.Add(new DownloadFolderFiles
                         {
                             FileName = fileName,
@@ -552,14 +581,12 @@ namespace SubtitlesSync.ViewModel
                             Suffix = suffix,
                             ToTransfer = true,
                         });
+                        //var qwer = "";
                     }
                 }
             }
+            //var qwer = "";
         }
-
-        public RelayCommand BrowseDownloadFolderCommand => new RelayCommand(execute => BrowseDownloadFolder());
-        public RelayCommand CheckDownloadFolderCommand => new RelayCommand(execute => CheckDownloadFolder());
-        public RelayCommand TransferSubtitlesCommand => new RelayCommand(execute => TransferSubtitles());
 
         private void BrowseDownloadFolder()
         {

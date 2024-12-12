@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style TargetType="{x:Type CheckBox}" x:Key="DownloadListCheckbox">
+    <!--<Style TargetType="{x:Type CheckBox}" x:Key="DownloadListCheckbox">
         <Setter Property="Background" Value="White" />
         <Setter Property="BorderBrush" Value="Black"/>
-        <!--                           your color here -->
+        --><!--                           your color here --><!--
         <Setter Property="Foreground" Value="HotPink"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
@@ -41,6 +41,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
+    
 
 </ResourceDictionary>
