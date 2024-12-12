@@ -26,12 +26,10 @@ namespace SubtitlesSync.View.UserControls
         public NumericTextBox()
         {
             InitializeComponent();
-
-            //var windowService = new WindowService();
-            //DataContext = new MainWindowViewModel(windowService);
+            DataContext = this;
         }
 
-        public int NumTextBoxText { get; set; }
+        public int NumTextBoxText { get; set; } = 6;
 
         //internal RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
 

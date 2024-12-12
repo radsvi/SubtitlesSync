@@ -98,7 +98,7 @@
                             <Label Content="hours)"/>
                         </DockPanel>
                         <DockPanel>
-                            <!--<userControls:NumericTextBox Width="40" NumTextBoxText="4" />-->
+                            <userControls:NumericTextBox Width="40" NumTextBoxText="4" />
                         </DockPanel>
                         <DockPanel>
                             <Label Content="Target folder"/>
