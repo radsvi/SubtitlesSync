@@ -24,7 +24,7 @@
 
     <Grid Style="{StaticResource NumericTextBox}">
         <TextBox Text="{Binding NumTextBoxText}" HorizontalContentAlignment="Right" Padding="0,0,20,0" />
-        <Button VerticalAlignment="Top" Command="">
+        <Button VerticalAlignment="Top" Command="{Binding NumericTextBoxUpCommand}">
             <Polygon Points="1,3 7,3 4,0" Stroke="Black" Fill="Black" />
         </Button>
         <Button VerticalAlignment="Bottom">

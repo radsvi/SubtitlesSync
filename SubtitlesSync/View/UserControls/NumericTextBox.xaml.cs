@@ -3,7 +3,9 @@ using SubtitlesSync.Services;
 using SubtitlesSync.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,25 +23,44 @@ namespace SubtitlesSync.View.UserControls
     /// <summary>
     /// Interaction logic for NumericTextBox.xaml
     /// </summary>
-    public partial class NumericTextBox : UserControl
+    public partial class NumericTextBox : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+
         public NumericTextBox()
         {
             InitializeComponent();
             DataContext = this;
         }
 
-        public int NumTextBoxText { get; set; } = 6;
+        //public int NumTextBoxText { get; set; }
+        private int numTextBoxText;
 
-        //internal RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
+        public int NumTextBoxText
+        {
+            get { return numTextBoxText; }
+            set {
+                numTextBoxText = value;
+                OnPropertyChanged();
+            }
+        }
 
-        //private void NumericTextBoxIncrease()
-        //{
-        //    //var NumTextBoxText = new NumericTextBox();
-        //    //NumTextBoxText.NumTextBoxText++;
 
-        //    NumTextBoxText++;
-        //}
+        internal RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
+
+        private void NumericTextBoxIncrease()
+        {
+            //var NumTextBoxText = new NumericTextBox();
+            //NumTextBoxText.NumTextBoxText++;
+
+            NumTextBoxText = 20;
+        }
 
 
     }
