@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="SubtitlesSync.View.UserControls.NumericTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SubtitlesSync.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignWidth="200">
+    <UserControl.Resources>
+        <Style TargetType="Grid" x:Key="NumericTextBox">
+            <Setter Property="Height" Value="19" />
+            <Style.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                    <Setter Property="Width" Value="17" />
+                    <Setter Property="Height" Value="8" />
+                    <Setter Property="Margin" Value="2" />
+                    <Setter Property="BorderBrush" Value="#ACACAC" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </Style.Resources>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid Style="{StaticResource NumericTextBox}">
+        <TextBox Text="{Binding NumTextBoxText}" />
+        <Button VerticalAlignment="Top" Command="">
+            <Polygon Points="1,3 7,3 4,0" Stroke="Black" Fill="Black" />
+        </Button>
+        <Button VerticalAlignment="Bottom">
+            <Polygon Points="1,0 7,0 4,3" Stroke="Black" Fill="Black" Margin="0,1,0,0" />
+        </Button>
+    </Grid>
+        
+</UserControl>

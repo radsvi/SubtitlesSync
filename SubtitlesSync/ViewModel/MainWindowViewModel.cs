@@ -11,6 +11,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls;
 using SubtitlesSync.Services;
 using System.Windows.Input;
+//using SubtitlesSync.View.UserControls;
 
 namespace SubtitlesSync.ViewModel
 {
@@ -241,5 +242,20 @@ namespace SubtitlesSync.ViewModel
             }
             CheckDownloadFolder(); // ## tohle musim zmenit. Dat to aby se to triggernulo az pri pusteni OptionsWindow
         }
+
+        // ===================================
+        // ===================================
+
+        //public int NumTextBoxText { get; set; }
+
+        //public RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
+
+        //private void NumericTextBoxIncrease()
+        //{
+        //    //var NumTextBoxText = new NumericTextBox();
+        //    //NumTextBoxText.NumTextBoxText++;
+
+        //    NumTextBoxText++;
+        //}
     }
 }

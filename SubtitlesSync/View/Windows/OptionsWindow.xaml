@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SubtitlesSync.View.Windows"
         xmlns:lists="clr-namespace:SubtitlesSync.View.Lists"
+        xmlns:userControls="clr-namespace:SubtitlesSync.View.UserControls"
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
         Background="#F0F0F0"
@@ -96,10 +97,14 @@
                         <Label Content="hours)"/>
                     </DockPanel>
                     <DockPanel>
+                        <userControls:NumericTextBox Width="40" NumTextBoxText="4" />
+                    </DockPanel>
+                    <DockPanel>
                         <Label Content="Target folder"/>
                         <TextBox x:Name="tbAddress" Text="{Binding FolderPath}" HorizontalAlignment="Stretch"
                                  VerticalContentAlignment="Center" IsEnabled="False" Width="Auto" />
                     </DockPanel>
+
                     <DockPanel Height="Auto">
                         <Expander Header="Downloaded files" IsExpanded="True">
                             <StackPanel Background="White">
