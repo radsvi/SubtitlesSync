@@ -12,13 +12,4 @@ Most usefull for TV shows that would otherwise require lots of files to be renam
 
 
 
-## Technologies
-+ MVVM (Kinda developed to learn that)
 
-
-
-### ToDo
-
-+ Implement menu
-+ Adjusting source of the subtitles. Default www.opensubtitles.org
-+ 
