@@ -6,7 +6,6 @@ Most usefull for TV shows that would otherwise require lots of files to be renam
 ## Features
 
 + Load a list of subtitles from a folder and sync them with video files
-+ Choose which subtitles to download
 + Adds context menu for relevant files and for a folder to quickly rename / search subs
 
 
