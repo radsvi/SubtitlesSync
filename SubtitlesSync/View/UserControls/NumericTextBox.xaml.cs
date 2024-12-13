@@ -23,44 +23,69 @@ namespace SubtitlesSync.View.UserControls
     /// <summary>
     /// Interaction logic for NumericTextBox.xaml
     /// </summary>
-    public partial class NumericTextBox : UserControl, INotifyPropertyChanged
+    public partial class NumericTextBox : UserControl , INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        //public event PropertyChangedEventHandler? PropertyChanged;
+        //protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        //{
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //}
 
 
 
         public NumericTextBox()
         {
             InitializeComponent();
-            DataContext = this;
+            //DataContext = this;
+            (this.Content as FrameworkElement).DataContext = this;
         }
 
         //public int NumTextBoxText { get; set; }
-        private int numTextBoxText;
+        //private int numTextBoxText;
+
+        //public int NumTextBoxText
+        //{
+        //    get { return numTextBoxText; }
+        //    set {
+        //        numTextBoxText = value;
+        //        //OnPropertyChanged();
+        //    }
+        //}
+
 
         public int NumTextBoxText
         {
-            get { return numTextBoxText; }
+            get { return (int)GetValue(NumTextBoxTextProperty); }
             set {
-                numTextBoxText = value;
-                OnPropertyChanged();
+                SetValue(NumTextBoxTextProperty, value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NumTextBoxText"));
             }
         }
 
+        // Using a DependencyProperty as the backing store for NumTextBoxText.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty NumTextBoxTextProperty =
+            DependencyProperty.Register("NumTextBoxText", typeof(int), typeof(NumericTextBox), new PropertyMetadata(0));
 
-        internal RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
-
-        private void NumericTextBoxIncrease()
+        public event PropertyChangedEventHandler PropertyChanged;
+        void SetValueDp(DependencyProperty property, object value,
+            [System.Runtime.CompilerServices.CallerMemberName] String p = null)
         {
-            //var NumTextBoxText = new NumericTextBox();
-            //NumTextBoxText.NumTextBoxText++;
-
-            NumTextBoxText = 20;
+            SetValue(property, value);
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(p));
         }
+
+
+
+        //internal RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
+
+        //private void NumericTextBoxIncrease()
+        //{
+        //    //var NumTextBoxText = new NumericTextBox();
+        //    //NumTextBoxText.NumTextBoxText++;
+
+        //    NumTextBoxText = 20;
+        //}
 
 
     }

@@ -247,15 +247,28 @@ namespace SubtitlesSync.ViewModel
         // ===================================
 
         //public int NumTextBoxText { get; set; }
+        private int externalNumTextBoxText = 9;
+        public int ExternalNumTextBoxText
+        {
+            get { return externalNumTextBoxText; }
+            set {
+                externalNumTextBoxText = value;
+                OnPropertyChanged();
+            }
+        }
 
-        //public RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
 
-        //private void NumericTextBoxIncrease()
-        //{
-        //    //var NumTextBoxText = new NumericTextBox();
-        //    //NumTextBoxText.NumTextBoxText++;
+        public RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
 
-        //    NumTextBoxText++;
-        //}
+        private void NumericTextBoxIncrease()
+        {
+            //var NumTextBoxText = new NumericTextBox();
+            //NumTextBoxText.NumTextBoxText++;
+
+            ExternalNumTextBoxText++;
+        }
+
+
+
     }
 }
