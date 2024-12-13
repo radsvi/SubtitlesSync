@@ -23,7 +23,7 @@ namespace SubtitlesSync.View.UserControls
     /// <summary>
     /// Interaction logic for NumericTextBox.xaml
     /// </summary>
-    public partial class NumericTextBox : UserControl , INotifyPropertyChanged
+    public partial class NumericTextBox : UserControl //, INotifyPropertyChanged
     {
         //public event PropertyChangedEventHandler? PropertyChanged;
         //protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -58,7 +58,7 @@ namespace SubtitlesSync.View.UserControls
             get { return (int)GetValue(NumTextBoxTextProperty); }
             set {
                 SetValue(NumTextBoxTextProperty, value);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NumTextBoxText"));
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NumTextBoxText"));
             }
         }
 
@@ -77,16 +77,7 @@ namespace SubtitlesSync.View.UserControls
 
 
 
-        //internal RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
-
-        //private void NumericTextBoxIncrease()
-        //{
-        //    //var NumTextBoxText = new NumericTextBox();
-        //    //NumTextBoxText.NumTextBoxText++;
-
-        //    NumTextBoxText = 20;
-        //}
-
+        internal RelayCommand NumericTextBoxUpInternalCommand => new RelayCommand(execute => NumTextBoxText++);
 
     }
 }
