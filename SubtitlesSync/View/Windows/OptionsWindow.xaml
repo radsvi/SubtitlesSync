@@ -94,12 +94,9 @@
                         <DockPanel>
                             <Button Content="Check new files" Command="{Binding CheckDownloadFolderCommand}" Padding="15,0"/>
                             <Label Content="(Downloaded in last"/>
-                            <TextBox Text="{Binding FileNewerThanHours, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" d:Text="4" Width="20" HorizontalContentAlignment="Right"/>
+                            <userControls:NumericTextBox Width="45" d:NumTextBoxText="4" 
+                                                         NumTextBoxText="{Binding FileNewerThanHours, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                             <Label Content="hours)"/>
-                        </DockPanel>
-                        <DockPanel>
-                            <userControls:NumericTextBox Width="40" NumTextBoxText="{Binding ExternalNumTextBoxText}" />
-                            <Button Content="testing" Command="{Binding NumericTextBoxUpCommand}"/>
                         </DockPanel>
                         <DockPanel>
                             <Label Content="Target folder"/>

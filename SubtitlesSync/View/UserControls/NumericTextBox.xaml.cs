@@ -57,8 +57,14 @@ namespace SubtitlesSync.View.UserControls
         {
             get { return (int)GetValue(NumTextBoxTextProperty); }
             set {
-                SetValue(NumTextBoxTextProperty, value);
-                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("NumTextBoxText"));
+                if (value > 0)
+                {
+                    SetValue(NumTextBoxTextProperty, value);
+                }
+                else
+                {
+                    SetValue(NumTextBoxTextProperty, 1);
+                }
             }
         }
 
@@ -66,14 +72,14 @@ namespace SubtitlesSync.View.UserControls
         public static readonly DependencyProperty NumTextBoxTextProperty =
             DependencyProperty.Register("NumTextBoxText", typeof(int), typeof(NumericTextBox), new PropertyMetadata(0));
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        void SetValueDp(DependencyProperty property, object value,
-            [System.Runtime.CompilerServices.CallerMemberName] String p = null)
-        {
-            SetValue(property, value);
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(p));
-        }
+        //public event PropertyChangedEventHandler PropertyChanged;
+        //void SetValueDp(DependencyProperty property, object value,
+        //    [System.Runtime.CompilerServices.CallerMemberName] String p = null)
+        //{
+        //    SetValue(property, value);
+        //    if (PropertyChanged != null)
+        //        PropertyChanged(this, new PropertyChangedEventArgs(p));
+        //}
 
 
 

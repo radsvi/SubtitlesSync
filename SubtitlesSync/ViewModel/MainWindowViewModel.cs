@@ -242,34 +242,5 @@ namespace SubtitlesSync.ViewModel
             }
             CheckDownloadFolder(); // ## tohle musim zmenit. Dat to aby se to triggernulo az pri pusteni OptionsWindow
         }
-
-        // ===================================
-        // ===================================
-
-        //public int NumTextBoxText { get; set; }
-        private int externalNumTextBoxText = 9;
-        public int ExternalNumTextBoxText
-        {
-            get { return externalNumTextBoxText; }
-            set {
-                externalNumTextBoxText = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        public RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => ExternalNumTextBoxText++);
-        //public RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
-
-        //private void NumericTextBoxIncrease()
-        //{
-        //    //var NumTextBoxText = new NumericTextBox();
-        //    //NumTextBoxText.NumTextBoxText++;
-
-        //    ExternalNumTextBoxText++;
-        //}
-
-
-
     }
 }

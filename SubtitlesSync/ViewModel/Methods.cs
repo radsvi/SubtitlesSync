@@ -581,11 +581,9 @@ namespace SubtitlesSync.ViewModel
                             Suffix = suffix,
                             ToTransfer = true,
                         });
-                        //var qwer = "";
                     }
                 }
             }
-            //var qwer = "";
         }
 
         private void BrowseDownloadFolder()
