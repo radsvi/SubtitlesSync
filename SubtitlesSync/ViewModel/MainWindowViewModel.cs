@@ -259,6 +259,7 @@ namespace SubtitlesSync.ViewModel
 
 
         public RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => ExternalNumTextBoxText++);
+        //public RelayCommand NumericTextBoxUpCommand => new RelayCommand(execute => NumericTextBoxIncrease());
 
         //private void NumericTextBoxIncrease()
         //{

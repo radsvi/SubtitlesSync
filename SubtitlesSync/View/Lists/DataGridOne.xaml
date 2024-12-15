@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SubtitlesSync.View.Lists"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="400">
+             d:DesignHeight="150" d:DesignWidth="500">
     <!--https://stackoverflow.com/questions/43050291/wpf-ticking-checkbox-when-clicking-anywhere-on-a-datagrid-row-->
     <!--<UserControl.Resources>
         <Style TargetType="DataGridRow">

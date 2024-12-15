@@ -77,7 +77,7 @@ namespace SubtitlesSync.View.UserControls
 
 
 
-        internal RelayCommand NumericTextBoxUpInternalCommand => new RelayCommand(execute => NumTextBoxText++);
-
+        public RelayCommand NumericTextBoxUpInternalCommand => new RelayCommand(execute => NumTextBoxText++);
+        public RelayCommand NumericTextBoxDownInternalCommand => new RelayCommand(execute => NumTextBoxText--);
     }
 }
