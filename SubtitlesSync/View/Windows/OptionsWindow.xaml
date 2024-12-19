@@ -109,8 +109,8 @@
                                 <StackPanel Background="White">
                                     <DockPanel>
                                         <Button Content="Unpack the subtitles into target directory"
-                                    Width="300"
-                                    Command="{Binding TransferSubtitlesCommand}"/>
+                                            Width="300"
+                                            Command="{Binding TransferSubtitlesCommand}"/>
                                     </DockPanel>
                                     <lists:DownloadFolderListBox/>
                                 </StackPanel>

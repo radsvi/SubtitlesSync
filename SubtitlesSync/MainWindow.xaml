@@ -62,7 +62,7 @@
                         Command="{Binding OpenOptionsWindowCommand}"/>
                 <Button Width="76" DockPanel.Dock="Right" Margin="10,0,0,0" FontSize="7"
                         Command="{Binding DownloadSelectedCommand}">
-                    <TextBlock>Download<LineBreak/>Selected</TextBlock>
+                    <TextBlock><Separator/> Search<LineBreak/>Selected</TextBlock>
                 </Button>
                 <Button Content="Rename all" x:Name="btnRename" Width="76" DockPanel.Dock="Right" Margin="10,0,0,0"
                         Command="{Binding RenameCommand}"/>

@@ -81,14 +81,15 @@
         </Style>
     </UserControl.Resources>
     <ListBox Margin="0,10,0,0" HorizontalContentAlignment="Stretch" SelectionMode="Single"
-    ItemsSource="{Binding DownloadedFiles}" d:ItemsSource="{d:SampleData ItemCount=2}"
+    ItemsSource="{Binding DownloadedFiles, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" d:ItemsSource="{d:SampleData ItemCount=2}"
     SelectedItem="{Binding SelectedItem}">
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <Grid HorizontalAlignment="Stretch" Height="24">
                     <CheckBox HorizontalContentAlignment="Stretch"
                             Style="{StaticResource DownloadListCheckbox}"
-                            IsChecked="{Binding Path=ToTransfer}" Content="{Binding BaseName}"/>
+                            Content="{Binding BaseName}"
+                            IsChecked="{Binding Path=ToTransfer}"/>
                 </Grid>
             </DataTemplate>
         </ListBox.ItemTemplate>

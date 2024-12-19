@@ -489,9 +489,7 @@ namespace SubtitlesSync.ViewModel
 
 
 
-        // ===================================
-        // ===================================
-        // ===================================
+        #region OptionsWindow
         private string downloadPath = Settings.Default.downloadPath;
         public string DownloadPath
         {
@@ -652,5 +650,32 @@ namespace SubtitlesSync.ViewModel
             }
             
         }
+        
+
+        //private void FindDefaultBrowser()
+        //{
+        //    string defaultBrowserKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice").GetValue("ProgId").ToString();
+            
+        //    Dictionary<string, string> browsers = new Dictionary<string, string>
+        //    {
+        //        { "FirefoxURL-308046B0AF4A39CB", "Firefox" },
+        //        { "ChromeHTML", "Chrome" },
+        //        { "IE.HTTP", "IE" },
+        //        { "MSEdgeHTM", "Edge" },
+        //        { "BraveHTML", "Brave" },
+        //        { "OperaStable", "Opera" },
+        //        { "SafariHTML", "Safari" }
+        //    };
+
+        //    if (browsers.ContainsKey(defaultBrowserKey))
+        //    {
+        //        MessageBox.Show(browsers[defaultBrowserKey]);
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Not found");
+        //    }
+        //}
+        #endregion
     }
 }

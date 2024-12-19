@@ -16,11 +16,22 @@ namespace SubtitlesSync.Model
             get { return fileName; }
             set {
                 fileName = value;
-                OnPropertyChanged();
+                //OnPropertyChanged();
             }
         }
 
-        public string BaseName { get; set; } // name without suffix and without path
+        //public string BaseName { get; set; } // name without suffix and without path
+        private string baseName;
+
+        public string BaseName
+        {
+            get { return baseName; }
+            set {
+                baseName = value;
+                //OnPropertyChanged();
+            }
+        }
+
         public string ShortName { get; set; } // name with suffix, but without path
         public string Suffix { get; set; } // suffix in format ".srt"
         public bool ToTransfer { get; set; }
