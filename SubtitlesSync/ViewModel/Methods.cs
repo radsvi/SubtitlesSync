@@ -540,8 +540,8 @@ namespace SubtitlesSync.ViewModel
         }
 
 
-        private List<DownloadFolderFiles> downloadedFiles = new List<DownloadFolderFiles>();
-        public List<DownloadFolderFiles> DownloadedFiles
+        private ObservableCollection<DownloadFolderFiles> downloadedFiles = new ObservableCollection<DownloadFolderFiles>();
+        public ObservableCollection<DownloadFolderFiles> DownloadedFiles
         {
             get {
                 return downloadedFiles;
