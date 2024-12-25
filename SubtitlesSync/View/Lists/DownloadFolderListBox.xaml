@@ -69,7 +69,7 @@
                             </Trigger>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="eliCheck" Property="Visibility" Value="Visible"/>
-                                <Setter Property="Background" Value="LightBlue" />
+                                <Setter Property="Background" Value="Lavender" />
                             </Trigger>
                             <Trigger Property="IsChecked" Value="{x:Null}">
                                 <Setter TargetName="nullBlock" Property="Visibility" Value="Visible"/>

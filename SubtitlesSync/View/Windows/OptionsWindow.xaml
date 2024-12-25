@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SubtitlesSync.View.Windows"
         xmlns:lists="clr-namespace:SubtitlesSync.View.Lists"
-        xmlns:converter="clr-namespace:SubtitlesSync.Converters"
+        
         xmlns:userControls="clr-namespace:SubtitlesSync.View.UserControls"
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
@@ -17,36 +17,11 @@
         <KeyBinding Key="Esc" Command="{Binding CloseOptionsWindowCommand}"/>
     </Window.InputBindings>
     <Window.Resources>
-        <converter:IntToVisibilityConverter x:Key="IntToVisibility"/>
-        <Style TargetType="DockPanel">
-            <Setter Property="Margin" Value="0,5,0,5"/>
-            <Setter Property="Height" Value="25"/>
-            <Style.Resources>
-                <Style TargetType="TextBox">
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                </Style>
-                <Style TargetType="Label">
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                </Style>
-            </Style.Resources>
-        </Style>
-        <Style TargetType="CheckBox">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-        </Style>
-        <Style TargetType="Grid" x:Key="BrowseBox">
-            <Setter Property="Height" Value="22" />
-            <Style.Resources>
-                <Style TargetType="TextBox">
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="HorizontalAlignment" Value="Stretch" />
-                </Style>
-                <Style TargetType="Button">
-                    <Setter Property="HorizontalAlignment" Value="Right" />
-
-                </Style>
-            </Style.Resources>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/OptionsWindowStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid Margin="10">
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
@@ -101,7 +76,7 @@
                 <GroupBox Header="Downloads">
                     <StackPanel>
                         <AccessText TextWrapping="WrapWithOverflow" Margin="5"
-                        Text="Download itself has to be handled manually through browser. After choosing and downloading the files, the app will detect them, unpack, and move to designated folder. All that has to be set is the folder those files were downloaded."/>
+                        Text="Download itself has to be handled manually through browser. After choosing and downloading the files, the app will detect them, you can then click button unpack, and move to designated folder. All that has to be set is the folder those files were downloaded."/>
                         <DockPanel Height="30">
                             <Label Content="Download folder" VerticalContentAlignment="Center"/>
                             <Grid Style="{StaticResource BrowseBox}">

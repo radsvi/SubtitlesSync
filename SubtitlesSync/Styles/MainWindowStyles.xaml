@@ -3,7 +3,7 @@
     <Style TargetType="Button">
         <Style.Resources>
             <Style TargetType="Border">
-                <Setter Property="CornerRadius" Value="3" />
+                <Setter Property="CornerRadius" Value="6" />
             </Style>
         </Style.Resources>
     </Style>
