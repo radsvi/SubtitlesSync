@@ -197,37 +197,76 @@ namespace SubtitlesSync.ViewModel
         //    set { customSampleData = value; }
         //}
 
-
-
-        //public RelayCommand AddCommand => new RelayCommand(execute => AddItem(), canExecute => { return true; });
-        public RelayCommand BrowseCommand => new RelayCommand(execute => BrowseNLoadFolder());
-        //public RelayCommand ReloadFolder => new RelayCommand(execute => LoadFolderVideo(), canExecute => { return Directory.Exists(FolderPath); });
-        public RelayCommand ReloadFolder => new RelayCommand(execute => PopulateDataGrid(), canExecute => { return Directory.Exists(FolderPath); });
-        public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return CheckRenamePrepared(); });
-        public RelayCommand EscKeyCommand => new RelayCommand(execute => CloseApplication());
-        //public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => AssociateWithVideoFilesRegistry());
-        //public RelayCommand RemoveSearchContextMenuCommand => new RelayCommand(execute => DisassociateVideoFilesRegistry());
-        public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => ToggleVideoFilesRegistry());
-        //public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => AssociateWithFolderRegistry());
-        //public RelayCommand RemoveSyncContextMenuCommand => new RelayCommand(execute => DisassociateFolderRegistry());
-        public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => ToggleFolderRegistry());
-        public RelayCommand DownloadSelectedCommand => new RelayCommand(execute => DownloadSelected(), canExecute => { return DownloadCheckIfAvailable(); });
-        //public RelayCommand OpenOptionsCommand => new RelayCommand(execute => OpenOptionsWindow());
-
-        private IWindowService _windowService;
-        //public ICommand OpenWindowCommand { get; set; }
-        //public ICommand CloseWindowCommand { get; set; }
-        public RelayCommand OpenOptionsWindowCommand => new RelayCommand(execute => OnOpenWindow());
-        public RelayCommand CloseOptionsWindowCommand => new RelayCommand(execute => OnCloseWindow());
-
-        private void OnOpenWindow()
+        #region OptionsWindow properties
+        private string downloadPath = Settings.Default.downloadPath;
+        public string DownloadPath
         {
-            _windowService.OpenWindow();
+            get { return downloadPath; }
+            set
+            {
+                downloadPath = value;
+                OnPropertyChanged();
+                Settings.Default.downloadPath = value;
+                Settings.Default.Save();
+            }
         }
-        private void OnCloseWindow()
+
+        private int fileNewerThanHours = Settings.Default.fileNewerThanHours;
+        public int FileNewerThanHours
         {
-            _windowService?.CloseWindow();
+            get { return fileNewerThanHours; }
+            set
+            {
+                fileNewerThanHours = value;
+                OnPropertyChanged();
+                Settings.Default.fileNewerThanHours = value;
+                Settings.Default.Save();
+            }
         }
+
+        private int optionsWindowHeight = Settings.Default.optionsWindowHeight;
+        public int OptionsWindowHeight
+        {
+            get { return optionsWindowHeight; }
+            set
+            {
+                optionsWindowHeight = value;
+                Settings.Default.optionsWindowHeight = value;
+                Settings.Default.Save();
+                OnPropertyChanged();
+            }
+        }
+        private int optionsWindowWidth = Settings.Default.optionsWindowWidth;
+        public int OptionsWindowWidth
+        {
+            get { return optionsWindowWidth; }
+            set
+            {
+                optionsWindowWidth = value;
+                Settings.Default.optionsWindowWidth = value;
+                Settings.Default.Save();
+                OnPropertyChanged();
+            }
+        }
+
+
+        private ObservableCollection<DownloadFolderFiles> downloadedFiles = new ObservableCollection<DownloadFolderFiles>();
+        public ObservableCollection<DownloadFolderFiles> DownloadedFiles
+        {
+            get
+            {
+                return downloadedFiles;
+            }
+            set
+            {
+                downloadedFiles = value;
+                OnPropertyChanged();
+            }
+        }
+
+        //public string[] packageTypes { get; set; } = { ".zip", ".rar", ".7z" }; // ## otestovat ostatni pripony
+        public string[] packageTypes { get; set; } = { ".zip" };
+        #endregion
 
 
         public MainWindowViewModel(IWindowService windowService)
@@ -258,7 +297,7 @@ namespace SubtitlesSync.ViewModel
                     CloseApplication();
                 }
             }
-            CheckDownloadFolder(); // ## tohle musim zmenit. Dat to aby se to triggernulo az pri pusteni OptionsWindow
+            //CheckDownloadFolder(); // ## tohle musim zmenit. Dat to aby se to triggernulo az pri pusteni OptionsWindow
 
             //DownloadedFiles.PropertyChanged
             

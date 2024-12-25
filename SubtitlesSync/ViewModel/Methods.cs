@@ -2,6 +2,7 @@
 using SubtitlesSync.Model;
 using SubtitlesSync.MVVM;
 using SubtitlesSync.Properties;
+using SubtitlesSync.Services;
 using SubtitlesSync.View.Windows;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,45 @@ namespace SubtitlesSync.ViewModel
 {
     internal partial class MainWindowViewModel
     {
+
+        //public RelayCommand AddCommand => new RelayCommand(execute => AddItem(), canExecute => { return true; });
+        public RelayCommand BrowseCommand => new RelayCommand(execute => BrowseNLoadFolder());
+        //public RelayCommand ReloadFolder => new RelayCommand(execute => LoadFolderVideo(), canExecute => { return Directory.Exists(FolderPath); });
+        public RelayCommand ReloadFolder => new RelayCommand(execute => PopulateDataGrid(), canExecute => { return Directory.Exists(FolderPath); });
+        public RelayCommand RenameCommand => new RelayCommand(execute => StartRenaming(), canExecute => { return CheckRenamePrepared(); });
+        public RelayCommand EscKeyCommand => new RelayCommand(execute => CloseApplication());
+        //public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => AssociateWithVideoFilesRegistry());
+        //public RelayCommand RemoveSearchContextMenuCommand => new RelayCommand(execute => DisassociateVideoFilesRegistry());
+        public RelayCommand SearchContextMenuCommand => new RelayCommand(execute => ToggleVideoFilesRegistry());
+        //public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => AssociateWithFolderRegistry());
+        //public RelayCommand RemoveSyncContextMenuCommand => new RelayCommand(execute => DisassociateFolderRegistry());
+        public RelayCommand SubtitlesSyncContextMenuCommand => new RelayCommand(execute => ToggleFolderRegistry());
+        public RelayCommand DownloadSelectedCommand => new RelayCommand(execute => DownloadSelected(), canExecute => { return DownloadCheckIfAvailable(); });
+        //public RelayCommand OpenOptionsCommand => new RelayCommand(execute => OpenOptionsWindow());
+
+        private IWindowService _windowService;
+        //public ICommand OpenWindowCommand { get; set; }
+        //public ICommand CloseWindowCommand { get; set; }
+        public RelayCommand OpenOptionsWindowCommand => new RelayCommand(execute => OnOpenWindow());
+        public RelayCommand CloseOptionsWindowCommand => new RelayCommand(execute => OnCloseWindow());
+
+        #region OptionsWindow RelayCommand
+        public RelayCommand BrowseDownloadFolderCommand => new RelayCommand(execute => BrowseDownloadFolder());
+        public RelayCommand CheckDownloadFolderCommand => new RelayCommand(execute => CheckDownloadFolder());
+        public RelayCommand TransferSubtitlesCommand => new RelayCommand(execute => ExtractSubtitles(), canExecute => { if (DownloadedFiles.Count > 0) { return true; } else { return false; } });
+
+
+        #endregion
+
+        private void OnOpenWindow()
+        {
+            CheckDownloadFolder();
+            _windowService.OpenWindow(this);
+        }
+        private void OnCloseWindow()
+        {
+            _windowService?.CloseWindow();
+        }
 
         //private Item selectedItem;
         //public Item SelectedItem
@@ -469,75 +509,8 @@ namespace SubtitlesSync.ViewModel
 
 
 
-        #region OptionsWindow
-        private string downloadPath = Settings.Default.downloadPath;
-        public string DownloadPath
-        {
-            get { return downloadPath; }
-            set {
-                downloadPath = value;
-                OnPropertyChanged();
-                Settings.Default.downloadPath = value;
-                Settings.Default.Save();
-            }
-        }
-
-        private int fileNewerThanHours = Settings.Default.fileNewerThanHours;
-        public int FileNewerThanHours
-        {
-            get { return fileNewerThanHours; }
-            set {
-                fileNewerThanHours = value;
-                OnPropertyChanged();
-                Settings.Default.fileNewerThanHours = value;
-                Settings.Default.Save();
-            }
-        }
-
-        private int optionsWindowHeight = Settings.Default.optionsWindowHeight;
-        public int OptionsWindowHeight
-        {
-            get { return optionsWindowHeight; }
-            set
-            {
-                optionsWindowHeight = value;
-                Settings.Default.optionsWindowHeight = value;
-                Settings.Default.Save();
-                OnPropertyChanged();
-            }
-        }
-        private int optionsWindowWidth = Settings.Default.optionsWindowWidth;
-        public int OptionsWindowWidth
-        {
-            get { return optionsWindowWidth; }
-            set
-            {
-                optionsWindowWidth = value;
-                Settings.Default.optionsWindowWidth = value;
-                Settings.Default.Save();
-                OnPropertyChanged();
-            }
-        }
-
-
-        private ObservableCollection<DownloadFolderFiles> downloadedFiles = new ObservableCollection<DownloadFolderFiles>();
-        public ObservableCollection<DownloadFolderFiles> DownloadedFiles
-        {
-            get {
-                return downloadedFiles;
-            }
-            set {
-                downloadedFiles = value;
-                OnPropertyChanged();
-            }
-        }
-        //public string[] packageTypes { get; set; } = { ".zip", ".rar", ".7z" }; // ## otestovat ostatni pripony
-        public string[] packageTypes { get; set; } = { ".zip" };
-
-        public RelayCommand BrowseDownloadFolderCommand => new RelayCommand(execute => BrowseDownloadFolder());
-        public RelayCommand CheckDownloadFolderCommand => new RelayCommand(execute => CheckDownloadFolder());
-        public RelayCommand TransferSubtitlesCommand => new RelayCommand(execute => ExtractSubtitles(), canExecute => { if (DownloadedFiles.Count > 0) { return true; } else { return false; } });
-
+        #region OptionsWindow Methods
+        
         public void CheckDownloadFolder()
         {
             if (Directory.Exists(DownloadPath))
@@ -651,12 +624,12 @@ namespace SubtitlesSync.ViewModel
             }
             
         }
-        
+
 
         //private void FindDefaultBrowser()
         //{
         //    string defaultBrowserKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice").GetValue("ProgId").ToString();
-            
+
         //    Dictionary<string, string> browsers = new Dictionary<string, string>
         //    {
         //        { "FirefoxURL-308046B0AF4A39CB", "Firefox" },
@@ -677,6 +650,7 @@ namespace SubtitlesSync.ViewModel
         //        MessageBox.Show("Not found");
         //    }
         //}
+
         #endregion
     }
 }

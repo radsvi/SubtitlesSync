@@ -79,12 +79,20 @@
 
                     </StackPanel>
                 </GroupBox>
+                <!--<GroupBox Header="Testing">
+                    <StackPanel>
+                        <DockPanel>
+                            <Button Content="Testovaci button" Width="300"
+                                    Command="{Binding TestCommand}"/>
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>-->
                 <GroupBox Header="Window">
                     <StackPanel>
                         <DockPanel>
                             <CheckBox
                                 IsChecked="{Binding ShowWindowEvenFromContextMenu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-                                <Label Content="Show app window even if searching for single subtitle from context menu."/>
+                                <Label Content="Show app window even while searching for single subtitle from context menu."/>
                             </CheckBox>
                         </DockPanel>
                     </StackPanel>

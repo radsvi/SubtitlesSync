@@ -8,7 +8,7 @@ namespace SubtitlesSync.Services
 {
     interface IWindowService
     {
-        void OpenWindow();
+        void OpenWindow(object dataContext);
         void CloseWindow();
     }
 }

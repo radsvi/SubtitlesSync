@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SubtitlesSync.MVVM;
 using SubtitlesSync.Services;
 using SubtitlesSync.ViewModel;
 
@@ -21,17 +23,31 @@ namespace SubtitlesSync.View.Windows
     /// </summary>
     public partial class OptionsWindow : Window
     {
-        public OptionsWindow()
+        public OptionsWindow(object dataContext)
         {
             //Owner = parentWindow;
             InitializeComponent();
 
             var windowService = new WindowService();
-            var dc = new MainWindowViewModel(windowService);
-            DataContext = dc;
+            //var dc = new MainWindowViewModel(windowService);
+            //var dc = dataContext;
+            //DataContext = dc;
+            DataContext = dataContext;
 
-            Top = (SystemParameters.WorkArea.Height - Height) / 2 + 50;
-            Left = (SystemParameters.WorkArea.Width - Width) / 2;
+            //CheckDownloadFolder()
+            //windowService.
+            //CheckDownloadFolderCommand;
+
+            //dataContext.OnMethodCall();
+            //dataContext.MethodCall += CheckDownloadFolder;
+
+            //dataContext.MethodCall?.Invoke(this, new PropertyChangedEventArgs("OptionsWindow"));
+
+            MainWindowViewModel dtc = dataContext as MainWindowViewModel;
+            Top = (SystemParameters.WorkArea.Height - dtc.OptionsWindowHeight) / 2 + 50;
+            Left = (SystemParameters.WorkArea.Width - dtc.OptionsWindowWidth) / 2;
         }
+
+
     }
 }

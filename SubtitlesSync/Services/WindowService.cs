@@ -10,10 +10,10 @@ namespace SubtitlesSync.Services
 {
     public class WindowService : IWindowService
     {
-        public void OpenWindow()
+        public void OpenWindow(object dataContext)
         {
             // Create an instance of the new window
-            var window = new OptionsWindow();
+            var window = new OptionsWindow(dataContext);
 
             // Show the new window
             window.ShowDialog();
