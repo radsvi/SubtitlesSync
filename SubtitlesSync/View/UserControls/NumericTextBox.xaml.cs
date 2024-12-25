@@ -57,9 +57,17 @@ namespace SubtitlesSync.View.UserControls
         {
             get { return (int)GetValue(NumTextBoxTextProperty); }
             set {
-                if (value > 0)
+                if (value > 0 && value <= 100)
                 {
                     SetValue(NumTextBoxTextProperty, value);
+                }
+                else if (value < 0)
+                {
+                    SetValue(NumTextBoxTextProperty, 1);
+                }
+                else if (value > 100)
+                {
+                    SetValue(NumTextBoxTextProperty, 100);
                 }
                 else
                 {

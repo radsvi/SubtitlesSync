@@ -156,10 +156,6 @@ namespace SubtitlesSync.ViewModel
 
             }
         }
-        //private void RegexMatch()
-        //{
-
-        //}
         private void MatchVideoAndSubtitles()
         {
             //var videoFiles = Array.Exists(FolderContent, (FilesExtended item) => VideoSuffixes.Contains(item.Extension));
@@ -234,7 +230,6 @@ namespace SubtitlesSync.ViewModel
 
             return false;
         }
-
         private bool CheckWhetherFolderIsUnchanged()
         {
             if (Directory.Exists(FolderPath) == false) { return false; }
@@ -296,27 +291,12 @@ namespace SubtitlesSync.ViewModel
 
             //MessageBox.Show("TEST");
         }
-        
         private void CloseApplication()
         {
             // ## predelat na MVVM model: https://www.youtube.com/watch?v=U7Qclpe2joo
             System.Windows.Application.Current.Shutdown();
         }
 
-        //private void WriteRegistryEntry()
-        //{
-        //    RegistryKey key = Registry.LocalMachine.OpenSubKey("Software", true);
-        //    //RegistryKey key = Registry.ClassesRoot
-
-        //    key.CreateSubKey("AppName");
-        //    key = key.OpenSubKey("AppName", true);
-
-
-        //    key.CreateSubKey("AppVersion");
-        //    key = key.OpenSubKey("AppVersion", true);
-
-        //    key.SetValue("yourkey", "yourvalue");
-        //}
 
         private void ToggleVideoFilesRegistry()
         {
@@ -556,7 +536,7 @@ namespace SubtitlesSync.ViewModel
 
         public RelayCommand BrowseDownloadFolderCommand => new RelayCommand(execute => BrowseDownloadFolder());
         public RelayCommand CheckDownloadFolderCommand => new RelayCommand(execute => CheckDownloadFolder());
-        public RelayCommand TransferSubtitlesCommand => new RelayCommand(execute => TransferSubtitles(), canExecute => { if (DownloadedFiles.Count > 0) { return true; } else { return false; } });
+        public RelayCommand TransferSubtitlesCommand => new RelayCommand(execute => ExtractSubtitles(), canExecute => { if (DownloadedFiles.Count > 0) { return true; } else { return false; } });
 
         public void CheckDownloadFolder()
         {
@@ -615,7 +595,7 @@ namespace SubtitlesSync.ViewModel
                 DownloadPath = path;
             }
         }
-        private void TransferSubtitles()
+        private void ExtractSubtitles()
         {
             int extractedFiles = 0;
             foreach (var archiveFile in DownloadedFiles)
@@ -630,19 +610,40 @@ namespace SubtitlesSync.ViewModel
                             if (entry.FullName.EndsWith(".srt", StringComparison.OrdinalIgnoreCase)) // ## dodelat aby to podporovalo vsechny pripony
                             {
                                 Console.WriteLine(entry.FullName);
-                                entry.ExtractToFile(Path.Combine(FolderPath, entry.FullName));
-                                extractedFiles++;
+                                try
+                                {
+                                    extractedFiles++;
+                                    entry.ExtractToFile(Path.Combine(FolderPath, entry.FullName));
+                                }
+                                catch
+                                {
+                                    extractedFiles--;
+                                    MessageBoxResult result = MessageBox.Show($"File [{entry.Name}] already exists. Do you want to overwrite it?", "Error!",
+                                        MessageBoxButton.YesNo, MessageBoxImage.Question);
+                                    if (result == MessageBoxResult.Yes)
+                                    {
+                                        try
+                                        {
+                                            extractedFiles++;
+                                            entry.ExtractToFile(Path.Combine(FolderPath, entry.FullName), true);
+                                        }
+                                        catch
+                                        {
+                                            extractedFiles--;
+                                            MessageBox.Show($"Cannot overwrite the file [{entry.Name}], because it is being used by another process.", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                                        }
+                                    }
+                                }
                             }
-
-
                         }
                     }
                 }
             }
             if (extractedFiles > 0)
             {
-                MessageBox.Show($"Extracted {extractedFiles} file(s).");
                 OnCloseWindow();
+                MessageBox.Show($"Extracted {extractedFiles} file(s).");
+                PopulateDataGrid();
             }
             else
             {

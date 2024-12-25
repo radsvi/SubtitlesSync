@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SubtitlesSync.View.Windows"
         xmlns:lists="clr-namespace:SubtitlesSync.View.Lists"
+        xmlns:converter="clr-namespace:SubtitlesSync.Converters"
         xmlns:userControls="clr-namespace:SubtitlesSync.View.UserControls"
         mc:Ignorable="d"
         WindowStyle="SingleBorderWindow"
@@ -16,6 +17,7 @@
         <KeyBinding Key="Esc" Command="{Binding CloseOptionsWindowCommand}"/>
     </Window.InputBindings>
     <Window.Resources>
+        <converter:IntToVisibilityConverter x:Key="IntToVisibility"/>
         <Style TargetType="DockPanel">
             <Setter Property="Margin" Value="0,5,0,5"/>
             <Setter Property="Height" Value="25"/>
