@@ -79,6 +79,16 @@
 
                     </StackPanel>
                 </GroupBox>
+                <GroupBox Header="Window">
+                    <StackPanel>
+                        <DockPanel>
+                            <CheckBox
+                                IsChecked="{Binding ShowWindowEvenFromContextMenu, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                <Label Content="Show app window even if searching for single subtitle from context menu."/>
+                            </CheckBox>
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
 
                 <GroupBox Header="Downloads">
                     <StackPanel>

@@ -142,5 +142,17 @@ namespace SubtitlesSync.Properties {
                 this["optionsWindowWidth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool showWindowEvenFromContextMenu {
+            get {
+                return ((bool)(this["showWindowEvenFromContextMenu"]));
+            }
+            set {
+                this["showWindowEvenFromContextMenu"] = value;
+            }
+        }
     }
 }

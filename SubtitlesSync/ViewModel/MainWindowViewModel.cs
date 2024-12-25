@@ -165,6 +165,21 @@ namespace SubtitlesSync.ViewModel
             }
         }
 
+        private bool showWindowEvenFromContextMenu = Settings.Default.showWindowEvenFromContextMenu;
+
+        public bool ShowWindowEvenFromContextMenu
+        {
+            get { return showWindowEvenFromContextMenu; }
+            set {
+                showWindowEvenFromContextMenu = value;
+                Settings.Default.showWindowEvenFromContextMenu = value;
+                Settings.Default.Save();
+            }
+        }
+
+        //public bool AlreadyOpenedURL { get; set; } = false;
+
+
 
 
 
@@ -238,7 +253,10 @@ namespace SubtitlesSync.ViewModel
                 FolderPath = folderOut;
                 OpenWebSearchForSubtitles(fileOut);
 
-                CloseApplication();
+                if (ShowWindowEvenFromContextMenu == false)
+                {
+                    CloseApplication();
+                }
             }
             CheckDownloadFolder(); // ## tohle musim zmenit. Dat to aby se to triggernulo az pri pusteni OptionsWindow
 
