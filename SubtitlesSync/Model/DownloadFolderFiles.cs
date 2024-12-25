@@ -9,6 +9,7 @@ namespace SubtitlesSync.Model
 {
     internal class DownloadFolderFiles : ViewModelBase
     {
+        public event EventHandler<string>? ItemsChanged;
         private string fileName; // full name with path and suffix
 
         public string FileName
