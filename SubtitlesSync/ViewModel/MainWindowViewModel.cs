@@ -11,14 +11,14 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls;
 using SubtitlesSync.Services;
 using System.Windows.Input;
+using System.Windows.Shapes;
 //using SubtitlesSync.View.UserControls;
 
 namespace SubtitlesSync.ViewModel
 {
     internal partial class MainWindowViewModel : ViewModelBase
     {
-        //private string folderPath = Settings.Default.folderPath;
-        private string folderPath;
+        private string folderPath = Settings.Default.folderPath;
         public string FolderPath
         {
             get { return folderPath; }
@@ -272,22 +272,21 @@ namespace SubtitlesSync.ViewModel
         public MainWindowViewModel(IWindowService windowService)
         {
             _windowService = windowService;
-            //OpenWindowCommand = new RelayCommand(param => OnOpenWindow());
-            //CloseWindowCommand = new RelayCommand(param => OnCloseWindow());
 
-            // https://stackoverflow.com/questions/11769113/how-to-start-wpf-based-on-arguments
-            FolderPath = (Environment.GetCommandLineArgs().Length > 1) ? Environment.GetCommandLineArgs()[1] : Settings.Default.folderPath;
+            string firstArg = (Environment.GetCommandLineArgs().Length > 1) ? Environment.GetCommandLineArgs()[1] : String.Empty;
+            if (String.IsNullOrEmpty(firstArg) == false && firstArg.Equals("null") == false)
+            {
+                FolderPath = firstArg;
+            }
             SubtitlesToSearchFor = (Environment.GetCommandLineArgs().Length > 2) ? Environment.GetCommandLineArgs()[2] : String.Empty;
 
-            //Items = new ObservableCollection<Item>();
             PopulateDataGrid();
 
-            if (SubtitlesToSearchFor != String.Empty)
+            if (SubtitlesToSearchFor != String.Empty && String.IsNullOrEmpty(SubtitlesToSearchFor) == false)
             {
                 string folderOut;
                 string fileOut;
                 ParseFileNameAndFolder(SubtitlesToSearchFor, out folderOut, out fileOut);
-                //MessageBox.Show($"Folder: #{folderOut}#\n\nFile: {fileOut}" );
 
                 FolderPath = folderOut;
                 OpenWebSearchForSubtitles(fileOut);

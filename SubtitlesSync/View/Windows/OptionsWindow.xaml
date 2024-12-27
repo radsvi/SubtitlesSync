@@ -27,11 +27,11 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <StackPanel>
                 <GroupBox Header="Other">
-                    <DockPanel>
+                    <DockPanel ToolTip="%s is replaced by name of the video when searching." >
                         <Label Content="Subtitles source"/>
                         <TextBox x:Name="tbSubtitlesSource" d:Text="https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s"
-                     Text="{Binding SubtitlesDownloadSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                     VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="Auto" Height="24" VerticalContentAlignment="Center" />
+                                    Text="{Binding SubtitlesDownloadSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    VerticalAlignment="Center" HorizontalAlignment="Stretch" Width="Auto" Height="24" VerticalContentAlignment="Center" />
                     </DockPanel>
                 </GroupBox>
 
