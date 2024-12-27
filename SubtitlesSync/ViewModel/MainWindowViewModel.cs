@@ -268,7 +268,6 @@ namespace SubtitlesSync.ViewModel
         public string[] packageTypes { get; set; } = { ".zip" };
         #endregion
 
-
         public MainWindowViewModel(IWindowService windowService)
         {
             _windowService = windowService;
