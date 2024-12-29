@@ -1,9 +1,11 @@
-﻿using SubtitlesSync.MVVM;
+﻿using SubtitlesSync.Model;
+using SubtitlesSync.MVVM;
 using SubtitlesSync.Services;
 using SubtitlesSync.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -52,16 +54,16 @@ namespace SubtitlesSync.View.UserControls
         //    }
         //}
 
-
+        [Range(1,100)]
         public int NumTextBoxText
         {
             get { return (int)GetValue(NumTextBoxTextProperty); }
             set {
-                if (value > 0 && value <= 100)
+                if (value >= 1 && value <= 100)
                 {
                     SetValue(NumTextBoxTextProperty, value);
                 }
-                else if (value < 0)
+                else if (value < 1)
                 {
                     SetValue(NumTextBoxTextProperty, 1);
                 }

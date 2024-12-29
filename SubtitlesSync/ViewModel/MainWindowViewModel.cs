@@ -50,9 +50,9 @@ namespace SubtitlesSync.ViewModel
                 //}
             }
         }
-        private string subtitlesToSearchFor;
+        private string? subtitlesToSearchFor;
 
-        public string SubtitlesToSearchFor
+        public string? SubtitlesToSearchFor
         {
             get { return subtitlesToSearchFor; }
             set { subtitlesToSearchFor = value; }
@@ -106,16 +106,16 @@ namespace SubtitlesSync.ViewModel
         //    new Item { VideoDisplayName = "tyui" }
         //};
 
-        private Item selectedItem;
-        public Item SelectedItem
-        {
-            get { return selectedItem; }
-            set
-            {
-                selectedItem = value;
-                OnPropertyChanged();
-            }
-        }
+        //private Item selectedItem;
+        //public Item SelectedItem
+        //{
+        //    get { return selectedItem; }
+        //    set
+        //    {
+        //        selectedItem = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         private int windowHeight = Settings.Default.windowHeight;
 

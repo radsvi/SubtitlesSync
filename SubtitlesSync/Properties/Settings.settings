@@ -6,10 +6,10 @@
       <Value Profile="(Default)">C:\</Value>
     </Setting>
     <Setting Name="windowWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">400</Value>
+      <Value Profile="(Default)">700</Value>
     </Setting>
     <Setting Name="windowHeight" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">900</Value>
+      <Value Profile="(Default)">350</Value>
     </Setting>
     <Setting Name="subtitlesDownloadSource" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://www.opensubtitles.org/en/search2/sublanguageid-eng/moviename-%s</Value>
